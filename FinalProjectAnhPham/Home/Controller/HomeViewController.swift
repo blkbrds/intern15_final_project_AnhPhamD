@@ -30,7 +30,7 @@ final class HomeViewController: UIViewController {
         title = "Category"
         configNavigation()
         
-        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.6784313725, blue: 0.7098039216, alpha: 1)]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
     
@@ -39,13 +39,12 @@ final class HomeViewController: UIViewController {
         let sideMenu = UIBarButtonItem(image: UIImage(systemName: "text.justify"), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
         navigationItem.leftBarButtonItem = sideMenu
         
-        let collectionView = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selection))
-        navigationItem.rightBarButtonItem = collectionView
+        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selection))
+        navigationItem.rightBarButtonItem = barButtonItem
         
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
     }
     
-    // MARK: - @objc
     @objc func sideMenuTouchUpInSide() {
         print("aaaaa")
     }

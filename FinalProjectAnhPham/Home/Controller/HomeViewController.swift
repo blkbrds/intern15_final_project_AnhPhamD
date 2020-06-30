@@ -36,11 +36,11 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Function
     private func configNavigation() {
-        let sideMenu = UIBarButtonItem(image: UIImage(systemName: "text.justify"), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
-        navigationItem.leftBarButtonItem = sideMenu
+        let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "text.justify"), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
+        navigationItem.leftBarButtonItem = leftBarButton
         
-        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selection))
-        navigationItem.rightBarButtonItem = barButtonItem
+        let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
+        navigationItem.rightBarButtonItem = rightBarButton
         
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
     }
@@ -49,19 +49,19 @@ final class HomeViewController: UIViewController {
         print("aaaaa")
     }
     
-    @objc func selection() {
+    @objc func selectionTouchUpInSide() {
         if status == .tableView {
             tableView.isHidden = true
             collectionView.isHidden = false
-            let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.split.1x2"), style: .plain, target: self, action: #selector(selection))
-            navigationItem.rightBarButtonItem = barButtonItem
+            let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "square.split.1x2"), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
+            navigationItem.rightBarButtonItem = rightBarButton
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
             status = .collectionView
         } else {
             tableView.isHidden = false
             collectionView.isHidden = true
-            let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selection))
-            navigationItem.rightBarButtonItem = barButtonItem
+            let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
+            navigationItem.rightBarButtonItem = rightBarButton
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
             status = .tableView
         }

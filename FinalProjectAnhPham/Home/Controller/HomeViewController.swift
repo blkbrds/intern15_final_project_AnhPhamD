@@ -23,13 +23,15 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Properites
     private var status = Status.tableView
+    var viewModel = HomeViewModel()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Category"
         configNavigation()
-        
+        configTableView()
+        viewModel.dummyData()
         let textAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.6784313725, blue: 0.7098039216, alpha: 1)]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
@@ -43,6 +45,12 @@ final class HomeViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarButton
         
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+    }
+    
+    private func configTableView() {
+        let nib = UINib(nibName: "HomeTableViewCell", bundle: .main)
+        tableView.register(nib, forCellReuseIdentifier: "HomeTableViewCell")
+        tableView.dataSource = self
     }
     
     @objc func sideMenuTouchUpInSide() {
@@ -65,5 +73,20 @@ final class HomeViewController: UIViewController {
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
             status = .tableView
         }
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRowsInSection()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as? HomeTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.viewModel = viewModel.viewModelCellForRowAt(indexPath: indexPath.row)
+        return cell
     }
 }

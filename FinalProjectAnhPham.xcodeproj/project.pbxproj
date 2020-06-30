@@ -13,6 +13,11 @@
 		1B935970F040B2AD743A5037 /* Pods_FinalProjectAnhPham.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9F3247E027ABBD46F392F2 /* Pods_FinalProjectAnhPham.framework */; };
 		F263960D24AAE1E300C70BF0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F263960B24AAE1E300C70BF0 /* HomeViewController.swift */; };
 		F263960E24AAE1E300C70BF0 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F263960C24AAE1E300C70BF0 /* HomeViewController.xib */; };
+		F281B03A24AAFE78003FEBD1 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B03824AAFE78003FEBD1 /* HomeTableViewCell.swift */; };
+		F281B03B24AAFE78003FEBD1 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F281B03924AAFE78003FEBD1 /* HomeTableViewCell.xib */; };
+		F281B03E24AB16DA003FEBD1 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B03D24AB16DA003FEBD1 /* Drink.swift */; };
+		F281B04024AB1710003FEBD1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B03F24AB1710003FEBD1 /* HomeViewModel.swift */; };
+		F281B04424AB2814003FEBD1 /* HomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B04324AB2814003FEBD1 /* HomeCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,11 @@
 		DDF28AC0A604F99D3BB80446 /* Pods-FinalProjectAnhPham.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectAnhPham.debug.xcconfig"; path = "Target Support Files/Pods-FinalProjectAnhPham/Pods-FinalProjectAnhPham.debug.xcconfig"; sourceTree = "<group>"; };
 		F263960B24AAE1E300C70BF0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F263960C24AAE1E300C70BF0 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		F281B03824AAFE78003FEBD1 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		F281B03924AAFE78003FEBD1 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
+		F281B03D24AB16DA003FEBD1 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
+		F281B03F24AB1710003FEBD1 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		F281B04324AB2814003FEBD1 /* HomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +71,7 @@
 		0EBD7A5B24AAD28900282779 /* FinalProjectAnhPham */ = {
 			isa = PBXGroup;
 			children = (
+				F281B03C24AB15DB003FEBD1 /* Model */,
 				F263960924AAE0BA00C70BF0 /* Home */,
 				0EBD7A5C24AAD28900282779 /* AppDelegate.swift */,
 				0EBD7A5E24AAD28900282779 /* SceneDelegate.swift */,
@@ -90,6 +101,7 @@
 		F263960924AAE0BA00C70BF0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				F281B03724AAFE56003FEBD1 /* Cell */,
 				F263960A24AAE1CE00C70BF0 /* Controller */,
 			);
 			path = Home;
@@ -100,8 +112,27 @@
 			children = (
 				F263960B24AAE1E300C70BF0 /* HomeViewController.swift */,
 				F263960C24AAE1E300C70BF0 /* HomeViewController.xib */,
+				F281B03F24AB1710003FEBD1 /* HomeViewModel.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		F281B03724AAFE56003FEBD1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F281B03824AAFE78003FEBD1 /* HomeTableViewCell.swift */,
+				F281B03924AAFE78003FEBD1 /* HomeTableViewCell.xib */,
+				F281B04324AB2814003FEBD1 /* HomeCellViewModel.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		F281B03C24AB15DB003FEBD1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F281B03D24AB16DA003FEBD1 /* Drink.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EBD7A6624AAD28F00282779 /* Assets.xcassets in Resources */,
+				F281B03B24AAFE78003FEBD1 /* HomeTableViewCell.xib in Resources */,
 				F263960E24AAE1E300C70BF0 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,8 +251,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F281B04424AB2814003FEBD1 /* HomeCellViewModel.swift in Sources */,
 				0EBD7A5D24AAD28900282779 /* AppDelegate.swift in Sources */,
+				F281B04024AB1710003FEBD1 /* HomeViewModel.swift in Sources */,
 				0EBD7A5F24AAD28900282779 /* SceneDelegate.swift in Sources */,
+				F281B03A24AAFE78003FEBD1 /* HomeTableViewCell.swift in Sources */,
+				F281B03E24AB16DA003FEBD1 /* Drink.swift in Sources */,
 				F263960D24AAE1E300C70BF0 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

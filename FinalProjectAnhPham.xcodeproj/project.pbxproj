@@ -13,6 +13,8 @@
 		1B935970F040B2AD743A5037 /* Pods_FinalProjectAnhPham.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9F3247E027ABBD46F392F2 /* Pods_FinalProjectAnhPham.framework */; };
 		F263960D24AAE1E300C70BF0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F263960B24AAE1E300C70BF0 /* HomeViewController.swift */; };
 		F263960E24AAE1E300C70BF0 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F263960C24AAE1E300C70BF0 /* HomeViewController.xib */; };
+		F279230424AC73FE0092C0DE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F279230224AC73FE0092C0DE /* BaseViewController.swift */; };
+		F279230524AC73FE0092C0DE /* BaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F279230324AC73FE0092C0DE /* BaseViewController.xib */; };
 		F281B03A24AAFE78003FEBD1 /* DrinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B03824AAFE78003FEBD1 /* DrinkTableViewCell.swift */; };
 		F281B03B24AAFE78003FEBD1 /* DrinkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F281B03924AAFE78003FEBD1 /* DrinkTableViewCell.xib */; };
 		F281B03E24AB16DA003FEBD1 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B03D24AB16DA003FEBD1 /* Drink.swift */; };
@@ -38,6 +40,8 @@
 		DDF28AC0A604F99D3BB80446 /* Pods-FinalProjectAnhPham.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectAnhPham.debug.xcconfig"; path = "Target Support Files/Pods-FinalProjectAnhPham/Pods-FinalProjectAnhPham.debug.xcconfig"; sourceTree = "<group>"; };
 		F263960B24AAE1E300C70BF0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F263960C24AAE1E300C70BF0 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		F279230224AC73FE0092C0DE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		F279230324AC73FE0092C0DE /* BaseViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseViewController.xib; sourceTree = "<group>"; };
 		F281B03824AAFE78003FEBD1 /* DrinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTableViewCell.swift; sourceTree = "<group>"; };
 		F281B03924AAFE78003FEBD1 /* DrinkTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrinkTableViewCell.xib; sourceTree = "<group>"; };
 		F281B03D24AB16DA003FEBD1 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		F263960924AAE0BA00C70BF0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F279230124AC73D20092C0DE /* Base */,
 				F263960A24AAE1CE00C70BF0 /* Home */,
 			);
 			path = Controller;
@@ -131,6 +136,15 @@
 				F281B03F24AB1710003FEBD1 /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		F279230124AC73D20092C0DE /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				F279230224AC73FE0092C0DE /* BaseViewController.swift */,
+				F279230324AC73FE0092C0DE /* BaseViewController.xib */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		F281B03724AAFE56003FEBD1 /* DrinkTableViewCell */ = {
@@ -235,6 +249,7 @@
 				0EBD7A6624AAD28F00282779 /* Assets.xcassets in Resources */,
 				F281B06124AB4D35003FEBD1 /* TagCollectionViewCell.xib in Resources */,
 				F281B03B24AAFE78003FEBD1 /* DrinkTableViewCell.xib in Resources */,
+				F279230524AC73FE0092C0DE /* BaseViewController.xib in Resources */,
 				F281B06624AB54AD003FEBD1 /* DrinkCollectionViewCell.xib in Resources */,
 				F263960E24AAE1E300C70BF0 /* HomeViewController.xib in Resources */,
 			);
@@ -290,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F279230424AC73FE0092C0DE /* BaseViewController.swift in Sources */,
 				F281B04424AB2814003FEBD1 /* DrinkTableCellViewModel.swift in Sources */,
 				F281B06C24AB5637003FEBD1 /* DrinkCollectionCellViewModel.swift in Sources */,
 				F281B06024AB4D35003FEBD1 /* TagCollectionViewCell.swift in Sources */,

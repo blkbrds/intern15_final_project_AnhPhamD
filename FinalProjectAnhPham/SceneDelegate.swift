@@ -18,10 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let viewController = HomeViewController()
         let navi = UINavigationController(rootViewController: viewController)
-        navi.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navi.navigationBar.shadowImage = UIImage()
-        navi.navigationBar.isTranslucent = true
-        navi.view.backgroundColor = .clear
         window.rootViewController = navi
         self.window = window
         window.makeKeyAndVisible()

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class HomeCellViewModel {
+final class DrinkTableCellViewModel {
     var name: String
     var isFavorite: Bool
     

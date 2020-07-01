@@ -31,6 +31,7 @@ final class HomeViewController: UIViewController {
         title = "Category"
         configNavigation()
         configTableView()
+        configCollectionView()
         viewModel.dummyData()
         let textAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.6784313725, blue: 0.7098039216, alpha: 1)]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -48,9 +49,20 @@ final class HomeViewController: UIViewController {
     }
     
     private func configTableView() {
-        let nib = UINib(nibName: "HomeTableViewCell", bundle: .main)
-        tableView.register(nib, forCellReuseIdentifier: "HomeTableViewCell")
+        let nib = UINib(nibName: "DrinkTableViewCell", bundle: .main)
+        tableView.register(nib, forCellReuseIdentifier: "DrinkTableViewCell")
         tableView.dataSource = self
+    }
+    
+    private func configCollectionView() {
+        let nib = UINib(nibName: "TagCollectionViewCell", bundle: .main)
+        tagCollectionView.register(nib, forCellWithReuseIdentifier: "TagCollectionViewCell")
+        let nib2 = UINib(nibName: "DrinkCollectionViewCell", bundle: .main)
+        collectionView.register(nib2, forCellWithReuseIdentifier: "DrinkCollectionViewCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        tagCollectionView.dataSource = self
+        tagCollectionView.delegate = self
     }
     
     @objc func sideMenuTouchUpInSide() {
@@ -83,10 +95,53 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as? HomeTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkTableViewCell", for: indexPath) as? DrinkTableViewCell else {
             return UITableViewCell()
         }
         cell.viewModel = viewModel.viewModelCellForRowAt(indexPath: indexPath.row)
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension HomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == tagCollectionView {
+            return viewModel.numberOfTagsInSection()
+        } else {
+            return viewModel.numberOfItemsInSection()
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == tagCollectionView {
+            guard let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as? TagCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.viewModel = viewModel.viewModelCellForTags(indexPath: indexPath.row)
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinkCollectionViewCell", for: indexPath) as? DrinkCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.viewModel = viewModel.viewModelCellForItems(indexPath: indexPath.row)
+            return cell
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == tagCollectionView {
+            return CGSize(width: 150, height: UIScreen.main.bounds.height / 20)
+        } else {
+            return CGSize(width: (UIScreen.main.bounds.width - CGFloat(30)) / 2, height: 140)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 }

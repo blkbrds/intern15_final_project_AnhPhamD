@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class HomeTableViewCell: UITableViewCell {
+final class DrinkTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet weak var nameLabel: UILabel!
@@ -16,7 +16,7 @@ final class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     
     // MARK: - Properties
-    var viewModel: HomeCellViewModel? {
+    var viewModel: DrinkTableCellViewModel? {
         didSet {
             updateView()
         }
@@ -26,7 +26,6 @@ final class HomeTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        // Initialization code
     }
     
     // MARK: - Function

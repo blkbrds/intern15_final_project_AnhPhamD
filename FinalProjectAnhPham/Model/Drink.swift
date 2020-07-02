@@ -16,7 +16,7 @@ final class Drink {
     var isFavorite: Bool
     var imageName: String
     var thumbnailImage: UIImage?
-    
+
     // MARK: - Init
     init(json: JSON, isFavorite: Bool = false) {
         if let name = json["strDrink"] as? String {

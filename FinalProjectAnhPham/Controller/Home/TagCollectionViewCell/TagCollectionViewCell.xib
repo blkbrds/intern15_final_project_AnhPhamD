@@ -20,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="134" height="58"/>
                         <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="16"/>
                         <color key="textColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
+                        <color key="highlightedColor" red="0.0" green="0.67843137249999996" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zEC-7c-LrA">
                         <rect key="frame" x="0.0" y="58" width="134" height="1"/>
@@ -44,6 +44,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="134" height="59"/>
             <connections>
+                <outlet property="footerView" destination="zEC-7c-LrA" id="Nh9-lD-vWq"/>
                 <outlet property="tagNameLabel" destination="vEl-Wx-j5E" id="m3S-4I-6tU"/>
             </connections>
             <point key="canvasLocation" x="21.739130434782609" y="133.59375"/>

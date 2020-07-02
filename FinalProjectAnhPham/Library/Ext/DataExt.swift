@@ -22,7 +22,7 @@ extension Data {
         }
         return json
     }
-    
+
     func toArrayJSON() -> [JSON] {
         var json: [[String: Any]] = [[:]]
         do {

@@ -15,61 +15,56 @@ enum Status {
 }
 
 final class HomeViewController: BaseViewController {
-    
+
     // MARK: - IBOutlet
     @IBOutlet private weak var tagCollectionView: UICollectionView!
     @IBOutlet private weak var listDrinkTableView: UITableView!
     @IBOutlet private weak var listDrinkCollectionView: UICollectionView!
-    
+
     // MARK: - Properites
     private var status = Status.tableView
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Category"
+        title = Identifier.title
         configNavigation()
         configTableView()
         configCollectionView()
-        loadAPICategories()
-        loadAPIDrinkForCategories()
+        loadAPICategories(category: "c")
+        loadAPIDrinkForCategories(keyword: "Ordinary%20Drink")
     }
-    
+
     // MARK: - Function
     private func configNavigation() {
-        let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "text.justify"), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
+        let leftBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.leftBarButton), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
-        
-        rightBarButton = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
+        rightBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.rightCollectionBarButton), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
         navigationItem.rightBarButtonItem = rightBarButton
-        
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
     }
-    
+
     private func configTableView() {
-        let nib = UINib(nibName: "DrinkTableViewCell", bundle: .main)
-        listDrinkTableView.register(nib, forCellReuseIdentifier: "DrinkTableViewCell")
+        let drinkTableViewCell = UINib(nibName: Identifier.drinkTableCell, bundle: .main)
+        listDrinkTableView.register(drinkTableViewCell, forCellReuseIdentifier: Identifier.drinkTableCell)
         listDrinkTableView.dataSource = self
         listDrinkTableView.delegate = self
     }
-    
+
     private func configCollectionView() {
-        let nib = UINib(nibName: "TagCollectionViewCell", bundle: .main)
-        tagCollectionView.register(nib, forCellWithReuseIdentifier: "TagCollectionViewCell")
-        
-        let nib2 = UINib(nibName: "DrinkCollectionViewCell", bundle: .main)
-        listDrinkCollectionView.register(nib2, forCellWithReuseIdentifier: "DrinkCollectionViewCell")
-        
+        let tagCollectionCell = UINib(nibName: Identifier.tagCell, bundle: .main)
+        tagCollectionView.register(tagCollectionCell, forCellWithReuseIdentifier: Identifier.tagCell)
+        let drinkCollectionCell = UINib(nibName: Identifier.drinkCollectionCell, bundle: .main)
+        listDrinkCollectionView.register(drinkCollectionCell, forCellWithReuseIdentifier: Identifier.drinkCollectionCell)
         listDrinkCollectionView.dataSource = self
         listDrinkCollectionView.delegate = self
-        
         tagCollectionView.dataSource = self
         tagCollectionView.delegate = self
     }
-    
-    private func loadAPICategories(category: String = "c") {
+
+    private func loadAPICategories(category: String) {
         viewModel.getCategories(category: category) { (done, msg) in
             if done {
                 self.tagCollectionView.reloadData()
@@ -78,8 +73,8 @@ final class HomeViewController: BaseViewController {
             }
         }
     }
-    
-    private func loadAPIDrinkForCategories(keyword: String = "Ordinary%20Drink") {
+
+    private func loadAPIDrinkForCategories(keyword: String) {
         viewModel.getDrinkForCategories(keyword: keyword) { (done, msg) in
             if done {
                 self.listDrinkTableView.reloadData()
@@ -89,34 +84,22 @@ final class HomeViewController: BaseViewController {
             }
         }
     }
-    
-    private func showAlert(msg: String) {
-        let alert = UIAlertController(title: "Waring", message: msg, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-            return
-        }
-        
-        alert.addAction(okAction)
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    @objc func sideMenuTouchUpInSide() {
+
+    @objc private func sideMenuTouchUpInSide() {
         print("aaaaa")
     }
-    
-    @objc func selectionTouchUpInSide() {
+
+    @objc private func selectionTouchUpInSide() {
         if status == .tableView {
             listDrinkTableView.isHidden = true
             listDrinkCollectionView.isHidden = false
-            rightBarButton?.image = UIImage(systemName: "square.split.1x2")
+            rightBarButton?.image = UIImage(systemName: Identifier.rightTableBarButton)
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
             status = .collectionView
         } else {
             listDrinkTableView.isHidden = false
             listDrinkCollectionView.isHidden = true
-            rightBarButton?.image = UIImage(systemName: "square.grid.2x2")
+            rightBarButton?.image = UIImage(systemName: Identifier.rightCollectionBarButton)
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
             status = .tableView
         }
@@ -128,9 +111,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection()
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkTableViewCell", for: indexPath) as? DrinkTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Identifier.drinkTableCell, for: indexPath) as? DrinkTableViewCell else {
             return UITableViewCell()
         }
         cell.indexPath = indexPath
@@ -138,7 +121,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.viewModel = viewModel.viewModelCellForRowAt(indexPath: indexPath.row)
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("aaaaaa: \(indexPath)")
     }
@@ -154,16 +137,16 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == tagCollectionView {
-            guard let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as? TagCollectionViewCell else {
+            guard let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: Identifier.tagCell, for: indexPath) as? TagCollectionViewCell else {
                 return UICollectionViewCell()
             }
             cell.viewModel = viewModel.viewModelCellForTags(indexPath: indexPath.row)
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinkCollectionViewCell", for: indexPath) as? DrinkCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifier.drinkCollectionCell, for: indexPath) as? DrinkCollectionViewCell else {
                 return UICollectionViewCell()
             }
             cell.delegate = self
@@ -172,12 +155,14 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             return cell
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tagCollectionView {
             let keyword = viewModel.tagGroups[indexPath.row].tagName
-            let newString = keyword.replacingOccurrences(of: " ", with: "%20", options: .literal, range: nil)
-            loadAPIDrinkForCategories(keyword: newString)
+            let newKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            if let newKeyword = newKeyword {
+                loadAPIDrinkForCategories(keyword: newKeyword)
+            }
             print("TagCollectionView")
         } else {
             print("ListCollectionView")
@@ -194,7 +179,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: (UIScreen.main.bounds.width - CGFloat(30)) / 2, height: 140)
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
@@ -203,7 +188,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - DrinkTableViewCellDelegate
 extension HomeViewController: DrinkTableViewCellDelegate {
     func dowloadImage(cell: DrinkTableViewCell, indexPath: IndexPath) {
-        viewModel.getDrinkImageForCategories(at: indexPath) { (indexPath, image) in
+        viewModel.getDrinkImageForCategories(at: indexPath) { (indexPath, _) in
             self.listDrinkTableView.reloadRows(at: [indexPath], with: .none)
         }
     }
@@ -212,8 +197,20 @@ extension HomeViewController: DrinkTableViewCellDelegate {
 // MARK: - DrinkCollectionViewCellDelegate
 extension HomeViewController: DrinkCollectionViewCellDelegate {
     func dowloadImage(cell: DrinkCollectionViewCell, indexPath: IndexPath) {
-        viewModel.getDrinkImageForCategories(at: indexPath) { (indexPath, image) in
+        viewModel.getDrinkImageForCategories(at: indexPath) { (indexPath, _) in
             self.listDrinkCollectionView.reloadItems(at: [indexPath])
         }
+    }
+}
+
+extension HomeViewController {
+    struct Identifier {
+        static let tagCell = "TagCollectionViewCell"
+        static let drinkCollectionCell = "DrinkCollectionViewCell"
+        static let drinkTableCell = "DrinkTableViewCell"
+        static let rightTableBarButton =  "square.split.1x2"
+        static let rightCollectionBarButton = "square.grid.2x2"
+        static let leftBarButton = "text.justify"
+        static let title = "Category"
     }
 }

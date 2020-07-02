@@ -10,28 +10,27 @@ import Foundation
 import UIKit
 
 final class HomeViewModel {
-    
+
     // MARK: - Properties
     var drinks: [Drink] = []
     var tagGroups: [TagGroup] = []
-    
+
     // MARK: - Function
-    func getCategories(category: String = "c", completion: @escaping (Bool, String) -> Void) {
-        let urlString = "https://www.thecocktaildb.com/api/json/v1/1/list.php?\(category)=list"
+    func getCategories(category: String, completion: @escaping (Bool, String) -> Void) {
+        let urlString = API.Home.categories + category + "=list"
         Networking.shared().getCategory(urlString: urlString) { (apiResult: APIResult<TagGroupResult>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
             case .success(let tagGroupResult):
                 self.tagGroups = tagGroupResult.tagGroups
-                
                 completion(true, "Success")
             }
         }
     }
-    
+
     func getDrinkForCategories(keyword: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=\(keyword)"
+        let urlString = API.Home.filterCategories + "c=" + keyword
         Networking.shared().getDrinkForCategory(urlString: urlString) { (apiResult: APIResult<DrinkResult>) in
             switch apiResult {
             case .failure(let stringError):
@@ -42,7 +41,7 @@ final class HomeViewModel {
             }
         }
     }
-    
+
     func getDrinkImageForCategories(at indexPath: IndexPath, completion: @escaping (IndexPath, UIImage?) -> Void) {
         let item = drinks[indexPath.row]
         if item.thumbnailImage == nil {
@@ -56,31 +55,31 @@ final class HomeViewModel {
             }
         }
     }
-    
+
     func numberOfRowsInSection() -> Int {
         return drinks.count
     }
-    
+
     func viewModelCellForRowAt(indexPath: Int) -> DrinkTableCellViewModel {
         let item = drinks[indexPath]
         let viewModel = DrinkTableCellViewModel(drink: item)
         return viewModel
     }
-    
+
     func numberOfTagsInSection() -> Int {
         return tagGroups.count
     }
-    
+
     func viewModelCellForTags(indexPath: Int) -> TagCellViewModel {
         let item = tagGroups[indexPath]
         let viewModel = TagCellViewModel(tagGroup: item)
         return viewModel
     }
-    
+
     func numberOfItemsInSection() -> Int {
         return drinks.count
     }
-    
+
     func viewModelCellForItems(indexPath: Int) -> DrinkCollectionCellViewModel {
         let item = drinks[indexPath]
         let viewModel = DrinkCollectionCellViewModel(drink: item)

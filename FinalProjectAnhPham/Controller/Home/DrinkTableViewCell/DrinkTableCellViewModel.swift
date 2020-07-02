@@ -10,10 +10,13 @@ import Foundation
 import UIKit
 
 final class DrinkTableCellViewModel {
+
+    // MARK: - Properties
     var name: String
     var isFavorite: Bool
     var thumbnailImage: UIImage?
-    
+
+    // MARK: - Init
     init(drink: Drink) {
         self.name = drink.name
         self.isFavorite = drink.isFavorite

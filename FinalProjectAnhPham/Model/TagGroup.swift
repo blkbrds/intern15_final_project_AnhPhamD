@@ -8,11 +8,18 @@
 
 import Foundation
 
-class TagGroup {
+final class TagGroup {
+
+    // MARK: - Properties
     var tagName: String
-    
+
+    // MARK: - Init
     init(json: JSON) {
         if let tagName = json["strCategory"] as? String {
+            self.tagName = tagName
+        } else if let tagName = json["strGlass"] as? String {
+            self.tagName = tagName
+        } else if let tagName = json["strAlcoholic"] as? String {
             self.tagName = tagName
         } else {
             self.tagName = ""

@@ -9,8 +9,11 @@
 import Foundation
 
 final class TagCellViewModel {
+
+    // MARK: - Properties
     var tagName: String
-    
+
+    // MARK: - Init
     init(tagGroup: TagGroup) {
         self.tagName = tagGroup.tagName
     }

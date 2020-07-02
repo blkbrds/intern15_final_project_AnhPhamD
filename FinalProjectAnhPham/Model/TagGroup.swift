@@ -11,7 +11,11 @@ import Foundation
 class TagGroup {
     var tagName: String
     
-    init(tagName: String) {
-        self.tagName = tagName
+    init(json: JSON) {
+        if let tagName = json["strCategory"] as? String {
+            self.tagName = tagName
+        } else {
+            self.tagName = ""
+        }
     }
 }

@@ -7,24 +7,54 @@
 //
 
 import Foundation
+import UIKit
 
 final class HomeViewModel {
+    
+    // MARK: - Properties
     var drinks: [Drink] = []
     var tagGroups: [TagGroup] = []
     
-    func dummyData() {
-        drinks.append(Drink(name: "Tuan"))
-        drinks.append(Drink(name: "Anh"))
-        drinks.append(Drink(name: "Quan Baby"))
-        drinks.append(Drink(name: "To Co To Co"))
-        drinks.append(Drink(name: "Ton That Tung"))
-        drinks.append(Drink(name: "abcbabacbcbcababac"))
-        drinks.append(Drink(name: "hahahahaahahaa"))
-        drinks.append(Drink(name: "hahacgdbcahsdsakdblasdasdjlhasjnadsknasdndasasasdasd"))
-        tagGroups.append(TagGroup(tagName: "AnhDuc"))
-        tagGroups.append(TagGroup(tagName: "TanHieuHieu"))
-        tagGroups.append(TagGroup(tagName: "Abcabcdabzxzzxcxzcxzd"))
-        tagGroups.append(TagGroup(tagName: "Ahdhddhdhdhdd"))
+    // MARK: - Function
+    func getCategories(category: String = "c", completion: @escaping (Bool, String) -> Void) {
+        let urlString = "https://www.thecocktaildb.com/api/json/v1/1/list.php?\(category)=list"
+        Networking.shared().getCategory(urlString: urlString) { (apiResult: APIResult<TagGroupResult>) in
+            switch apiResult {
+            case .failure(let stringError):
+                completion(false, stringError)
+            case .success(let tagGroupResult):
+                self.tagGroups = tagGroupResult.tagGroups
+                
+                completion(true, "Success")
+            }
+        }
+    }
+    
+    func getDrinkForCategories(keyword: String, completion: @escaping (Bool, String) -> Void) {
+        let urlString = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=\(keyword)"
+        Networking.shared().getDrinkForCategory(urlString: urlString) { (apiResult: APIResult<DrinkResult>) in
+            switch apiResult {
+            case .failure(let stringError):
+                completion(false, stringError)
+            case .success(let drinkResult):
+                self.drinks = drinkResult.drinks
+                completion(true, "Success")
+            }
+        }
+    }
+    
+    func getDrinkImageForCategories(at indexPath: IndexPath, completion: @escaping (IndexPath, UIImage?) -> Void) {
+        let item = drinks[indexPath.row]
+        if item.thumbnailImage == nil {
+            Networking.shared().getDrinkImageForCategories(urlString: item.imageName) { (image) in
+                if let image = image {
+                    item.thumbnailImage = image
+                    completion(indexPath, image)
+                } else {
+                    completion(indexPath, nil)
+                }
+            }
+        }
     }
     
     func numberOfRowsInSection() -> Int {

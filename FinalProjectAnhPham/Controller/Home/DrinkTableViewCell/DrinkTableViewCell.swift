@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DrinkTableViewCellDelegate: class {
+    func dowloadImage(cell: DrinkTableViewCell, indexPath: IndexPath)
+}
+
 final class DrinkTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
@@ -21,25 +25,30 @@ final class DrinkTableViewCell: UITableViewCell {
             updateView()
         }
     }
+    weak var delegate: DrinkTableViewCellDelegate?
+    var indexPath: IndexPath?
     
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
     }
     
     // MARK: - Function
-    private func setupUI() {
-        avatarImageView.layer.cornerRadius = 15
-        avatarImageView.clipsToBounds = true
-    }
-    
     private func updateView() {
         guard let viewModel = viewModel else {
             return
         }
         nameLabel.text = viewModel.name
         favoriteButton.isSelected = viewModel.isFavorite
+        if viewModel.thumbnailImage == nil {
+            if let delegate = delegate {
+                if let indexPath = indexPath {
+                    delegate.dowloadImage(cell: self, indexPath: indexPath)
+                }
+            }
+        } else {
+            avatarImageView.image = viewModel.thumbnailImage
+        }
     }
     
     // MARK: - IBAction

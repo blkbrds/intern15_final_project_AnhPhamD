@@ -7,16 +7,29 @@
 //
 
 import Foundation
+import UIKit
 
 final class Drink {
     
     // MARK: - Properties
     var name: String
     var isFavorite: Bool
+    var imageName: String
+    var thumbnailImage: UIImage?
     
     // MARK: - Init
-    init(name: String, isFavorite: Bool = false) {
-        self.name = name
+    init(json: JSON, isFavorite: Bool = false) {
+        if let name = json["strDrink"] as? String {
+            self.name = name
+        } else {
+            self.name = ""
+        }
         self.isFavorite = isFavorite
+        
+        if let imageName = json["strDrinkThumb"] as? String {
+            self.imageName = imageName
+        } else {
+            self.imageName = ""
+        }
     }
 }

@@ -14,12 +14,14 @@ final class DrinkTableCellViewModel {
     // MARK: - Properties
     var name: String
     var isFavorite: Bool
+    var imageURL: String
     var thumbnailImage: UIImage?
 
     // MARK: - Init
     init(drink: Drink) {
         self.name = drink.name
         self.isFavorite = drink.isFavorite
+        self.imageURL = drink.imageURL
         self.thumbnailImage = drink.thumbnailImage
     }
 }

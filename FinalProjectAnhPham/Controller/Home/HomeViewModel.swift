@@ -14,10 +14,11 @@ final class HomeViewModel {
     // MARK: - Properties
     var drinks: [Drink] = []
     var tagGroups: [TagGroup] = []
+    var status: MenuItem = .category
 
     // MARK: - Function
     func getCategories(category: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = API.Home.categories + category + "=list"
+        let urlString = API.Home.categories + category + "list"
         Networking.shared().getCategory(urlString: urlString) { (apiResult: APIResult<TagGroupResult>) in
             switch apiResult {
             case .failure(let stringError):
@@ -29,8 +30,8 @@ final class HomeViewModel {
         }
     }
 
-    func getDrinkForCategories(keyword: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = API.Home.filterCategories + "c=" + keyword
+    func getDrinkForCategories(firstChar: String, keyword: String, completion: @escaping (Bool, String) -> Void) {
+        let urlString = API.Home.filterCategories + firstChar + keyword
         Networking.shared().getDrinkForCategory(urlString: urlString) { (apiResult: APIResult<DrinkResult>) in
             switch apiResult {
             case .failure(let stringError):
@@ -38,20 +39,6 @@ final class HomeViewModel {
             case .success(let drinkResult):
                 self.drinks = drinkResult.drinks
                 completion(true, "Success")
-            }
-        }
-    }
-
-    func getDrinkImageForCategories(at indexPath: IndexPath, completion: @escaping (IndexPath, UIImage?) -> Void) {
-        let item = drinks[indexPath.row]
-        if item.thumbnailImage == nil {
-            Networking.shared().getDrinkImageForCategories(urlString: item.imageName) { (image) in
-                if let image = image {
-                    item.thumbnailImage = image
-                    completion(indexPath, image)
-                } else {
-                    completion(indexPath, nil)
-                }
             }
         }
     }

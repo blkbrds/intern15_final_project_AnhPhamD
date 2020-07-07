@@ -24,8 +24,8 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdasdsadasasddasassaasdads" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcT-jP-tPy">
                                 <rect key="frame" x="5" y="5" width="112" height="35"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="13"/>
+                                <color key="textColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -37,13 +37,13 @@
                             <constraint firstItem="PcT-jP-tPy" firstAttribute="top" secondItem="8po-zT-Qgx" secondAttribute="top" constant="5" id="xyg-4b-8gf"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9v-N0-yZ4">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9v-N0-yZ4">
                         <rect key="frame" x="89" y="6.5" width="28" height="22.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="DSQ-sc-NCT"/>
                             <constraint firstAttribute="height" constant="25" id="SbJ-gp-FXt"/>
                         </constraints>
-                        <color key="tintColor" red="0.0" green="0.67843137254901964" blue="0.70980392156862748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.79607843137254897" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" backgroundImage="heart" catalog="system"/>
                         <state key="selected" backgroundImage="heart.fill" catalog="system">
                             <color key="titleColor" red="0.0" green="0.67843137254901964" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,6 +72,7 @@
                 <outlet property="avatarImageView" destination="HA7-0F-TgR" id="DpU-jP-SBu"/>
                 <outlet property="favoriteButton" destination="k9v-N0-yZ4" id="nwR-6V-QMr"/>
                 <outlet property="nameDrinkLabel" destination="PcT-jP-tPy" id="TXs-VV-RyU"/>
+                <outlet property="titleView" destination="8po-zT-Qgx" id="NAt-H5-XyT"/>
             </connections>
             <point key="canvasLocation" x="184.05797101449278" y="140.95982142857142"/>
         </collectionViewCell>

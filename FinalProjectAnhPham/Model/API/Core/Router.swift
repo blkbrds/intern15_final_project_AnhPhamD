@@ -9,8 +9,11 @@
 import Foundation
 
 final class API {
-    
+
+    // MARK: - Properties
     static var baseURL: String = "https://www.thecocktaildb.com/api/json/v1/1/"
+
+    // MARK: - Struct
     struct Home {
         static var categories = baseURL + "list.php?"
         static var filterCategories = baseURL + "filter.php?"

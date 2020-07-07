@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LGSideMenuController
 
 // MARK: - Enum
 enum Status {
@@ -33,8 +34,8 @@ final class HomeViewController: BaseViewController {
         configNavigation()
         configTableView()
         configCollectionView()
-        loadAPICategories(category: "c")
-        loadAPIDrinkForCategories(keyword: "Ordinary%20Drink")
+        loadAPICategories(category: "c=")
+        loadAPIDrinkForCategories(firstChar: "c=", keyword: "Ordinary%20Drink")
     }
 
     // MARK: - Function
@@ -43,7 +44,10 @@ final class HomeViewController: BaseViewController {
         navigationItem.leftBarButtonItem = leftBarButton
         rightBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.rightCollectionBarButton), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
         navigationItem.rightBarButtonItem = rightBarButton
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
+        if let leftMenu = SceneDelegate.share.sideMenu.leftViewController as? SideMenuViewController {
+            leftMenu.delegate = self
+        }
     }
 
     private func configTableView() {
@@ -51,6 +55,7 @@ final class HomeViewController: BaseViewController {
         listDrinkTableView.register(drinkTableViewCell, forCellReuseIdentifier: Identifier.drinkTableCell)
         listDrinkTableView.dataSource = self
         listDrinkTableView.delegate = self
+        listDrinkTableView.rowHeight = UIScreen.main.bounds.height / 3
     }
 
     private func configCollectionView() {
@@ -74,8 +79,8 @@ final class HomeViewController: BaseViewController {
         }
     }
 
-    private func loadAPIDrinkForCategories(keyword: String) {
-        viewModel.getDrinkForCategories(keyword: keyword) { (done, msg) in
+    private func loadAPIDrinkForCategories(firstChar: String, keyword: String) {
+        viewModel.getDrinkForCategories(firstChar: firstChar, keyword: keyword) { (done, msg) in
             if done {
                 self.listDrinkTableView.reloadData()
                 self.listDrinkCollectionView.reloadData()
@@ -86,7 +91,7 @@ final class HomeViewController: BaseViewController {
     }
 
     @objc private func sideMenuTouchUpInSide() {
-        print("aaaaa")
+        sideMenuController?.showLeftView(animated: true, completionHandler: nil)
     }
 
     @objc private func selectionTouchUpInSide() {
@@ -94,19 +99,19 @@ final class HomeViewController: BaseViewController {
             listDrinkTableView.isHidden = true
             listDrinkCollectionView.isHidden = false
             rightBarButton?.image = UIImage(systemName: Identifier.rightTableBarButton)
-            navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+            navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
             status = .collectionView
         } else {
             listDrinkTableView.isHidden = false
             listDrinkCollectionView.isHidden = true
             rightBarButton?.image = UIImage(systemName: Identifier.rightCollectionBarButton)
-            navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+            navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
             status = .tableView
         }
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection()
@@ -116,8 +121,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Identifier.drinkTableCell, for: indexPath) as? DrinkTableViewCell else {
             return UITableViewCell()
         }
-        cell.indexPath = indexPath
-        cell.delegate = self
         cell.viewModel = viewModel.viewModelCellForRowAt(indexPath: indexPath.row)
         return cell
     }
@@ -127,7 +130,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
@@ -135,7 +138,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         } else {
             return viewModel.numberOfItemsInSection()
         }
-        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -149,8 +151,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifier.drinkCollectionCell, for: indexPath) as? DrinkCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.delegate = self
-            cell.indexPath = indexPath
             cell.viewModel = viewModel.viewModelCellForItems(indexPath: indexPath.row)
             return cell
         }
@@ -161,9 +161,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             let keyword = viewModel.tagGroups[indexPath.row].tagName
             let newKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             if let newKeyword = newKeyword {
-                loadAPIDrinkForCategories(keyword: newKeyword)
+                switch viewModel.status {
+                case .category:
+                    loadAPIDrinkForCategories(firstChar: "c=", keyword: newKeyword)
+                case .glass:
+                    loadAPIDrinkForCategories(firstChar: "g=", keyword: newKeyword)
+                default:
+                    loadAPIDrinkForCategories(firstChar: "a=", keyword: newKeyword)
+                }
             }
-            print("TagCollectionView")
         } else {
             print("ListCollectionView")
         }
@@ -176,7 +182,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == tagCollectionView {
             return CGSize(width: 150, height: UIScreen.main.bounds.height / 20)
         } else {
-            return CGSize(width: (UIScreen.main.bounds.width - CGFloat(30)) / 2, height: 140)
+            return CGSize(width: (UIScreen.main.bounds.width - CGFloat(30)) / 2, height: 200)
         }
     }
 
@@ -185,24 +191,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - DrinkTableViewCellDelegate
-extension HomeViewController: DrinkTableViewCellDelegate {
-    func dowloadImage(cell: DrinkTableViewCell, indexPath: IndexPath) {
-        viewModel.getDrinkImageForCategories(at: indexPath) { (indexPath, _) in
-            self.listDrinkTableView.reloadRows(at: [indexPath], with: .none)
-        }
-    }
-}
-
-// MARK: - DrinkCollectionViewCellDelegate
-extension HomeViewController: DrinkCollectionViewCellDelegate {
-    func dowloadImage(cell: DrinkCollectionViewCell, indexPath: IndexPath) {
-        viewModel.getDrinkImageForCategories(at: indexPath) { (indexPath, _) in
-            self.listDrinkCollectionView.reloadItems(at: [indexPath])
-        }
-    }
-}
-
+// MARK: - HomeViewController
 extension HomeViewController {
     struct Identifier {
         static let tagCell = "TagCollectionViewCell"
@@ -212,5 +201,39 @@ extension HomeViewController {
         static let rightCollectionBarButton = "square.grid.2x2"
         static let leftBarButton = "text.justify"
         static let title = "Category"
+    }
+}
+
+// MARK: - SideMenuViewControllerDelegate
+extension HomeViewController: SideMenuViewControllerDelegate {
+    func sideMenu(_ controller: SideMenuViewController, withPerform item: MenuItem) {
+        viewModel.status = item
+        switch item {
+        case .category:
+            let catagory = "c="
+            loadAPICategories(category: catagory)
+            title = item.rawValue
+            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
+        case .glass:
+            let category = "g="
+            loadAPICategories(category: category)
+            title = item.rawValue
+            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
+        case .alcoholic:
+            let category = "a="
+            loadAPICategories(category: category)
+            title = item.rawValue
+            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
+        case .favorite:
+            let favoriteViewController = FavoriteViewController()
+            favoriteViewController.title = item.rawValue
+            navigationController?.pushViewController(favoriteViewController, animated: true)
+            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
+        default:
+            let searchViewController = SearchViewController()
+            searchViewController.title = item.rawValue
+            navigationController?.pushViewController(searchViewController, animated: true)
+            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
+        }
     }
 }

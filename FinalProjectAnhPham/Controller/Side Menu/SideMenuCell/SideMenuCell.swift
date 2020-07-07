@@ -1,21 +1,21 @@
 //
-//  TagCollectionViewCell.swift
+//  SideMenuCell.swift
 //  FinalProjectAnhPham
 //
-//  Created by PCI0012 on 6/30/20.
+//  Created by PCI0012 on 7/4/20.
 //  Copyright © 2020 Asian Tech Co., Ltd. All rights reserved.
 //
 
 import UIKit
 
-final class TagCollectionViewCell: UICollectionViewCell {
+final class SideMenuCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var tagNameLabel: UILabel!
-    @IBOutlet weak var footerView: UIView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var iconImageView: UIImageView!
 
     // MARK: - Properties
-    var viewModel: TagCellViewModel? {
+    var viewModel: SideMenuCellViewModel? {
         didSet {
             updateView()
         }
@@ -24,11 +24,13 @@ final class TagCollectionViewCell: UICollectionViewCell {
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
 
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        tagNameLabel.text = viewModel.tagName
+        titleLabel.text = viewModel.title
+        iconImageView.image = UIImage(named: viewModel.icon)
     }
 }

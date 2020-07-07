@@ -13,13 +13,13 @@ final class DrinkCollectionCellViewModel {
 
     // MARK: - Properties
     var name: String
-    var thumbnailImage: UIImage?
+    var imageURL: String
     var isFavorite: Bool
 
     // MARK: - Init
     init(drink: Drink) {
         self.name = drink.name
-        self.thumbnailImage = drink.thumbnailImage
+        self.imageURL = drink.imageURL
         self.isFavorite = drink.isFavorite
     }
 }

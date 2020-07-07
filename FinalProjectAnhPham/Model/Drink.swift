@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 final class Drink {
-    
+
     // MARK: - Properties
     var name: String
     var isFavorite: Bool
-    var imageName: String
+    var imageURL: String
     var thumbnailImage: UIImage?
 
     // MARK: - Init
@@ -27,9 +27,9 @@ final class Drink {
         self.isFavorite = isFavorite
         
         if let imageName = json["strDrinkThumb"] as? String {
-            self.imageName = imageName
+            self.imageURL = imageName
         } else {
-            self.imageName = ""
+            self.imageURL = ""
         }
     }
 }

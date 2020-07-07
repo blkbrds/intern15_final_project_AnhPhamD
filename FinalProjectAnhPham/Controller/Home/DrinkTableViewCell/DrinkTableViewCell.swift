@@ -8,16 +8,13 @@
 
 import UIKit
 
-protocol DrinkTableViewCellDelegate: class {
-    func dowloadImage(cell: DrinkTableViewCell, indexPath: IndexPath)
-}
-
 final class DrinkTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var favoriteButton: UIButton!
+    @IBOutlet weak var titleView: UIView!
 
     // MARK: - Properties
     var viewModel: DrinkTableCellViewModel? {
@@ -25,12 +22,18 @@ final class DrinkTableViewCell: UITableViewCell {
             updateView()
         }
     }
-    weak var delegate: DrinkTableViewCellDelegate?
     var indexPath: IndexPath?
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        avatarImageView.layer.cornerRadius = 15
+        titleView.layer.cornerRadius = 15
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarImageView.image = nil
     }
 
     // MARK: - Function
@@ -40,15 +43,7 @@ final class DrinkTableViewCell: UITableViewCell {
         }
         nameLabel.text = viewModel.name
         favoriteButton.isSelected = viewModel.isFavorite
-        if viewModel.thumbnailImage == nil {
-            if let delegate = delegate {
-                if let indexPath = indexPath {
-                    delegate.dowloadImage(cell: self, indexPath: indexPath)
-                }
-            }
-        } else {
-            avatarImageView.image = viewModel.thumbnailImage
-        }
+        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
     }
 
     // MARK: - IBAction

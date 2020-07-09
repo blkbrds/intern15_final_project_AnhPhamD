@@ -129,10 +129,10 @@
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7qu-Mp-6cq">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="612"/>
                             <color key="backgroundColor" red="0.87305194139999998" green="0.9123113155" blue="0.99955898519999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="sectionIndexBackgroundColor" red="0.87305194139999998" green="0.9123113155" blue="0.99955898519999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="sectionIndexBackgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </tableView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.87305194139999998" green="0.9123113155" blue="0.99955898519999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="7qu-Mp-6cq" firstAttribute="top" secondItem="KTE-g8-uVw" secondAttribute="top" id="158-io-gPi"/>
                         <constraint firstAttribute="trailing" secondItem="7qu-Mp-6cq" secondAttribute="trailing" id="NU0-wU-D9D"/>
@@ -144,7 +144,7 @@
                     <rect key="frame" x="225" y="84" width="169" height="160"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="J6t-b2-d63" secondAttribute="trailing" constant="20" id="2Pf-nQ-KYL"/>
                 <constraint firstItem="bxW-yh-LEC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="F6k-aq-Whv"/>

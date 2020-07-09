@@ -64,12 +64,11 @@ final class DetailDrinkViewController: BaseViewController {
         sectionTypeTableView.register(ingredientTableViewCell, forCellReuseIdentifier: "IngredientTableViewCell")
         sectionTypeTableView.register(measureTableViewCell, forCellReuseIdentifier: "MeasureTableViewCell")
         sectionTypeTableView.dataSource = self
+        sectionTypeTableView.sectionHeaderHeight = 40
     }
     
     private func setupUI() {
-        infomationView.layer.cornerRadius = 30
-        infomationView.clipsToBounds = true
-        stackView.layer.cornerRadius = 20
+        avatarImageView.layer.cornerRadius = 10
     }
     
     private func updateView() {
@@ -136,7 +135,8 @@ extension DetailDrinkViewController: UITableViewDataSource {
             cell.viewModel = DetailCellViewModel(label: value)
             return cell
         case 1:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath) as? IngredientTableViewCell, let value = viewModel?.drink?.ingredient else {
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath) as? IngredientTableViewCell,
+                let value = viewModel?.drink?.ingredient else {
                 return UITableViewCell()
             }
             cell.viewModel = DetailCellViewModel(label: value)

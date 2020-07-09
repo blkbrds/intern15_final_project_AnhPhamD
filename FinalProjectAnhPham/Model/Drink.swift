@@ -9,7 +9,7 @@
 import Foundation
 
 final class Drink {
-
+    
     // MARK: - Properties
     var nameTitle: String
     var isFavorite: Bool
@@ -21,7 +21,7 @@ final class Drink {
     var category: String
     var glass: String
     var alcoholic: String
-
+    
     // MARK: - Init
     init(json: JSON, isFavorite: Bool = false) {
         if let nameTitleJS = json["strDrink"] as? String {
@@ -56,30 +56,36 @@ final class Drink {
             self.alcoholic = ""
         }
         if let instructionJS = json["strInstructions"] as? String {
-            self.instruction = instructionJS
+            if instructionJS != "" {
+                self.instruction = instructionJS
+            } else {
+                self.instruction = "Empty data"
+            }
         } else {
-            self.instruction = "Empty data"
+            self.instruction = ""
         }
         var strIngredient: String = ""
-        for index in 0...15 {
+        for index in 1...15 {
             if let ingredientJS = json["strIngredient\(index)"] as? String {
                 if ingredientJS != "" {
                     strIngredient += ingredientJS + "\n"
-                } else {
-                    strIngredient += "Empty data"
                 }
             }
         }
+        if strIngredient == "" {
+            strIngredient = "Empty data"
+        }
         self.ingredient = strIngredient
         var strMeasure: String = ""
-        for index in 0...15 {
+        for index in 1...15 {
             if let measureJS = json["strMeasure\(index)"] as? String {
                 if measureJS != "" {
                     strMeasure += measureJS + "\n"
-                } else {
-                    strMeasure += "Empty data"
                 }
             }
+        }
+        if strMeasure == "" {
+            strMeasure = "Empty data"
         }
         self.measure = strMeasure
     }

@@ -32,7 +32,7 @@
                         <state key="normal" title="Button" image="circle.fill" catalog="system"/>
                     </button>
                 </subviews>
-                <color key="backgroundColor" red="0.87305194139999998" green="0.9123113155" blue="0.99955898519999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="G8N-pa-UeF" secondAttribute="trailing" constant="15" id="H7D-Nj-uwe"/>
                     <constraint firstItem="G8N-pa-UeF" firstAttribute="leading" secondItem="JCg-Sd-yfa" secondAttribute="trailing" constant="5" id="Mfo-0j-XaH"/>
@@ -42,6 +42,7 @@
                     <constraint firstAttribute="bottom" secondItem="G8N-pa-UeF" secondAttribute="bottom" constant="5" id="yFg-rZ-oqm"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="ingredientLabel" destination="G8N-pa-UeF" id="pFU-Vm-Prb"/>

@@ -14,7 +14,7 @@ final class DrinkTableViewCell: UITableViewCell {
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var favoriteButton: UIButton!
-    @IBOutlet weak var titleView: UIView!
+    @IBOutlet private weak var titleView: UIView!
 
     // MARK: - Properties
     var viewModel: DrinkTableCellViewModel? {

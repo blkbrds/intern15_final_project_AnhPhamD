@@ -12,7 +12,7 @@ final class TagCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet private weak var tagNameLabel: UILabel!
-    @IBOutlet weak var footerView: UIView!
+    @IBOutlet private weak var footerView: UIView!
 
     // MARK: - Properties
     var viewModel: TagCellViewModel? {

@@ -99,13 +99,11 @@ final class HomeViewController: BaseViewController {
             listDrinkTableView.isHidden = true
             listDrinkCollectionView.isHidden = false
             rightBarButton?.image = UIImage(systemName: Identifier.rightTableBarButton)
-            navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
             status = .collectionView
         } else {
             listDrinkTableView.isHidden = false
             listDrinkCollectionView.isHidden = true
             rightBarButton?.image = UIImage(systemName: Identifier.rightCollectionBarButton)
-            navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
             status = .tableView
         }
     }
@@ -126,7 +124,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("aaaaaa: \(indexPath)")
+        let vc = DetailDrinkViewController()
+        vc.viewModel = viewModel.getIdOfRow(index: indexPath.row)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -171,7 +171,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
                 }
             }
         } else {
-            print("ListCollectionView")
+            let vc = DetailDrinkViewController()
+            vc.viewModel = viewModel.getIdOfItem(index: indexPath.row)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
@@ -206,22 +208,25 @@ extension HomeViewController {
 
 // MARK: - SideMenuViewControllerDelegate
 extension HomeViewController: SideMenuViewControllerDelegate {
-    func sideMenu(_ controller: SideMenuViewController, withPerform item: MenuItem) {
+    func sideMenu(_ controller: SideMenuViewController, with item: MenuItem) {
         viewModel.status = item
         switch item {
         case .category:
             let catagory = "c="
             loadAPICategories(category: catagory)
+            loadAPIDrinkForCategories(firstChar: "c=", keyword: "Ordinary%20Drink")
             title = item.rawValue
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .glass:
             let category = "g="
             loadAPICategories(category: category)
+            loadAPIDrinkForCategories(firstChar: "g=", keyword: "Highball%20glass")
             title = item.rawValue
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .alcoholic:
             let category = "a="
             loadAPICategories(category: category)
+            loadAPIDrinkForCategories(firstChar: "a=", keyword: "Alcoholic")
             title = item.rawValue
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .favorite:

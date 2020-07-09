@@ -7,29 +7,80 @@
 //
 
 import Foundation
-import UIKit
 
 final class Drink {
 
     // MARK: - Properties
-    var name: String
+    var nameTitle: String
     var isFavorite: Bool
     var imageURL: String
-    var thumbnailImage: UIImage?
+    var idDrink: String
+    var instruction: String
+    var ingredient: String
+    var measure: String
+    var category: String
+    var glass: String
+    var alcoholic: String
 
     // MARK: - Init
     init(json: JSON, isFavorite: Bool = false) {
-        if let name = json["strDrink"] as? String {
-            self.name = name
+        if let nameTitleJS = json["strDrink"] as? String {
+            self.nameTitle = nameTitleJS
         } else {
-            self.name = ""
+            self.nameTitle = ""
         }
         self.isFavorite = isFavorite
-        
-        if let imageName = json["strDrinkThumb"] as? String {
-            self.imageURL = imageName
+        if let imageURL = json["strDrinkThumb"] as? String {
+            self.imageURL = imageURL
         } else {
             self.imageURL = ""
         }
+        if let idDrinkJS = json["idDrink"] as? String {
+            self.idDrink = idDrinkJS
+        } else {
+            self.idDrink = ""
+        }
+        if let categoryJS = json["strCategory"] as? String {
+            self.category = categoryJS
+        } else {
+            self.category = ""
+        }
+        if let glassJS = json["strGlass"] as? String {
+            self.glass = glassJS
+        } else {
+            self.glass = ""
+        }
+        if let alcoholicJS = json["strAlcoholic"] as? String {
+            self.alcoholic = alcoholicJS
+        } else {
+            self.alcoholic = ""
+        }
+        if let instructionJS = json["strInstructions"] as? String {
+            self.instruction = instructionJS
+        } else {
+            self.instruction = "Empty data"
+        }
+        var strIngredient: String = ""
+        for index in 0...15 {
+            if let ingredientJS = json["strIngredient\(index)"] as? String {
+                if ingredientJS != "" {
+                    strIngredient += ingredientJS + "\n"
+                } else {
+                    strIngredient += "Empty data"
+                }
+            }
+        }
+        self.ingredient = strIngredient
+        var strMeasure: String = ""
+        for index in 0...15 {
+            if let measureJS = json["strMeasure\(index)"] as? String {
+                if measureJS != "" {
+                    strMeasure += measureJS + "\n"
+                } else {
+                    strMeasure += "Empty data"
+                }
+            }
+        }
+        self.measure = strMeasure
     }
 }

@@ -8,19 +8,22 @@
 
 import UIKit
 
-class MeasureTableViewCell: UITableViewCell {
+final class MeasureTableViewCell: UITableViewCell {
 
+    // MARK: - IBOutlet
     @IBOutlet weak var measureLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
+
+    // MARK: - Properties
     var viewModel: DetailCellViewModel? {
         didSet {
             updateView()
         }
+    }
+
+    // MARK: - Life Cycle
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -28,7 +31,8 @@ class MeasureTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+    // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else {
             return

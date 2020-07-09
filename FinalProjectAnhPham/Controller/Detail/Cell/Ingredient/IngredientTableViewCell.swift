@@ -8,26 +8,25 @@
 
 import UIKit
 
-class IngredientTableViewCell: UITableViewCell {
+final class IngredientTableViewCell: UITableViewCell {
 
+    // MARK: - IBOutlet
     @IBOutlet weak var ingredientLabel: UILabel!
-    
+
+    // MARK: - Properties
     var viewModel: DetailCellViewModel? {
         didSet {
             updateView()
         }
     }
-    
+
+    // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
-    
+    // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else {
             return

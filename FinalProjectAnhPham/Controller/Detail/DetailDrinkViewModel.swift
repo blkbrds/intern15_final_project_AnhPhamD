@@ -32,11 +32,11 @@ final class DetailDrinkViewModel {
             }
         }
     }
-    
+
     func numberOfSections() -> Int {
         return sections.count
     }
-    
+
     func numberOfRowsInSection(section: Int) -> Int {
         switch section {
         case 0:
@@ -47,12 +47,13 @@ final class DetailDrinkViewModel {
             return 1
         }
     }
-    
+
     func titleHeaderInSection(section: Int) -> String? {
         return sections[section].rawValue
     }
 }
 
+// MARK: - DetailDrinkViewModel
 extension DetailDrinkViewModel {
     enum SectionType: String {
         case instruction = "Instruction"

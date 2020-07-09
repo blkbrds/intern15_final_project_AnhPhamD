@@ -8,13 +8,14 @@
 
 import UIKit
 
+// MARK: - Enum
 enum Favorite {
     case favorite
     case unFavorite
 }
 
 final class DetailDrinkViewController: BaseViewController {
-    
+
     // MARK: - IBOutlet
     @IBOutlet private weak var infomationView: UIView!
     @IBOutlet private weak var stackView: UIStackView!
@@ -24,7 +25,7 @@ final class DetailDrinkViewController: BaseViewController {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var informationTableView: UITableView!
     @IBOutlet weak var sectionTypeTableView: UITableView!
-    
+
     // MARK: - Properties
     var viewModel: DetailDrinkViewModel? {
         didSet {
@@ -33,7 +34,7 @@ final class DetailDrinkViewController: BaseViewController {
     }
     var status = Favorite.favorite
     var rightBarButton: UIBarButtonItem?
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,7 @@ final class DetailDrinkViewController: BaseViewController {
         configNavigation()
         setupUI()
     }
-    
+
     // MARK: - Function
     private func loadAPIDetailDrink() {
         guard let viewModel = viewModel else { return }
@@ -55,7 +56,7 @@ final class DetailDrinkViewController: BaseViewController {
             }
         })
     }
-    
+
     private func configTableView() {
         let instructionTableViewCell = UINib(nibName: "InstructionTableViewCell", bundle: .main)
         let ingredientTableViewCell = UINib(nibName: "IngredientTableViewCell", bundle: .main)
@@ -66,11 +67,11 @@ final class DetailDrinkViewController: BaseViewController {
         sectionTypeTableView.dataSource = self
         sectionTypeTableView.sectionHeaderHeight = 40
     }
-    
+
     private func setupUI() {
         avatarImageView.layer.cornerRadius = 10
     }
-    
+
     private func updateView() {
         guard let drink = viewModel?.drink else {
             return
@@ -81,18 +82,18 @@ final class DetailDrinkViewController: BaseViewController {
         alcoholicLabel.text = drink.alcoholic
         avatarImageView.loadImageFromUrl(urlString: drink.imageURL)
     }
-    
+
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(named: "ic-back"), style: .plain, target: self, action: #selector(backTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
         rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteTouchUpInSide))
         navigationItem.rightBarButtonItem = rightBarButton
     }
-    
+
     @objc func backTouchUpInSide() {
         navigationController?.popToRootViewController(animated: true)
     }
-    
+
     @objc func favoriteTouchUpInSide() {
         if status == .favorite {
             rightBarButton?.image = UIImage(systemName: "heart.fill")
@@ -113,18 +114,18 @@ extension DetailDrinkViewController: UITableViewDataSource {
         }
         return viewModel.numberOfSections()
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let viewModel = viewModel else {
             return 0
         }
         return viewModel.numberOfRowsInSection(section: section)
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel?.titleHeaderInSection(section: section)
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:

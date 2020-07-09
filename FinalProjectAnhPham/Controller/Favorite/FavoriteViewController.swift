@@ -8,20 +8,32 @@
 
 import UIKit
 
-final class FavoriteViewController: UIViewController {
+final class FavoriteViewController: BaseViewController {
 
+    // MARK: - IBOutlet
+    @IBOutlet weak var favoriteCollectionView: UICollectionView!
+
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configNavigation()
         // Do any additional setup after loading the view.
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Function
+    private func configNavigation() {
+        let leftBarButton = UIBarButtonItem(image: UIImage(named: "ic-back"), style: .plain, target: self, action: #selector(backTouchUpInSide))
+        navigationItem.leftBarButtonItem = leftBarButton
+        
+        let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteTouchUpInSide))
+        navigationItem.rightBarButtonItem = rightBarButton
     }
-    */
 
+    @objc func backTouchUpInSide() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+
+    @objc func deleteTouchUpInSide() {
+        
+    }
 }

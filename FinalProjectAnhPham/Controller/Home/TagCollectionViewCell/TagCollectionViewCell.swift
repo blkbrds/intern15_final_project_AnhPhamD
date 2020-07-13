@@ -8,10 +8,11 @@
 
 import UIKit
 
-class TagCollectionViewCell: UICollectionViewCell {
+final class TagCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet weak var tagNameLabel: UILabel!
+    @IBOutlet private weak var tagNameLabel: UILabel!
+    @IBOutlet weak var footerView: UIView!
     
     // MARK: - Properties
     var viewModel: TagCellViewModel? {
@@ -19,18 +20,15 @@ class TagCollectionViewCell: UICollectionViewCell {
             updateView()
         }
     }
-    
-    // MARK: - Life Cycel
+
+    // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    
+
     // MARK: - Function
     private func updateView() {
-        guard let viewModel = viewModel else {
-            return
-        }
+        guard let viewModel = viewModel else { return }
         tagNameLabel.text = viewModel.tagName
     }
 }

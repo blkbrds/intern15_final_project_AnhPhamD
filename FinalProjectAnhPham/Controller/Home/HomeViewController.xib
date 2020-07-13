@@ -9,8 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="FinalProjectAnhPham" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="Wpy-uy-3vC" id="Nnr-mh-8be"/>
-                <outlet property="tableView" destination="1jv-Mh-5YU" id="9g4-ET-CXr"/>
+                <outlet property="listDrinkCollectionView" destination="Wpy-uy-3vC" id="Nnr-mh-8be"/>
+                <outlet property="listDrinkTableView" destination="1jv-Mh-5YU" id="9g4-ET-CXr"/>
                 <outlet property="tagCollectionView" destination="iaL-UL-AnI" id="0LB-gW-WZf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="iaL-UL-AnI">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="iaL-UL-AnI">
                     <rect key="frame" x="0.0" y="44" width="414" height="45"/>
                     <color key="backgroundColor" red="0.22352941176470587" green="0.24313725490196078" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yOp-f5-HGi">

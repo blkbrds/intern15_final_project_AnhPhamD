@@ -16,26 +16,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="122" height="135"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HA7-0F-TgR">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HA7-0F-TgR">
                         <rect key="frame" x="0.0" y="0.0" width="122" height="135"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
-                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8po-zT-Qgx">
-                        <rect key="frame" x="0.0" y="64" width="122" height="71"/>
+                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8po-zT-Qgx">
+                        <rect key="frame" x="0.0" y="90" width="122" height="45"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdasdsadasasddasassaasdads" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcT-jP-tPy">
-                                <rect key="frame" x="5" y="5" width="112" height="61"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdasdsadasasddasassaasdads" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcT-jP-tPy">
+                                <rect key="frame" x="5" y="5" width="112" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="PcT-jP-tPy" secondAttribute="trailing" constant="5" id="bnK-TN-qad"/>
-                            <constraint firstItem="PcT-jP-tPy" firstAttribute="top" secondItem="8po-zT-Qgx" secondAttribute="top" constant="5" id="feS-bC-xfb"/>
-                            <constraint firstItem="PcT-jP-tPy" firstAttribute="leading" secondItem="8po-zT-Qgx" secondAttribute="leading" constant="5" id="nUA-LE-omv"/>
-                            <constraint firstAttribute="bottom" secondItem="PcT-jP-tPy" secondAttribute="bottom" constant="5" id="uPy-Hv-C14"/>
+                            <constraint firstAttribute="trailing" secondItem="PcT-jP-tPy" secondAttribute="trailing" constant="5" id="MIh-39-FLC"/>
+                            <constraint firstAttribute="bottom" secondItem="PcT-jP-tPy" secondAttribute="bottom" constant="5" id="MiI-Rv-5KR"/>
+                            <constraint firstItem="PcT-jP-tPy" firstAttribute="leading" secondItem="8po-zT-Qgx" secondAttribute="leading" constant="5" id="gB3-Lp-Vlb"/>
+                            <constraint firstItem="PcT-jP-tPy" firstAttribute="top" secondItem="8po-zT-Qgx" secondAttribute="top" constant="5" id="xyg-4b-8gf"/>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9v-N0-yZ4">
@@ -46,24 +45,32 @@
                         </constraints>
                         <color key="tintColor" red="0.0" green="0.67843137254901964" blue="0.70980392156862748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" backgroundImage="heart" catalog="system"/>
-                        <state key="selected" backgroundImage="heart.fill" catalog="system"/>
+                        <state key="selected" backgroundImage="heart.fill" catalog="system">
+                            <color key="titleColor" red="0.0" green="0.67843137254901964" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="favoriteButtonTouchUpInSide:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Kjm-P5-xaZ"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="k9v-N0-yZ4" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="5sc-tX-VX0"/>
                 <constraint firstAttribute="bottom" secondItem="HA7-0F-TgR" secondAttribute="bottom" id="GaP-5c-jDl"/>
-                <constraint firstAttribute="bottom" secondItem="8po-zT-Qgx" secondAttribute="bottom" id="M6l-7X-rMq"/>
+                <constraint firstAttribute="bottom" secondItem="8po-zT-Qgx" secondAttribute="bottom" id="Lav-7B-Ito"/>
                 <constraint firstAttribute="trailing" secondItem="HA7-0F-TgR" secondAttribute="trailing" id="WdD-dw-BDF"/>
+                <constraint firstItem="8po-zT-Qgx" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="YEg-CZ-Af1"/>
+                <constraint firstAttribute="trailing" secondItem="8po-zT-Qgx" secondAttribute="trailing" id="fBu-dg-jVY"/>
+                <constraint firstItem="8po-zT-Qgx" firstAttribute="height" secondItem="HA7-0F-TgR" secondAttribute="height" multiplier="1/3" id="fou-z7-HgH"/>
                 <constraint firstItem="HA7-0F-TgR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ft6-3K-do2"/>
                 <constraint firstAttribute="trailing" secondItem="k9v-N0-yZ4" secondAttribute="trailing" constant="5" id="fva-me-fCg"/>
-                <constraint firstItem="8po-zT-Qgx" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ixe-E4-nRv"/>
-                <constraint firstAttribute="trailing" secondItem="8po-zT-Qgx" secondAttribute="trailing" id="lLI-fe-YM9"/>
                 <constraint firstItem="HA7-0F-TgR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="q6e-z7-WGo"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="122" height="135"/>
             <connections>
+                <outlet property="avatarImageView" destination="HA7-0F-TgR" id="DpU-jP-SBu"/>
+                <outlet property="favoriteButton" destination="k9v-N0-yZ4" id="nwR-6V-QMr"/>
                 <outlet property="nameDrinkLabel" destination="PcT-jP-tPy" id="TXs-VV-RyU"/>
             </connections>
             <point key="canvasLocation" x="184.05797101449278" y="140.95982142857142"/>

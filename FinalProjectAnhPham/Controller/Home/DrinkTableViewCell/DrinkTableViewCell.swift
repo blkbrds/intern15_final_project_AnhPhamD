@@ -8,45 +8,52 @@
 
 import UIKit
 
+protocol DrinkTableViewCellDelegate: class {
+    func dowloadImage(cell: DrinkTableViewCell, indexPath: IndexPath)
+}
+
 final class DrinkTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var favoriteButton: UIButton!
-    
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var favoriteButton: UIButton!
+
     // MARK: - Properties
     var viewModel: DrinkTableCellViewModel? {
         didSet {
             updateView()
         }
     }
-    
+    weak var delegate: DrinkTableViewCellDelegate?
+    var indexPath: IndexPath?
+
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
     }
-    
+
     // MARK: - Function
-    private func setupUI() {
-        avatarImageView.layer.cornerRadius = 15
-        avatarImageView.clipsToBounds = true
-    }
-    
     private func updateView() {
         guard let viewModel = viewModel else {
             return
         }
         nameLabel.text = viewModel.name
         favoriteButton.isSelected = viewModel.isFavorite
-    }
-    
-    // MARK: - IBAction
-    @IBAction func favoriteButtonTouchUpInSide(_ sender: Any) {
-        guard let viewModel = viewModel else {
-            return
+        if viewModel.thumbnailImage == nil {
+            if let delegate = delegate {
+                if let indexPath = indexPath {
+                    delegate.dowloadImage(cell: self, indexPath: indexPath)
+                }
+            }
+        } else {
+            avatarImageView.image = viewModel.thumbnailImage
         }
+    }
+
+    // MARK: - IBAction
+    @IBAction private func favoriteButtonTouchUpInSide(_ sender: Any) {
+        guard let viewModel = viewModel else { return }
         favoriteButton.isSelected = !viewModel.isFavorite
         viewModel.isFavorite = !viewModel.isFavorite
     }

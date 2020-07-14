@@ -19,6 +19,7 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var nameDrinkLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var favoriteButton: UIButton!
+    @IBOutlet weak var titleView: UIView!
 
     // MARK: - Properties
     var viewModel: DrinkCollectionCellViewModel? {
@@ -33,6 +34,8 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        avatarImageView.layer.cornerRadius = 15
+        titleView.layer.cornerRadius = 15
     }
 
     // MARK: - Function
@@ -40,15 +43,7 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
         guard let viewModel = viewModel else { return }
         nameDrinkLabel.text = viewModel.name
         favoriteButton.isSelected = viewModel.isFavorite
-        if viewModel.thumbnailImage == nil {
-            if let delegate = delegate {
-                if let indexPath = indexPath {
-                    delegate.dowloadImage(cell: self, indexPath: indexPath)
-                }
-            }
-        } else {
-            avatarImageView.image = viewModel.thumbnailImage
-        }
+        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
     }
 
     // MARK: - IBAction

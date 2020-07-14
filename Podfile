@@ -7,5 +7,6 @@ target 'FinalProjectAnhPham' do
 
   # Pods for FinalProjectAnhPham
   pod 'SwiftLint', '0.39.2'
+  pod 'LGSideMenuController'
 
 end

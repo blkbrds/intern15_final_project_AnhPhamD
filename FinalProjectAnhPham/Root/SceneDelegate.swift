@@ -7,18 +7,32 @@
 //
 
 import UIKit
+import LGSideMenuController
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
+    // MARK: - Singleton
+    static var share: SceneDelegate {
+        guard let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+            fatalError("No catching scene delegate")
+        }
+        return scene
+    }
+    
+    private override init() {
+        
+    }
+    
+    // MARK: - Properties
+    lazy var sideMenu = LGSideMenuController()
     var window: UIWindow?
-
+    
+    // MARK: - Function
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let viewController = HomeViewController()
-        let navi = UINavigationController(rootViewController: viewController)
-        window.rootViewController = navi
         self.window = window
+        setupSideMenu()
         window.makeKeyAndVisible()
     }
 
@@ -48,5 +62,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    private func setupSideMenu() {
+        let rootView = UINavigationController(rootViewController: HomeViewController())
+        let leftView = SideMenuViewController()
+        sideMenu.rootViewController = rootView
+        sideMenu.leftViewController = leftView
+        sideMenu.leftViewWidth = UIScreen.main.bounds.width / 1.5
+        window?.rootViewController = sideMenu
     }
 }

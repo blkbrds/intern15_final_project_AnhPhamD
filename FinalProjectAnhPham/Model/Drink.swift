@@ -7,29 +7,34 @@
 //
 
 import Foundation
+import RealmSwift
 
-final class Drink {
-    
+final class Drink: Object {
+
     // MARK: - Properties
-    var nameTitle: String
-    var isFavorite: Bool
-    var imageURL: String
-    var idDrink: String
-    var instruction: String
-    var ingredient: String
-    var measure: String
-    var category: String
-    var glass: String
-    var alcoholic: String
+    @objc dynamic var nameTitle: String = ""
+    @objc dynamic var imageURL: String = ""
+    @objc dynamic var idDrink: String = ""
+    var instruction: String = ""
+    var ingredient: String = ""
+    var measure: String = ""
+    var category: String = ""
+    var glass: String = ""
+    var alcoholic: String = ""
+    var isFavorite: Bool = false
     
-    // MARK: - Init
-    init(json: JSON, isFavorite: Bool = false) {
+    override static func primaryKey() -> String? {
+        return "idDrink"
+    }
+
+    // MARK: - Convenience Init
+    convenience init(json: JSON) {
+        self.init()
         if let nameTitleJS = json["strDrink"] as? String {
             self.nameTitle = nameTitleJS
         } else {
             self.nameTitle = ""
         }
-        self.isFavorite = isFavorite
         if let imageURL = json["strDrinkThumb"] as? String {
             self.imageURL = imageURL
         } else {
@@ -80,7 +85,7 @@ final class Drink {
         for index in 1...15 {
             if let measureJS = json["strMeasure\(index)"] as? String {
                 if measureJS != "" {
-                    strMeasure += measureJS + "\n"
+                    strMeasure += "•  " + measureJS + "\n"
                 }
             }
         }

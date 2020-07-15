@@ -9,9 +9,9 @@
 import Foundation
 
 final class DetailCellViewModel {
-    var label: String
+    var nameLabel: String
     
     init(label: String) {
-        self.label = label
+        self.nameLabel = label
     }
 }

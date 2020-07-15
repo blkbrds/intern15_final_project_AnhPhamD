@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class InstructionTableViewCell: UITableViewCell {
+final class DetailTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet weak var instructionLabel: UILabel!
@@ -29,6 +29,6 @@ final class InstructionTableViewCell: UITableViewCell {
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        instructionLabel.text = viewModel.label
+        instructionLabel.text = viewModel.nameLabel
     }
 }

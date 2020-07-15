@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DrinkCollectionViewCellDelegate: class {
+    func handleFavoriteCollection(cell: DrinkCollectionViewCell, idDrink: String, isFavorite: Bool)
+}
+
 final class DrinkCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlet
@@ -17,12 +21,13 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var titleView: UIView!
 
     // MARK: - Properties
-    var viewModel: DrinkCollectionCellViewModel? {
+    var viewModel: DrinkCellViewModel? {
         didSet {
             updateView()
         }
     }
     var indexPath: IndexPath?
+    weak var delegate: DrinkCollectionViewCellDelegate?
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -34,7 +39,7 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        nameDrinkLabel.text = viewModel.name
+        nameDrinkLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
         avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
     }
@@ -42,7 +47,9 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
     // MARK: - IBAction
     @IBAction private func favoriteButtonTouchUpInSide(_ sender: Any) {
         guard let viewModel = viewModel else { return }
-        favoriteButton.isSelected = !viewModel.isFavorite
-        viewModel.isFavorite = !viewModel.isFavorite
+        if let delegate = delegate {
+            delegate.handleFavoriteCollection(cell: self, idDrink: viewModel.idDrink, isFavorite: viewModel.isFavorite)
+        }
+        updateView()
     }
 }

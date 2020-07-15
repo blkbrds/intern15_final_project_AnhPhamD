@@ -15,7 +15,7 @@ enum Favorite {
 }
 
 final class DetailDrinkViewController: BaseViewController {
-
+    
     // MARK: - IBOutlet
     @IBOutlet private weak var infomationView: UIView!
     @IBOutlet private weak var stackView: UIStackView!
@@ -25,16 +25,15 @@ final class DetailDrinkViewController: BaseViewController {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var informationTableView: UITableView!
     @IBOutlet weak var sectionTypeTableView: UITableView!
-
+    
     // MARK: - Properties
     var viewModel: DetailDrinkViewModel? {
         didSet {
             loadAPIDetailDrink()
         }
     }
-    var status = Favorite.favorite
     var rightBarButton: UIBarButtonItem?
-
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +41,7 @@ final class DetailDrinkViewController: BaseViewController {
         configNavigation()
         setupUI()
     }
-
+    
     // MARK: - Function
     private func loadAPIDetailDrink() {
         guard let viewModel = viewModel else { return }
@@ -56,22 +55,18 @@ final class DetailDrinkViewController: BaseViewController {
             }
         })
     }
-
+    
     private func configTableView() {
-        let instructionTableViewCell = UINib(nibName: "InstructionTableViewCell", bundle: .main)
-        let ingredientTableViewCell = UINib(nibName: "IngredientTableViewCell", bundle: .main)
-        let measureTableViewCell = UINib(nibName: "MeasureTableViewCell", bundle: .main)
-        sectionTypeTableView.register(instructionTableViewCell, forCellReuseIdentifier: "InstructionTableViewCell")
-        sectionTypeTableView.register(ingredientTableViewCell, forCellReuseIdentifier: "IngredientTableViewCell")
-        sectionTypeTableView.register(measureTableViewCell, forCellReuseIdentifier: "MeasureTableViewCell")
+        let detailTableViewCell = UINib(nibName: "DetailTableViewCell", bundle: .main)
+        sectionTypeTableView.register(detailTableViewCell, forCellReuseIdentifier: "DetailTableViewCell")
         sectionTypeTableView.dataSource = self
         sectionTypeTableView.sectionHeaderHeight = 40
     }
-
+    
     private func setupUI() {
         avatarImageView.layer.cornerRadius = 10
     }
-
+    
     private func updateView() {
         guard let drink = viewModel?.drink else {
             return
@@ -82,25 +77,38 @@ final class DetailDrinkViewController: BaseViewController {
         alcoholicLabel.text = drink.alcoholic
         avatarImageView.loadImageFromUrl(urlString: drink.imageURL)
     }
-
+    
     private func configNavigation() {
+        viewModel?.checkFavorite(completion: { [weak self] (done) in
+            guard let this = self else { return }
+            if done {
+                this.viewModel?.status = .unFavorite
+                this.rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: this, action: #selector(this.addFavoriteTouchUpInSide))
+                this.navigationItem.rightBarButtonItem = this.rightBarButton
+            } else {
+                this.viewModel?.status = .favorite
+                this.rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: this, action: #selector(this.addFavoriteTouchUpInSide))
+                this.navigationItem.rightBarButtonItem = this.rightBarButton
+            }
+        })
         let leftBarButton = UIBarButtonItem(image: UIImage(named: "ic-back"), style: .plain, target: self, action: #selector(backTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
-        rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteTouchUpInSide))
-        navigationItem.rightBarButtonItem = rightBarButton
     }
-
+    
     @objc func backTouchUpInSide() {
         navigationController?.popToRootViewController(animated: true)
     }
-
-    @objc func favoriteTouchUpInSide() {
-        if status == .favorite {
+    
+    @objc func addFavoriteTouchUpInSide() {
+        if viewModel?.status == .favorite {
             rightBarButton?.image = UIImage(systemName: "heart.fill")
-            status = .unFavorite
+            viewModel?.status = .unFavorite
+            guard let drink = viewModel?.drink else { return }
+            viewModel?.addFavorite(idDrink: drink.idDrink, nameTitle: drink.nameTitle, imageUrl: drink.imageURL)
         } else {
+            viewModel?.deleteItemFavorite()
             rightBarButton?.image = UIImage(systemName: "heart")
-            status = .favorite
+            viewModel?.status = .favorite
         }
     }
 }
@@ -114,40 +122,40 @@ extension DetailDrinkViewController: UITableViewDataSource {
         }
         return viewModel.numberOfSections()
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let viewModel = viewModel else {
             return 0
         }
         return viewModel.numberOfRowsInSection(section: section)
     }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel?.titleHeaderInSection(section: section)
-    }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InstructionTableViewCell", for: indexPath) as? InstructionTableViewCell,
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell,
                 let value = viewModel?.drink?.instruction else {
-                return UITableViewCell()
+                    return UITableViewCell()
             }
             cell.viewModel = DetailCellViewModel(label: value)
             return cell
         case 1:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath) as? IngredientTableViewCell,
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell,
                 let value = viewModel?.drink?.ingredient else {
-                return UITableViewCell()
+                    return UITableViewCell()
             }
             cell.viewModel = DetailCellViewModel(label: value)
             return cell
         default:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "MeasureTableViewCell", for: indexPath) as? MeasureTableViewCell, let value = viewModel?.drink?.measure else {
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell, let value = viewModel?.drink?.measure else {
                 return UITableViewCell()
             }
             cell.viewModel = DetailCellViewModel(label: value)
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel?.titleHeaderInSection(section: section)
     }
 }

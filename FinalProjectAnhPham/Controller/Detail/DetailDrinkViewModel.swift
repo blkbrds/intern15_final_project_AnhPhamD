@@ -7,36 +7,80 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class DetailDrinkViewModel {
-
+    
     // MARK: - Properties
+    var status = Favorite.favorite
     var idDrink: String
     var drink: Drink?
     var sections: [SectionType] = [.instruction, .ingredient, .measure]
-
+    
     // MARK: - Init
     init(drink: Drink) {
         self.idDrink = drink.idDrink
     }
-
+    
     // MARK: - Function
     func getDetailDrink(completion: @escaping (Bool, String) -> Void) {
-        Networking.shared().getDetailDrink(id: idDrink) { (apiResult: APIResult<DrinkResult>) in
+        Networking.shared().getDetailDrink(id: idDrink) { [weak self] (apiResult: APIResult<DrinkResult>) in
+            guard let this = self else { return }
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
             case .success(let data):
-                self.drink = data.drinks.first
+                this.drink = data.drinks.first
                 completion(true, "Success")
             }
         }
     }
-
+    
+    func checkFavorite(completion: @escaping (Bool) -> Void) {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            if results.isEmpty {
+                completion(false)
+            } else {
+                completion(true)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteItemFavorite() {
+        do {
+            let realm = try Realm()
+            let result = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            try realm.write {
+                realm.delete(result)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
+        do {
+            let realm = try Realm()
+            let drink = Drink()
+            drink.idDrink = idDrink
+            drink.nameTitle = nameTitle
+            drink.imageURL = imageUrl
+            try realm.write {
+                realm.add(drink)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
     func numberOfSections() -> Int {
         return sections.count
     }
-
+    
     func numberOfRowsInSection(section: Int) -> Int {
         switch section {
         case 0:
@@ -47,7 +91,7 @@ final class DetailDrinkViewModel {
             return 1
         }
     }
-
+    
     func titleHeaderInSection(section: Int) -> String? {
         return sections[section].rawValue
     }

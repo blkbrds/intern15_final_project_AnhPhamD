@@ -9,24 +9,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MeasureTableViewCell" customModule="FinalProjectAnhPham" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="DetailTableViewCell" customModule="FinalProjectAnhPham" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8G-7c-0zk">
-                        <rect key="frame" x="10" y="10" width="10" height="10"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8X-5E-9I8">
+                        <rect key="frame" x="30" y="10" width="10" height="10"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="TdQ-l5-Gjd"/>
-                            <constraint firstAttribute="width" constant="10" id="ZRd-rT-7R1"/>
+                            <constraint firstAttribute="height" constant="10" id="L31-Kb-d6m"/>
+                            <constraint firstAttribute="width" constant="10" id="WxG-9l-Lhw"/>
                         </constraints>
                         <color key="tintColor" red="0.93333333330000001" green="0.43529411759999997" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" image="circle.fill" catalog="system"/>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uLD-YO-6Ky">
-                        <rect key="frame" x="25" y="5" width="280" height="34"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnZ-vC-nm9">
+                        <rect key="frame" x="50" y="5" width="255" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -34,20 +34,20 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="B8G-7c-0zk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="3Sk-AU-e60"/>
-                    <constraint firstItem="B8G-7c-0zk" firstAttribute="top" secondItem="uLD-YO-6Ky" secondAttribute="top" constant="5" id="By3-vX-9cs"/>
-                    <constraint firstAttribute="bottom" secondItem="uLD-YO-6Ky" secondAttribute="bottom" constant="5" id="YzT-fk-1eB"/>
-                    <constraint firstItem="uLD-YO-6Ky" firstAttribute="leading" secondItem="B8G-7c-0zk" secondAttribute="trailing" constant="5" id="lWN-ci-B5d"/>
-                    <constraint firstItem="uLD-YO-6Ky" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="nf2-Xt-6lp"/>
-                    <constraint firstAttribute="trailing" secondItem="uLD-YO-6Ky" secondAttribute="trailing" constant="15" id="u2e-oT-kQc"/>
+                    <constraint firstItem="l8X-5E-9I8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="8Au-Dq-laX"/>
+                    <constraint firstItem="JnZ-vC-nm9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="GXn-wc-I7q"/>
+                    <constraint firstAttribute="bottom" secondItem="JnZ-vC-nm9" secondAttribute="bottom" constant="5" id="SXD-61-BAA"/>
+                    <constraint firstAttribute="trailing" secondItem="JnZ-vC-nm9" secondAttribute="trailing" constant="15" id="fSn-wJ-mJj"/>
+                    <constraint firstItem="l8X-5E-9I8" firstAttribute="top" secondItem="JnZ-vC-nm9" secondAttribute="top" constant="5" id="oDq-HN-oyC"/>
+                    <constraint firstItem="JnZ-vC-nm9" firstAttribute="leading" secondItem="l8X-5E-9I8" secondAttribute="trailing" constant="10" id="qc3-YT-jJA"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="measureLabel" destination="uLD-YO-6Ky" id="yuc-nc-59X"/>
+                <outlet property="instructionLabel" destination="JnZ-vC-nm9" id="Poq-hW-Dzi"/>
             </connections>
-            <point key="canvasLocation" x="133" y="119"/>
+            <point key="canvasLocation" x="131.8840579710145" y="118.52678571428571"/>
         </tableViewCell>
     </objects>
     <resources>

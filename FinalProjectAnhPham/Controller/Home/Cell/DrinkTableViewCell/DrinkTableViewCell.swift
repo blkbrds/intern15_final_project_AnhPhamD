@@ -8,6 +8,11 @@
 
 import UIKit
 
+// MARK: - Protocol
+protocol DrinkTableViewCellDelegate: class {
+    func handleFavoriteTableView(cell: DrinkTableViewCell, idDrink: String, isFavorite: Bool)
+}
+
 final class DrinkTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
@@ -17,12 +22,12 @@ final class DrinkTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleView: UIView!
 
     // MARK: - Properties
-    var viewModel: DrinkTableCellViewModel? {
+    var viewModel: DrinkCellViewModel? {
         didSet {
             updateView()
         }
     }
-    var indexPath: IndexPath?
+    weak var delegate: DrinkTableViewCellDelegate?
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -33,7 +38,6 @@ final class DrinkTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        avatarImageView.image = nil
     }
 
     // MARK: - Function
@@ -41,7 +45,7 @@ final class DrinkTableViewCell: UITableViewCell {
         guard let viewModel = viewModel else {
             return
         }
-        nameLabel.text = viewModel.name
+        nameLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
         avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
     }
@@ -49,7 +53,9 @@ final class DrinkTableViewCell: UITableViewCell {
     // MARK: - IBAction
     @IBAction private func favoriteButtonTouchUpInSide(_ sender: Any) {
         guard let viewModel = viewModel else { return }
-        favoriteButton.isSelected = !viewModel.isFavorite
-        viewModel.isFavorite = !viewModel.isFavorite
+        if let delegate = delegate {
+            delegate.handleFavoriteTableView(cell: self, idDrink: viewModel.idDrink, isFavorite: viewModel.isFavorite)
+        }
+        updateView()
     }
 }

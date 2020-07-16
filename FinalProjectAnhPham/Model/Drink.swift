@@ -16,11 +16,11 @@ final class Drink {
     var imageURL: String
     var idDrink: String
     var instruction: String
-    var ingredient: String
-    var measure: String
     var category: String
     var glass: String
     var alcoholic: String
+    var ingredients: [String] = []
+    var measures: [String] = []
     
     // MARK: - Init
     init(json: JSON, isFavorite: Bool = false) {
@@ -64,29 +64,19 @@ final class Drink {
         } else {
             self.instruction = ""
         }
-        var strIngredient: String = ""
         for index in 1...15 {
             if let ingredientJS = json["strIngredient\(index)"] as? String {
                 if ingredientJS != "" {
-                    strIngredient += ingredientJS + "\n"
+                    self.ingredients.append(ingredientJS)
                 }
             }
         }
-        if strIngredient == "" {
-            strIngredient = "Empty data"
-        }
-        self.ingredient = strIngredient
-        var strMeasure: String = ""
         for index in 1...15 {
             if let measureJS = json["strMeasure\(index)"] as? String {
                 if measureJS != "" {
-                    strMeasure += measureJS + "\n"
+                    self.measures.append(measureJS)
                 }
             }
         }
-        if strMeasure == "" {
-            strMeasure = "Empty data"
-        }
-        self.measure = strMeasure
     }
 }

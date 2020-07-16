@@ -58,11 +58,9 @@ final class DetailDrinkViewController: BaseViewController {
     
     private func configTableView() {
         let instructionTableViewCell = UINib(nibName: "InstructionTableViewCell", bundle: .main)
-        let ingredientTableViewCell = UINib(nibName: "IngredientTableViewCell", bundle: .main)
-        let measureTableViewCell = UINib(nibName: "MeasureTableViewCell", bundle: .main)
+        let informationTableViewCell = UINib(nibName: "InformationTableViewCell", bundle: .main)
         sectionTypeTableView.register(instructionTableViewCell, forCellReuseIdentifier: "InstructionTableViewCell")
-        sectionTypeTableView.register(ingredientTableViewCell, forCellReuseIdentifier: "IngredientTableViewCell")
-        sectionTypeTableView.register(measureTableViewCell, forCellReuseIdentifier: "MeasureTableViewCell")
+        sectionTypeTableView.register(informationTableViewCell, forCellReuseIdentifier: "InformationTableViewCell")
         sectionTypeTableView.dataSource = self
         sectionTypeTableView.sectionHeaderHeight = 40
     }
@@ -126,26 +124,18 @@ extension DetailDrinkViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InstructionTableViewCell", for: indexPath) as? InstructionTableViewCell,
-                let value = viewModel?.drink?.instruction else {
+        switch viewModel?.sections[indexPath.section] {
+        case .instruction:
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InstructionTableViewCell", for: indexPath) as? InstructionTableViewCell else {
                 return UITableViewCell()
             }
-            cell.viewModel = DetailCellViewModel(label: value)
-            return cell
-        case 1:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath) as? IngredientTableViewCell,
-                let value = viewModel?.drink?.ingredient else {
-                return UITableViewCell()
-            }
-            cell.viewModel = DetailCellViewModel(label: value)
+            cell.viewModel = viewModel?.viewModelCellForRowAt(index: indexPath.row)
             return cell
         default:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "MeasureTableViewCell", for: indexPath) as? MeasureTableViewCell, let value = viewModel?.drink?.measure else {
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InformationTableViewCell", for: indexPath) as? InformationTableViewCell else {
                 return UITableViewCell()
             }
-            cell.viewModel = DetailCellViewModel(label: value)
+            cell.viewModel = viewModel?.viewModelCellForRowAt2(index: indexPath.row)
             return cell
         }
     }

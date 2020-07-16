@@ -1,26 +1,22 @@
 //
-//  DetailDrinkTableViewCell.swift
+//  InstructionTableViewCell.swift
 //  FinalProjectAnhPham
 //
-//  Created by PCI0012 on 7/8/20.
+//  Created by PCI0012 on 7/16/20.
 //  Copyright © 2020 Asian Tech Co., Ltd. All rights reserved.
 //
 
 import UIKit
 
-final class InstructionTableViewCell: UITableViewCell {
+class InstructionTableViewCell: UITableViewCell {
 
-    // MARK: - IBOutlet
     @IBOutlet weak var instructionLabel: UILabel!
     
-    // MARK: - Properties
-    var viewModel: DetailCellViewModel? {
+    var viewModel: InstructionViewModel? {
         didSet {
             updateView()
         }
     }
-    
-    // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -32,9 +28,9 @@ final class InstructionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        instructionLabel.text = viewModel.label
+        instructionLabel.text = viewModel.instruction
     }
+    
 }

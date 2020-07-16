@@ -8,8 +8,9 @@
 
 import UIKit
 
+// MARK: - Protocol
 protocol SideMenuViewControllerDelegate: class {
-    func sideMenu(_ view: SideMenuViewController, withPerform item: MenuItem)
+    func sideMenu(_ view: SideMenuViewController, with item: MenuItem)
 }
 
 final class SideMenuViewController: UIViewController {
@@ -33,6 +34,7 @@ final class SideMenuViewController: UIViewController {
         sideMenuTableView.register(sideMenuTableViewCell, forCellReuseIdentifier: "SideMenuCell")
         sideMenuTableView.dataSource = self
         sideMenuTableView.delegate = self
+        sideMenuTableView.rowHeight = 60
     }
 }
 
@@ -53,7 +55,7 @@ extension SideMenuViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = viewModel.getMenuItem(at: indexPath.row) else { return }
         if let delegate = delegate {
-            delegate.sideMenu(self, withPerform: item)
+            delegate.sideMenu(self, with: item)
         }
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import RealmSwift
 
 final class HomeViewModel {
 
@@ -15,29 +15,87 @@ final class HomeViewModel {
     var drinks: [Drink] = []
     var tagGroups: [TagGroup] = []
     var status: MenuItem = .category
+    var realmDrinks: [Drink] = []
+    var isFavorite: Bool = false
 
     // MARK: - Function
+    
+    func fetchRealmData() {
+        do {
+            // Realm
+            let realm = try Realm()
+            // Create results
+            let results = realm.objects(Drink.self)
+            // Convert to array
+            realmDrinks = Array(results)
+            
+        } catch {
+            print(error)
+        }
+    }
+    func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
+        do {
+            let realm = try Realm()
+            let drink = Drink()
+            drink.idDrink = idDrink
+            drink.nameTitle = nameTitle
+            drink.imageURL = imageUrl
+            try realm.write {
+                realm.add(drink, update: .all)
+                editFavorite(favorite: true, idDrink: idDrink)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteItemFavorite(idDrink: String) {
+        do {
+            let realm = try Realm()
+            let result = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            try realm.write {
+                realm.delete(result)
+                editFavorite(favorite: false, idDrink: idDrink)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func editFavorite(favorite: Bool, idDrink: String) {
+        for item in drinks {
+//            where item.idDrink == id
+            if item.idDrink == idDrink {
+                item.isFavorite = favorite
+            }
+//            item.isFavorite = favorite
+        }
+    }
+    
     func getCategories(category: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = API.Home.categories + category + "list"
-        Networking.shared().getCategory(urlString: urlString) { (apiResult: APIResult<TagGroupResult>) in
+        Networking.shared().getCategory(category: category) { [weak self] (apiResult: APIResult<TagGroupResult>) in
+            guard let this = self else { return }
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
             case .success(let tagGroupResult):
-                self.tagGroups = tagGroupResult.tagGroups
+                this.tagGroups = tagGroupResult.tagGroups
                 completion(true, "Success")
             }
         }
     }
 
     func getDrinkForCategories(firstChar: String, keyword: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = API.Home.filterCategories + firstChar + keyword
-        Networking.shared().getDrinkForCategory(urlString: urlString) { (apiResult: APIResult<DrinkResult>) in
+        Networking.shared().getDrinkForCategory(firstChar: firstChar, keyword: keyword) { [weak self] (apiResult: APIResult<DrinkResult>) in
+            guard let this = self else { return }
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
             case .success(let drinkResult):
-                self.drinks = drinkResult.drinks
+                this.drinks = drinkResult.drinks
+                for i in 0..<this.drinks.count {
+                    this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.idDrink == this.drinks[i].idDrink })
+                }
                 completion(true, "Success")
             }
         }
@@ -47,9 +105,15 @@ final class HomeViewModel {
         return drinks.count
     }
 
-    func viewModelCellForRowAt(indexPath: Int) -> DrinkTableCellViewModel {
+    func viewModelCellForRowAt(indexPath: Int) -> DrinkCellViewModel {
         let item = drinks[indexPath]
-        let viewModel = DrinkTableCellViewModel(drink: item)
+        let viewModel = DrinkCellViewModel(drink: item)
+        return viewModel
+    }
+    
+    func viewModelDidSelectRowAt(index: Int) -> DetailDrinkViewModel {
+        let item = drinks[index]
+        let viewModel = DetailDrinkViewModel(drink: item)
         return viewModel
     }
 
@@ -67,9 +131,15 @@ final class HomeViewModel {
         return drinks.count
     }
 
-    func viewModelCellForItems(indexPath: Int) -> DrinkCollectionCellViewModel {
+    func viewModelCellForItems(indexPath: Int) -> DrinkCellViewModel {
         let item = drinks[indexPath]
-        let viewModel = DrinkCollectionCellViewModel(drink: item)
+        let viewModel = DrinkCellViewModel(drink: item)
+        return viewModel
+    }
+    
+    func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
+        let item = drinks[index]
+        let viewModel = DetailDrinkViewModel(drink: item)
         return viewModel
     }
 }

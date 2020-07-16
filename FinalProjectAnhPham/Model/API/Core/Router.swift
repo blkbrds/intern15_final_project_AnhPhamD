@@ -17,6 +17,6 @@ final class API {
     struct Home {
         static var categories = baseURL + "list.php?"
         static var filterCategories = baseURL + "filter.php?"
-        static var detailCategories = baseURL + "lookup.php?"
+        static var detailCategories = baseURL + "lookup.php?i="
     }
 }

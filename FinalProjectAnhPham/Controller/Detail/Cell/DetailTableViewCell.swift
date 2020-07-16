@@ -1,21 +1,20 @@
 //
-//  TagCollectionViewCell.swift
+//  DetailDrinkTableViewCell.swift
 //  FinalProjectAnhPham
 //
-//  Created by PCI0012 on 6/30/20.
+//  Created by PCI0012 on 7/8/20.
 //  Copyright © 2020 Asian Tech Co., Ltd. All rights reserved.
 //
 
 import UIKit
 
-final class TagCollectionViewCell: UICollectionViewCell {
+final class DetailTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var tagNameLabel: UILabel!
-    @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var instructionLabel: UILabel!
 
     // MARK: - Properties
-    var viewModel: TagCellViewModel? {
+    var viewModel: DetailCellViewModel? {
         didSet {
             updateView()
         }
@@ -24,11 +23,12 @@ final class TagCollectionViewCell: UICollectionViewCell {
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
 
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        tagNameLabel.text = viewModel.tagName
+        instructionLabel.text = viewModel.nameLabel
     }
 }

@@ -64,9 +64,9 @@ class FavoriteViewModel {
         return drinks.count
     }
     
-    func viewModelCellForItemAt(index: Int) -> DrinkCellViewModel {
+    func viewModelCellForItemAt(index: Int) -> FavoriteCellViewModel {
         let item = drinks[index]
-        let viewModel = DrinkCellViewModel(drink: item)
+        let viewModel = FavoriteCellViewModel(drink: item)
         return viewModel
     }
     

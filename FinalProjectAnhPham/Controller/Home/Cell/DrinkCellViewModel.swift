@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 final class DrinkCellViewModel {
 
@@ -15,29 +14,28 @@ final class DrinkCellViewModel {
     var idDrink: String
     var nameTitle: String
     var imageURL: String
-    var isFavorite: Bool {
-        return checkFavorite(idDrink: idDrink)
-    }
+    var isFavorite: Bool
 
     // MARK: - Init
     init(drink: Drink) {
         self.idDrink = drink.idDrink
         self.nameTitle = drink.nameTitle
         self.imageURL = drink.imageURL
+        self.isFavorite = drink.isFavorite
     }
     
-    func checkFavorite(idDrink: String) -> Bool {
-        do {
-            let realm = try Realm()
-            let results = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
-            if results.isEmpty {
-               return false
-            } else {
-               return true
-            }
-        } catch {
-            print(error)
-        }
-        return false
-    }
+//    func checkFavorite(idDrink: String) -> Bool {
+//        do {
+//            let realm = try Realm()
+//            let results = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+//            if results.isEmpty {
+//               return false
+//            } else {
+//               return true
+//            }
+//        } catch {
+//            print(error)
+//        }
+//        return false
+//    }
 }

@@ -19,6 +19,20 @@ final class HomeViewModel {
     var isFavorite: Bool = false
 
     // MARK: - Function
+    
+    func fetchRealmData() {
+        do {
+            // Realm
+            let realm = try Realm()
+            // Create results
+            let results = realm.objects(Drink.self)
+            // Convert to array
+            realmDrinks = Array(results)
+            
+        } catch {
+            print(error)
+        }
+    }
     func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()
@@ -27,7 +41,8 @@ final class HomeViewModel {
             drink.nameTitle = nameTitle
             drink.imageURL = imageUrl
             try realm.write {
-                realm.add(drink)
+                realm.add(drink, update: .all)
+                editFavorite(favorite: true, idDrink: idDrink)
             }
         } catch {
             print(error)
@@ -40,9 +55,20 @@ final class HomeViewModel {
             let result = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
             try realm.write {
                 realm.delete(result)
+                editFavorite(favorite: false, idDrink: idDrink)
             }
         } catch {
             print(error)
+        }
+    }
+    
+    func editFavorite(favorite: Bool, idDrink: String) {
+        for item in drinks {
+//            where item.idDrink == id
+            if item.idDrink == idDrink {
+                item.isFavorite = favorite
+            }
+//            item.isFavorite = favorite
         }
     }
     
@@ -68,7 +94,7 @@ final class HomeViewModel {
             case .success(let drinkResult):
                 this.drinks = drinkResult.drinks
                 for i in 0..<this.drinks.count {
-                    this.drinks[i].isFavorite = this.realmDrinks.contains(this.drinks[i])
+                    this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.idDrink == this.drinks[i].idDrink })
                 }
                 completion(true, "Success")
             }

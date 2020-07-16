@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FavoriteViewControllerDelegate: class {
+    func handleFavoriteCollection(controller: FavoriteViewController, idDrink: String)
+}
+
 final class FavoriteViewController: BaseViewController {
 
     // MARK: - IBOutlet
@@ -15,7 +19,8 @@ final class FavoriteViewController: BaseViewController {
     
     // MARK: - Properties
     var viewModel = FavoriteViewModel()
-    
+    weak var delegate: FavoriteViewControllerDelegate?
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,8 +65,8 @@ final class FavoriteViewController: BaseViewController {
     }
     
     private func configCollectionView() {
-        let collectionView = UINib(nibName: "DrinkCollectionViewCell", bundle: .main)
-        listFavoriteCollectionView.register(collectionView, forCellWithReuseIdentifier: "DrinkCollectionViewCell")
+        let collectionView = UINib(nibName: "FavoriteCell", bundle: .main)
+        listFavoriteCollectionView.register(collectionView, forCellWithReuseIdentifier: "FavoriteCell")
         listFavoriteCollectionView.dataSource = self
         listFavoriteCollectionView.delegate = self
     }
@@ -101,7 +106,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = listFavoriteCollectionView.dequeueReusableCell(withReuseIdentifier: "DrinkCollectionViewCell", for: indexPath) as? DrinkCollectionViewCell else {
+        guard let cell = listFavoriteCollectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteCell", for: indexPath) as? FavoriteCell else {
             return UICollectionViewCell()
         }
         cell.delegate = self
@@ -128,14 +133,11 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - DrinkCollectionViewCellDelegate
-extension FavoriteViewController: DrinkCollectionViewCellDelegate {
-    func handleFavoriteCollection(cell: DrinkCollectionViewCell, idDrink: String, isFavorite: Bool) {
-        viewModel.isFavorite = isFavorite
-        if viewModel.isFavorite {
-            deleteItemFavorite(idDrink: idDrink)
-            viewModel.isFavorite = false
-        } else {
-            viewModel.isFavorite = true
+extension FavoriteViewController: FavoriteCellDelegate {
+    func handleFavorite(cell: FavoriteCell, idDrink: String, isFavorite: Bool) {
+        if let delegate = delegate {
+            delegate.handleFavoriteCollection(controller: self, idDrink: idDrink)
         }
+        deleteItemFavorite(idDrink: idDrink)
     }
 }

@@ -69,6 +69,7 @@ final class HomeViewController: BaseViewController {
     }
     
     private func getData() {
+        viewModel.fetchRealmData()
         loadAPICategories(category: "c=")
         loadAPIDrinkForCategories(firstChar: "c=", keyword: "Ordinary%20Drink")
     }
@@ -243,6 +244,7 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             let favoriteViewController = FavoriteViewController()
             favoriteViewController.viewModel = FavoriteViewModel(status: viewModel.status)
             favoriteViewController.title = item.rawValue
+            favoriteViewController.delegate = self
             navigationController?.pushViewController(favoriteViewController, animated: true)
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         default:
@@ -257,29 +259,35 @@ extension HomeViewController: SideMenuViewControllerDelegate {
 // MARK: - DrinkTableViewCellDelegate
 extension HomeViewController: DrinkTableViewCellDelegate {
     func handleFavoriteTableView(cell: DrinkTableViewCell, idDrink: String, isFavorite: Bool) {
-        viewModel.isFavorite = isFavorite
-        if viewModel.isFavorite {
+        if isFavorite {
             viewModel.deleteItemFavorite(idDrink: idDrink)
-            viewModel.isFavorite = false
         } else {
             viewModel.addFavorite(idDrink: cell.viewModel?.idDrink ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
-            viewModel.isFavorite = true
-            listDrinkTableView.reloadData()
         }
+        listDrinkTableView.reloadData()
+        listDrinkCollectionView.reloadData()
     }
 }
 
 // MARK: - DrinkCollectionViewCellDelegate
 extension HomeViewController: DrinkCollectionViewCellDelegate {
     func handleFavoriteCollection(cell: DrinkCollectionViewCell, idDrink: String, isFavorite: Bool) {
-        viewModel.isFavorite = isFavorite
-        if viewModel.isFavorite {
+        if isFavorite {
             viewModel.deleteItemFavorite(idDrink: idDrink)
-            viewModel.isFavorite = false
         } else {
             viewModel.addFavorite(idDrink: cell.viewModel?.idDrink ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
-            viewModel.isFavorite = true
-            listDrinkCollectionView.reloadData()
         }
+        guard let indexPath = listDrinkCollectionView.indexPath(for: cell) else { return }
+        listDrinkCollectionView.reloadItems(at: [indexPath])
+        listDrinkTableView.reloadData()
+    }
+}
+
+// MARK: - FavoriteViewControllerDelegate
+extension HomeViewController: FavoriteViewControllerDelegate {
+    func handleFavoriteCollection(controller: FavoriteViewController, idDrink: String) {
+        viewModel.deleteItemFavorite(idDrink: idDrink)
+        listDrinkTableView.reloadData()
+        listDrinkCollectionView.reloadData()
     }
 }

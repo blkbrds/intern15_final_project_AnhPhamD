@@ -25,7 +25,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
-    private var status = Status.tableView
+    private var statusList = Status.tableView
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -35,6 +35,13 @@ final class HomeViewController: BaseViewController {
         configTableView()
         configCollectionView()
         getData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        listDrinkTableView.reloadData()
+        listDrinkCollectionView.reloadData()
     }
     
     // MARK: - Function
@@ -102,16 +109,16 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc private func selectionTouchUpInSide() {
-        if status == .tableView {
+        if statusList == .tableView {
             listDrinkTableView.isHidden = true
             listDrinkCollectionView.isHidden = false
             rightBarButton?.image = UIImage(systemName: Identifier.rightTableBarButton)
-            status = .collectionView
+            statusList = .collectionView
         } else {
             listDrinkTableView.isHidden = false
             listDrinkCollectionView.isHidden = true
             rightBarButton?.image = UIImage(systemName: Identifier.rightCollectionBarButton)
-            status = .tableView
+            statusList = .tableView
         }
     }
 }
@@ -249,6 +256,7 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         default:
             let searchViewController = SearchViewController()
+            searchViewController.viewModel = SearchViewModel(status: viewModel.status)
             searchViewController.title = item.rawValue
             navigationController?.pushViewController(searchViewController, animated: true)
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()

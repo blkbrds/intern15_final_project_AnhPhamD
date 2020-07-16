@@ -28,20 +28,20 @@ enum APIResult<T> {
 typealias APICompletion<T> = (APIResult<T>) -> Void
 
 final class Networking {
-
+    
     // MARK: - Singleton
     private static var sharedNetworking: Networking = {
         let networking = Networking()
         return networking
     }()
-
+    
     class func shared() -> Networking {
         return sharedNetworking
     }
-
+    
     // MARK: - Init
     private init() {}
-
+    
     // MARK: - Function
     func getCategory(category: String, completion: @escaping APICompletion<TagGroupResult>) {
         let urlString = API.Home.categories + category + "list"
@@ -60,9 +60,7 @@ final class Networking {
                     if let data = data {
                         var tagGroups: [TagGroup] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else {
-                            return
-                        }
+                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
                         drinksJS.forEach { drink in
                             let item = TagGroup(json: drink)
                             tagGroups.append(item)
@@ -76,7 +74,7 @@ final class Networking {
         }
         task.resume()
     }
-
+    
     func getDrinkForCategory(firstChar: String, keyword: String, completion: @escaping APICompletion<DrinkResult>) {
         let urlString = API.Home.filterCategories + firstChar + keyword
         guard let url = URL(string: urlString) else {
@@ -94,9 +92,7 @@ final class Networking {
                     if let data = data {
                         var drinksResult: [Drink] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else {
-                            return
-                        }
+                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
                         drinksJS.forEach { drink in
                             let item = Drink(json: drink)
                             drinksResult.append(item)
@@ -110,7 +106,7 @@ final class Networking {
         }
         task.resume()
     }
-
+    
     func getDrinkImageForCategories(urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil)
@@ -135,7 +131,7 @@ final class Networking {
         }
         task.resume()
     }
-
+    
     func getDetailDrink(id: String, completion: @escaping APICompletion<DrinkResult>) {
         let urlString = API.Home.detailCategories + id
         guard let url = URL(string: urlString) else {
@@ -153,9 +149,39 @@ final class Networking {
                     if let data = data {
                         var drinks: [Drink] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else {
-                            return
+                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
+                        drinksJS.forEach { drink in
+                            let item = Drink(json: drink)
+                            drinks.append(item)
                         }
+                        completion(.success(DrinkResult(drinks: drinks)))
+                    } else {
+                        completion(.failure("Data format is error"))
+                    }
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func getResultSearchByName(keywork: String, completion: @escaping APICompletion<DrinkResult>) {
+        let urlString = API.Home.searchCategories + keywork
+        guard let url = URL(string: urlString) else {
+            completion(.failure("URL error"))
+            return
+        }
+        let config = URLSessionConfiguration.ephemeral
+        config.waitsForConnectivity = true
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: url) { (data, _, error) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    completion(.failure(error.localizedDescription))
+                } else {
+                    if let data = data {
+                        var drinks: [Drink] = []
+                        let json = data.toJSON()
+                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
                         drinksJS.forEach { drink in
                             let item = Drink(json: drink)
                             drinks.append(item)

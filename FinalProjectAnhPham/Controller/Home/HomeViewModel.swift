@@ -28,11 +28,11 @@ final class HomeViewModel {
             let results = realm.objects(Drink.self)
             // Convert to array
             realmDrinks = Array(results)
-            
         } catch {
             print(error)
         }
     }
+    
     func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()
@@ -63,12 +63,8 @@ final class HomeViewModel {
     }
     
     func editFavorite(favorite: Bool, idDrink: String) {
-        for item in drinks {
-//            where item.idDrink == id
-            if item.idDrink == idDrink {
-                item.isFavorite = favorite
-            }
-//            item.isFavorite = favorite
+        for item in drinks where item.idDrink == idDrink {
+            item.isFavorite = favorite
         }
     }
     

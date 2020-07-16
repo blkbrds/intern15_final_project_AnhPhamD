@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Protocol
 protocol FavoriteViewControllerDelegate: class {
     func handleFavoriteCollection(controller: FavoriteViewController, idDrink: String)
 }
@@ -15,8 +16,8 @@ protocol FavoriteViewControllerDelegate: class {
 final class FavoriteViewController: BaseViewController {
 
     // MARK: - IBOutlet
-    @IBOutlet weak var listFavoriteCollectionView: UICollectionView!
-    
+    @IBOutlet private weak var listFavoriteCollectionView: UICollectionView!
+
     // MARK: - Properties
     var viewModel = FavoriteViewModel()
     weak var delegate: FavoriteViewControllerDelegate?
@@ -41,7 +42,7 @@ final class FavoriteViewController: BaseViewController {
             }
         }
     }
-    
+
     private func deleteItemFavorite(idDrink: String) {
         viewModel.deleteItemFavorite(idDrink: idDrink) { [weak self] (done) in
             guard let this = self else { return }
@@ -52,7 +53,7 @@ final class FavoriteViewController: BaseViewController {
             }
         }
     }
-    
+
     private func deleteAllItem() {
         viewModel.deleteAllItem { [weak self] (done) in
             guard let this = self else { return }
@@ -63,14 +64,14 @@ final class FavoriteViewController: BaseViewController {
             }
         }
     }
-    
+
     private func configCollectionView() {
         let collectionView = UINib(nibName: "FavoriteCell", bundle: .main)
         listFavoriteCollectionView.register(collectionView, forCellWithReuseIdentifier: "FavoriteCell")
         listFavoriteCollectionView.dataSource = self
         listFavoriteCollectionView.delegate = self
     }
-    
+
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(named: "ic-back"), style: .plain, target: self, action: #selector(backTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
@@ -104,7 +105,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.numberOfItemsInSection()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = listFavoriteCollectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteCell", for: indexPath) as? FavoriteCell else {
             return UICollectionViewCell()
@@ -113,7 +114,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
         cell.viewModel = viewModel.viewModelCellForItemAt(index: indexPath.row)
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailDrinkViewController()
         vc.viewModel = viewModel.viewModelDidSelectItemAt(index: indexPath.row)
@@ -126,7 +127,7 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (UIScreen.main.bounds.width - CGFloat(30)) / 2, height: 200)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }

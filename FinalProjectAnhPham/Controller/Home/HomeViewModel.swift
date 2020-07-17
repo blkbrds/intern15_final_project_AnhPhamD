@@ -63,12 +63,8 @@ final class HomeViewModel {
     }
     
     func editFavorite(favorite: Bool, drinkID: String) {
-        for item in drinks {
-//            where item.drinkID == id
-            if item.drinkID == drinkID {
-                item.isFavorite = favorite
-            }
-//            item.isFavorite = favorite
+        for item in drinks where item.drinkID == drinkID {
+            item.isFavorite = favorite
         }
     }
     

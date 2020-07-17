@@ -12,7 +12,7 @@ import LGSideMenuController
 final class HomeViewController: BaseViewController {
     
     // MARK: - Enum
-    enum Status {
+    enum TypeDisplay {
         case tableView
         case collectionView
     }
@@ -25,7 +25,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
-    private var status = Status.tableView
+    private var status = TypeDisplay.tableView
     
     // MARK: - Life Cycle
     override func viewDidLoad() {

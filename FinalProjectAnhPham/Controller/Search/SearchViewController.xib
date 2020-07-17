@@ -9,6 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController" customModule="FinalProjectAnhPham" customModuleProvider="target">
             <connections>
+                <outlet property="drinkResultsTableView" destination="vLh-Tf-Bro" id="AOx-dX-coz"/>
+                <outlet property="searchBar" destination="HX4-d6-3Zt" id="RFT-E5-25g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,18 +19,31 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7V-eI-YQF">
-                    <rect key="frame" x="148" y="340" width="20" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="trash" catalog="system"/>
-                </button>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="HX4-d6-3Zt">
+                    <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <scopeButtonTitles>
+                        <string>Title</string>
+                        <string>Title</string>
+                    </scopeButtonTitles>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vLh-Tf-Bro">
+                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vLh-Tf-Bro" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="15W-oq-kPm"/>
+                <constraint firstItem="HX4-d6-3Zt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="7NP-gb-6Oj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vLh-Tf-Bro" secondAttribute="bottom" id="7pZ-w4-ZdO"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vLh-Tf-Bro" secondAttribute="trailing" id="DW2-H1-9NP"/>
+                <constraint firstItem="vLh-Tf-Bro" firstAttribute="top" secondItem="HX4-d6-3Zt" secondAttribute="bottom" id="TWT-eP-rYM"/>
+                <constraint firstItem="HX4-d6-3Zt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hk0-RZ-wNF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="HX4-d6-3Zt" secondAttribute="trailing" id="ka4-c9-RuS"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="133" y="119"/>
+            <point key="canvasLocation" x="131.8840579710145" y="118.52678571428571"/>
         </view>
     </objects>
-    <resources>
-        <image name="trash" catalog="system" width="60" height="64"/>
-    </resources>
 </document>

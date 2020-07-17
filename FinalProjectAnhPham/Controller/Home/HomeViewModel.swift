@@ -28,11 +28,11 @@ final class HomeViewModel {
             let results = realm.objects(Drink.self)
             // Convert to array
             realmDrinks = Array(results)
-            
         } catch {
             print(error)
         }
     }
+    
     func addFavorite(drinkID: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()

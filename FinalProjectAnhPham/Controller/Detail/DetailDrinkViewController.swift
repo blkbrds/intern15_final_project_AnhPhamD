@@ -98,7 +98,7 @@ final class DetailDrinkViewController: BaseViewController {
     }
     
     @objc func backTouchUpInSide() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func addFavoriteTouchUpInSide() {

@@ -1,26 +1,26 @@
 //
-//  DrinkCollectionCellViewModel.swift
+//  SearchCellViewModel.swift
 //  FinalProjectAnhPham
 //
-//  Created by PCI0012 on 6/30/20.
+//  Created by PCI0012 on 7/16/20.
 //  Copyright © 2020 Asian Tech Co., Ltd. All rights reserved.
 //
 
 import Foundation
 
-final class DrinkCellViewModel {
+final class SearchCellViewModel {
 
     // MARK: - Properties
-    var drinkID: String
     var nameTitle: String
-    var imageURL: String
+    var drinkID: String
     var isFavorite: Bool
+    var imageURL: String
 
     // MARK: - Init
     init(drink: Drink) {
-        self.drinkID = drink.drinkID
         self.nameTitle = drink.nameTitle
-        self.imageURL = drink.imageURL
+        self.drinkID = drink.drinkID
         self.isFavorite = drink.isFavorite
+        self.imageURL = drink.imageURL
     }
 }

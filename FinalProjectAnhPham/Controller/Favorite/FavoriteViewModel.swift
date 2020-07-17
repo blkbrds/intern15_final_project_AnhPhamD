@@ -9,16 +9,19 @@
 import Foundation
 import RealmSwift
 
-class FavoriteViewModel {
-    
+final class FavoriteViewModel {
+
+    // MARK: - Properties
     var status: MenuItem
     var drinks: [Drink] = []
     var isFavorite: Bool = false
-    
+
+    // MARK: - Init
     init(status: MenuItem = .category) {
         self.status = status
     }
 
+    // MARK: - Function
     func fetchRealmData(completion: (Bool) -> Void) {
         do {
             // Realm
@@ -46,7 +49,7 @@ class FavoriteViewModel {
             completion(false)
         }
     }
-    
+
     func deleteAllItem(completion: @escaping (Bool) -> Void) {
         do {
             let realm = try Realm()
@@ -59,17 +62,17 @@ class FavoriteViewModel {
             completion(false)
         }
     }
-    
+
     func numberOfItemsInSection() -> Int {
         return drinks.count
     }
-    
+
     func viewModelCellForItemAt(index: Int) -> FavoriteCellViewModel {
         let item = drinks[index]
         let viewModel = FavoriteCellViewModel(drink: item)
         return viewModel
     }
-    
+
     func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)

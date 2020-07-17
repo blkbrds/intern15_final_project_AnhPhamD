@@ -18,5 +18,6 @@ final class API {
         static var categories = baseURL + "list.php?"
         static var filterCategories = baseURL + "filter.php?"
         static var detailCategories = baseURL + "lookup.php?i="
+        static var searchCategories = baseURL + "search.php?s="
     }
 }

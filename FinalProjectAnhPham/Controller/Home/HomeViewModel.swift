@@ -53,7 +53,7 @@ final class HomeViewModel {
     
     func getIdOfRow(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
-        let viewModel = DetailDrinkViewModel(idDrink: item.idDrink)
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 
@@ -79,7 +79,7 @@ final class HomeViewModel {
     
     func getIdOfItem(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
-        let viewModel = DetailDrinkViewModel(idDrink: item.idDrink)
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 }

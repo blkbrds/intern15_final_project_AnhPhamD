@@ -14,7 +14,7 @@ final class Drink {
     var nameTitle: String
     var isFavorite: Bool
     var imageURL: String
-    var idDrink: String
+    var drinkID: String
     var instruction: String
     var category: String
     var glass: String
@@ -35,10 +35,10 @@ final class Drink {
         } else {
             self.imageURL = ""
         }
-        if let idDrinkJS = json["idDrink"] as? String {
-            self.idDrink = idDrinkJS
+        if let drinkIDJS = json["idDrink"] as? String {
+            self.drinkID = drinkIDJS
         } else {
-            self.idDrink = ""
+            self.drinkID = ""
         }
         if let categoryJS = json["strCategory"] as? String {
             self.category = categoryJS

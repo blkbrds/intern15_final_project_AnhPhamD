@@ -7,19 +7,21 @@
 //
 
 import Foundation
-import UIKit
 
-final class DrinkCollectionCellViewModel {
+final class DrinkCellViewModel {
 
     // MARK: - Properties
-    var name: String
+    var drinkID: String
+    var nameTitle: String
     var imageURL: String
     var isFavorite: Bool
 
     // MARK: - Init
     init(drink: Drink) {
-        self.name = drink.nameTitle
+        self.drinkID = drink.drinkID
+        self.nameTitle = drink.nameTitle
         self.imageURL = drink.imageURL
         self.isFavorite = drink.isFavorite
     }
+
 }

@@ -1,5 +1,5 @@
 //
-//  HomeTableViewCell.swift
+//  DrinkCollectionViewCell.swift
 //  FinalProjectAnhPham
 //
 //  Created by PCI0012 on 6/30/20.
@@ -8,21 +8,25 @@
 
 import UIKit
 
-final class DrinkTableViewCell: UITableViewCell {
+protocol DrinkCollectionViewCellDelegate: class {
+    func handleFavoriteCollection(cell: DrinkCollectionViewCell, drinkID: String, isFavorite: Bool)
+}
+
+final class DrinkCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var nameDrinkLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var favoriteButton: UIButton!
     @IBOutlet private weak var titleView: UIView!
 
     // MARK: - Properties
-    var viewModel: DrinkTableCellViewModel? {
+    var viewModel: DrinkCellViewModel? {
         didSet {
             updateView()
         }
     }
-    var indexPath: IndexPath?
+    weak var delegate: DrinkCollectionViewCellDelegate?
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -31,17 +35,10 @@ final class DrinkTableViewCell: UITableViewCell {
         titleView.layer.cornerRadius = 15
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        avatarImageView.image = nil
-    }
-
     // MARK: - Function
     private func updateView() {
-        guard let viewModel = viewModel else {
-            return
-        }
-        nameLabel.text = viewModel.name
+        guard let viewModel = viewModel else { return }
+        nameDrinkLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
         avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
     }
@@ -49,7 +46,9 @@ final class DrinkTableViewCell: UITableViewCell {
     // MARK: - IBAction
     @IBAction private func favoriteButtonTouchUpInSide(_ sender: Any) {
         guard let viewModel = viewModel else { return }
-        favoriteButton.isSelected = !viewModel.isFavorite
-        viewModel.isFavorite = !viewModel.isFavorite
+        if let delegate = delegate {
+            delegate.handleFavoriteCollection(cell: self, drinkID: viewModel.drinkID, isFavorite: viewModel.isFavorite)
+        }
+        updateView()
     }
 }

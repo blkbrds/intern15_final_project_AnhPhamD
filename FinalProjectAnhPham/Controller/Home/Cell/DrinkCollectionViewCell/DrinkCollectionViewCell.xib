@@ -37,40 +37,38 @@
                             <constraint firstItem="PcT-jP-tPy" firstAttribute="top" secondItem="8po-zT-Qgx" secondAttribute="top" constant="5" id="xyg-4b-8gf"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9v-N0-yZ4">
-                        <rect key="frame" x="89" y="6.5" width="28" height="22.5"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPU-U3-cKC">
+                        <rect key="frame" x="89" y="6.5" width="28" height="23.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="28" id="DSQ-sc-NCT"/>
-                            <constraint firstAttribute="height" constant="25" id="SbJ-gp-FXt"/>
+                            <constraint firstAttribute="width" constant="28" id="QX7-Ne-pey"/>
+                            <constraint firstAttribute="height" constant="26" id="epP-Is-1E0"/>
                         </constraints>
-                        <color key="tintColor" red="0.79607843137254897" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.79607843140000001" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" backgroundImage="heart" catalog="system"/>
-                        <state key="selected" backgroundImage="heart.fill" catalog="system">
-                            <color key="titleColor" red="0.0" green="0.67843137254901964" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
+                        <state key="selected" backgroundImage="heart.fill" catalog="system"/>
                         <connections>
-                            <action selector="favoriteButtonTouchUpInSide:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Kjm-P5-xaZ"/>
+                            <action selector="favoriteButtonTouchUpInSide:" destination="gTV-IL-0wX" eventType="touchUpInside" id="f3O-sx-LLe"/>
                         </connections>
                     </button>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="k9v-N0-yZ4" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="5sc-tX-VX0"/>
                 <constraint firstAttribute="bottom" secondItem="HA7-0F-TgR" secondAttribute="bottom" id="GaP-5c-jDl"/>
+                <constraint firstItem="QPU-U3-cKC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Jbz-6d-d8J"/>
                 <constraint firstAttribute="bottom" secondItem="8po-zT-Qgx" secondAttribute="bottom" id="Lav-7B-Ito"/>
                 <constraint firstAttribute="trailing" secondItem="HA7-0F-TgR" secondAttribute="trailing" id="WdD-dw-BDF"/>
                 <constraint firstItem="8po-zT-Qgx" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="YEg-CZ-Af1"/>
                 <constraint firstAttribute="trailing" secondItem="8po-zT-Qgx" secondAttribute="trailing" id="fBu-dg-jVY"/>
                 <constraint firstItem="8po-zT-Qgx" firstAttribute="height" secondItem="HA7-0F-TgR" secondAttribute="height" multiplier="1/3" id="fou-z7-HgH"/>
                 <constraint firstItem="HA7-0F-TgR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ft6-3K-do2"/>
-                <constraint firstAttribute="trailing" secondItem="k9v-N0-yZ4" secondAttribute="trailing" constant="5" id="fva-me-fCg"/>
+                <constraint firstAttribute="trailing" secondItem="QPU-U3-cKC" secondAttribute="trailing" constant="5" id="iCd-Yd-tJB"/>
                 <constraint firstItem="HA7-0F-TgR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="q6e-z7-WGo"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="122" height="135"/>
             <connections>
                 <outlet property="avatarImageView" destination="HA7-0F-TgR" id="DpU-jP-SBu"/>
-                <outlet property="favoriteButton" destination="k9v-N0-yZ4" id="nwR-6V-QMr"/>
+                <outlet property="favoriteButton" destination="QPU-U3-cKC" id="DeF-wM-dDU"/>
                 <outlet property="nameDrinkLabel" destination="PcT-jP-tPy" id="TXs-VV-RyU"/>
                 <outlet property="titleView" destination="8po-zT-Qgx" id="NAt-H5-XyT"/>
             </connections>

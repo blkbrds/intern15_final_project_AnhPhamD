@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class DetailDrinkViewModel {
-
+    
     // MARK: - Properties
+    var status = Favorite.favorite
     var drinkID: String
     var drink: Drink?
     var materials: [String] {
@@ -23,7 +25,7 @@ final class DetailDrinkViewModel {
     init(drinkID: String) {
         self.drinkID = drinkID
     }
-
+    
     // MARK: - Function
     func getDetailDrink(completion: @escaping (Bool, String) -> Void) {
         Networking.shared().getDetailDrink(drinkID: drinkID) { (apiResult: APIResult<DrinkDetail>) in
@@ -34,6 +36,47 @@ final class DetailDrinkViewModel {
                 self.drink = drinkResult.drink
                 completion(true, "Success")
             }
+        }
+    }
+    
+    func checkFavorite(completion: @escaping (Bool) -> Void) {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
+            if results.isEmpty {
+                completion(false)
+            } else {
+                completion(true)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteItemFavorite() {
+        do {
+            let realm = try Realm()
+            let result = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
+            try realm.write {
+                realm.delete(result)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addFavorite(drinkID: String, nameTitle: String, imageUrl: String) {
+        do {
+            let realm = try Realm()
+            let drink = Drink()
+            drink.drinkID = drinkID
+            drink.nameTitle = nameTitle
+            drink.imageURL = imageUrl
+            try realm.write {
+                realm.add(drink)
+            }
+        } catch {
+            print(error)
         }
     }
     
@@ -67,6 +110,7 @@ final class DetailDrinkViewModel {
     }
 }
 
+// MARK: - DetailDrinkViewModel
 extension DetailDrinkViewModel {
     enum SectionType: String {
         case instruction = "Instruction"

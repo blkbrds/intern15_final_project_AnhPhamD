@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Enum
 enum Favorite {
     case favorite
     case unFavorite
@@ -31,7 +32,6 @@ final class DetailDrinkViewController: BaseViewController {
             loadAPIDetailDrink()
         }
     }
-    var status = Favorite.favorite
     var rightBarButton: UIBarButtonItem?
     
     // MARK: - Life Cycle
@@ -81,23 +81,36 @@ final class DetailDrinkViewController: BaseViewController {
     }
     
     private func configNavigation() {
+        viewModel?.checkFavorite(completion: { [weak self] (done) in
+            guard let this = self else { return }
+            if done {
+                this.viewModel?.status = .unFavorite
+                this.rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: this, action: #selector(this.addFavoriteTouchUpInSide))
+                this.navigationItem.rightBarButtonItem = this.rightBarButton
+            } else {
+                this.viewModel?.status = .favorite
+                this.rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: this, action: #selector(this.addFavoriteTouchUpInSide))
+                this.navigationItem.rightBarButtonItem = this.rightBarButton
+            }
+        })
         let leftBarButton = UIBarButtonItem(image: UIImage(named: "ic-back"), style: .plain, target: self, action: #selector(backTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
-        rightBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteTouchUpInSide))
-        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     @objc func backTouchUpInSide() {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func favoriteTouchUpInSide() {
-        if status == .favorite {
+    @objc func addFavoriteTouchUpInSide() {
+        if viewModel?.status == .favorite {
             rightBarButton?.image = UIImage(systemName: "heart.fill")
-            status = .unFavorite
+            viewModel?.status = .unFavorite
+            guard let drink = viewModel?.drink else { return }
+            viewModel?.addFavorite(drinkID: drink.drinkID, nameTitle: drink.nameTitle, imageUrl: drink.imageURL)
         } else {
+            viewModel?.deleteItemFavorite()
             rightBarButton?.image = UIImage(systemName: "heart")
-            status = .favorite
+            viewModel?.status = .favorite
         }
     }
 }
@@ -119,10 +132,6 @@ extension DetailDrinkViewController: UITableViewDataSource {
         return viewModel.numberOfRowsInSection(section: section)
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel?.titleHeaderInSection(section: section)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel?.sections[indexPath.section] {
         case .instruction:
@@ -138,5 +147,9 @@ extension DetailDrinkViewController: UITableViewDataSource {
             cell.viewModel = viewModel?.viewModelCellForRowAt2(index: indexPath.row)
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel?.titleHeaderInSection(section: section)
     }
 }

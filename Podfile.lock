@@ -1,20 +1,30 @@
 PODS:
   - LGSideMenuController (2.1.1)
+  - Realm (4.4.1):
+    - Realm/Headers (= 4.4.1)
+  - Realm/Headers (4.4.1)
+  - RealmSwift (4.4.1):
+    - Realm (= 4.4.1)
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - LGSideMenuController
+  - RealmSwift (~> 4.0)
   - SwiftLint (= 0.39.2)
 
 SPEC REPOS:
   trunk:
     - LGSideMenuController
+    - Realm
+    - RealmSwift
     - SwiftLint
 
 SPEC CHECKSUMS:
   LGSideMenuController: ae40c80983ab8b8801c7cef0a6804d43aaa72d45
+  Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
+  RealmSwift: 3eb8924ff7100df5928c7602f71d0fec51e7c9c5
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: a71fcb507d82c5d7a0fd0668d351c259145a1fff
+PODFILE CHECKSUM: 78a62da04cbcf47c483acae3a31c8e91dd05d73f
 
 COCOAPODS: 1.9.3

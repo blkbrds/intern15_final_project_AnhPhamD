@@ -18,13 +18,13 @@ final class DetailDrinkViewModel {
     var sections: [SectionType] = [.instruction, .ingredient]
 
     // MARK: - Init
-    init(idDrink: String) {
-        self.drinkID = idDrink
+    init(drinkID: String) {
+        self.drinkID = drinkID
     }
 
     // MARK: - Function
     func getDetailDrink(completion: @escaping (Bool, String) -> Void) {
-        Networking.shared().getDetailDrink(idDrink: drinkID) { (apiResult: APIResult<DrinkDetail>) in
+        Networking.shared().getDetailDrink(drinkID: drinkID) { (apiResult: APIResult<DrinkDetail>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)

@@ -140,8 +140,8 @@ final class Networking {
         task.resume()
     }
 
-    func getDetailDrink(idDrink: String, completion: @escaping APICompletion<DrinkDetail>) {
-        let urlString = API.Home.detailCategories + idDrink
+    func getDetailDrink(drinkID: String, completion: @escaping APICompletion<DrinkDetail>) {
+        let urlString = API.Home.detailCategories + drinkID
         guard let url = URL(string: urlString) else {
             completion(.failure("URL Error"))
             return

@@ -36,11 +36,11 @@ final class FavoriteViewModel {
             completion(false)
         }
     }
-
-    func deleteItemFavorite(idDrink: String, completion: @escaping (Bool) -> Void) {
+    
+    func deleteItemFavorite(drinkID: String, completion: @escaping (Bool) -> Void) {
         do {
             let realm = try Realm()
-            let results = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            let results = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
             try realm.write {
                 realm.delete(results)
             }
@@ -75,7 +75,7 @@ final class FavoriteViewModel {
 
     func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
-        let viewModel = DetailDrinkViewModel(drink: item)
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 }

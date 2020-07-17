@@ -12,7 +12,7 @@ import LGSideMenuController
 final class HomeViewController: BaseViewController {
     
     // MARK: - Enum
-    enum Status {
+    enum TypeDisplay {
         case tableView
         case collectionView
     }
@@ -25,7 +25,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
-    private var statusList = Status.tableView
+    private var statusList = TypeDisplay.tableView
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -266,11 +266,11 @@ extension HomeViewController: SideMenuViewControllerDelegate {
 
 // MARK: - DrinkTableViewCellDelegate
 extension HomeViewController: DrinkTableViewCellDelegate {
-    func handleFavoriteTableView(cell: DrinkTableViewCell, idDrink: String, isFavorite: Bool) {
+    func handleFavoriteTableView(cell: DrinkTableViewCell, drinkID: String, isFavorite: Bool) {
         if isFavorite {
-            viewModel.deleteItemFavorite(idDrink: idDrink)
+            viewModel.deleteItemFavorite(drinkID: drinkID)
         } else {
-            viewModel.addFavorite(idDrink: cell.viewModel?.idDrink ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
+            viewModel.addFavorite(drinkID: cell.viewModel?.drinkID ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
         }
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
@@ -279,11 +279,11 @@ extension HomeViewController: DrinkTableViewCellDelegate {
 
 // MARK: - DrinkCollectionViewCellDelegate
 extension HomeViewController: DrinkCollectionViewCellDelegate {
-    func handleFavoriteCollection(cell: DrinkCollectionViewCell, idDrink: String, isFavorite: Bool) {
+    func handleFavoriteCollection(cell: DrinkCollectionViewCell, drinkID: String, isFavorite: Bool) {
         if isFavorite {
-            viewModel.deleteItemFavorite(idDrink: idDrink)
+            viewModel.deleteItemFavorite(drinkID: drinkID)
         } else {
-            viewModel.addFavorite(idDrink: cell.viewModel?.idDrink ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
+            viewModel.addFavorite(drinkID: cell.viewModel?.drinkID ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
         }
         guard let indexPath = listDrinkCollectionView.indexPath(for: cell) else { return }
         listDrinkCollectionView.reloadItems(at: [indexPath])
@@ -293,8 +293,8 @@ extension HomeViewController: DrinkCollectionViewCellDelegate {
 
 // MARK: - FavoriteViewControllerDelegate
 extension HomeViewController: FavoriteViewControllerDelegate {
-    func handleFavoriteCollection(controller: FavoriteViewController, idDrink: String) {
-        viewModel.deleteItemFavorite(idDrink: idDrink)
+    func handleFavoriteCollection(controller: FavoriteViewController, drinkID: String) {
+        viewModel.deleteItemFavorite(drinkID: drinkID)
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
     }

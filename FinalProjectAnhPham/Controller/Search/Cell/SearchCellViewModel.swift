@@ -12,14 +12,14 @@ final class SearchCellViewModel {
 
     // MARK: - Properties
     var nameTitle: String
-    var idDrink: String
+    var drinkID: String
     var isFavorite: Bool
     var imageURL: String
 
     // MARK: - Init
     init(drink: Drink) {
         self.nameTitle = drink.nameTitle
-        self.idDrink = drink.idDrink
+        self.drinkID = drink.drinkID
         self.isFavorite = drink.isFavorite
         self.imageURL = drink.imageURL
     }

@@ -14,17 +14,18 @@ final class Drink: Object {
     // MARK: - Properties
     @objc dynamic var nameTitle: String = ""
     @objc dynamic var imageURL: String = ""
-    @objc dynamic var idDrink: String = ""
+    @objc dynamic var drinkID: String = ""
     var instruction: String = ""
-    var ingredient: String = ""
-    var measure: String = ""
     var category: String = ""
     var glass: String = ""
     var alcoholic: String = ""
     var isFavorite: Bool = false
-    
+    private var ingredients: [String] = []
+    private var measures: [String] = []
+    var material: [String] = []
+
     override static func primaryKey() -> String? {
-        return "idDrink"
+        return "drinkID"
     }
 
     // MARK: - Convenience Init
@@ -40,10 +41,10 @@ final class Drink: Object {
         } else {
             self.imageURL = ""
         }
-        if let idDrinkJS = json["idDrink"] as? String {
-            self.idDrink = idDrinkJS
+        if let drinkIDJS = json["idDrink"] as? String {
+            self.drinkID = drinkIDJS
         } else {
-            self.idDrink = ""
+            self.drinkID = ""
         }
         if let categoryJS = json["strCategory"] as? String {
             self.category = categoryJS
@@ -69,29 +70,21 @@ final class Drink: Object {
         } else {
             self.instruction = ""
         }
-        var strIngredient: String = ""
         for index in 1...15 {
             if let ingredientJS = json["strIngredient\(index)"] as? String {
-                if ingredientJS != "" {
-                    strIngredient += ingredientJS + "\n"
-                }
+                self.ingredients.append(ingredientJS)
             }
         }
-        if strIngredient == "" {
-            strIngredient = "Empty data"
-        }
-        self.ingredient = strIngredient
-        var strMeasure: String = ""
         for index in 1...15 {
             if let measureJS = json["strMeasure\(index)"] as? String {
-                if measureJS != "" {
-                    strMeasure += "•  " + measureJS + "\n"
-                }
+                self.measures.append(measureJS)
+            } else {
+                self.measures.append("---")
             }
         }
-        if strMeasure == "" {
-            strMeasure = "Empty data"
+        
+        material = zip(ingredients, measures).map { (ingredient, measure) -> String in
+            return ingredient + ": " + measure
         }
-        self.measure = strMeasure
     }
 }

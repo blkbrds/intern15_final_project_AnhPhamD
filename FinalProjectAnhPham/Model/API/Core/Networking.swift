@@ -18,6 +18,10 @@ struct DrinkResult {
     var drinks: [Drink]
 }
 
+struct DrinkDetail {
+    var drink: Drink?
+}
+
 // MARK: - Enum
 enum APIResult<T> {
     case failure(String)
@@ -131,9 +135,9 @@ final class Networking {
         }
         task.resume()
     }
-    
-    func getDetailDrink(id: String, completion: @escaping APICompletion<DrinkResult>) {
-        let urlString = API.Home.detailCategories + id
+
+    func getDetailDrink(drinkID: String, completion: @escaping APICompletion<DrinkDetail>) {
+        let urlString = API.Home.detailCategories + drinkID
         guard let url = URL(string: urlString) else {
             completion(.failure("URL Error"))
             return
@@ -154,7 +158,7 @@ final class Networking {
                             let item = Drink(json: drink)
                             drinks.append(item)
                         }
-                        completion(.success(DrinkResult(drinks: drinks)))
+                        completion(.success(DrinkDetail(drink: drinks.first)))
                     } else {
                         completion(.failure("Data format is error"))
                     }

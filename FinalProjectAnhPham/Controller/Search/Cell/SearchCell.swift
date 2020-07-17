@@ -48,7 +48,7 @@ final class SearchCell: UITableViewCell {
     @IBAction private func favoriteButtonTouchUpInSide(_ sender: Any) {
         guard let viewModel = viewModel else { return }
         if let delegate = delegate {
-            delegate.handleFavorite(self, idDrink: viewModel.idDrink, isFavorite: viewModel.isFavorite)
+            delegate.handleFavorite(self, idDrink: viewModel.drinkID, isFavorite: viewModel.isFavorite)
         }
         updateView()
     }

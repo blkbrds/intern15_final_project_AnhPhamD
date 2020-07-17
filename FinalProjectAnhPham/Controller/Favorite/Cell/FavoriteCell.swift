@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Protocol
 protocol FavoriteCellDelegate: class {
-    func handleFavorite(cell: FavoriteCell, idDrink: String, isFavorite: Bool)
+    func handleFavorite(cell: FavoriteCell, drinkID: String, isFavorite: Bool)
 }
 
 final class FavoriteCell: UICollectionViewCell {
@@ -47,7 +47,7 @@ final class FavoriteCell: UICollectionViewCell {
     @IBAction private func deleteButtonTouchUpInSide(_ sender: Any) {
         guard let viewModel = viewModel else { return }
         if let delegate = delegate {
-            delegate.handleFavorite(cell: self, idDrink: viewModel.idDrink, isFavorite: viewModel.isFavorite)
+            delegate.handleFavorite(cell: self, drinkID: viewModel.drinkID, isFavorite: viewModel.isFavorite)
         }
         updateView()
     }

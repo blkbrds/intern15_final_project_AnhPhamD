@@ -100,7 +100,7 @@ extension SearchViewController: SearchCellDelegate {
         if isFavorite {
             viewModel.deleteItemFavorite(idDrink: idDrink)
         } else {
-            viewModel.addFavorite(idDrink: cell.viewModel?.idDrink ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
+            viewModel.addFavorite(drinkID: cell.viewModel?.drinkID ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
         }
         drinkResultsTableView.reloadData()
     }

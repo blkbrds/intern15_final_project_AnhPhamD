@@ -11,14 +11,14 @@ import Foundation
 final class DrinkCellViewModel {
 
     // MARK: - Properties
-    var idDrink: String
+    var drinkID: String
     var nameTitle: String
     var imageURL: String
     var isFavorite: Bool
 
     // MARK: - Init
     init(drink: Drink) {
-        self.idDrink = drink.idDrink
+        self.drinkID = drink.drinkID
         self.nameTitle = drink.nameTitle
         self.imageURL = drink.imageURL
         self.isFavorite = drink.isFavorite

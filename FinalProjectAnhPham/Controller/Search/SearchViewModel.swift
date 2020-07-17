@@ -30,7 +30,7 @@ final class SearchViewModel {
             case .success(let drinkResults):
                 self.drinks = drinkResults.drinks
                 for i in 0..<self.drinks.count {
-                    self.drinks[i].isFavorite = self.realmDrinks.contains(where: { $0.idDrink == self.drinks[i].idDrink })
+                    self.drinks[i].isFavorite = self.realmDrinks.contains(where: { $0.drinkID == self.drinks[i].drinkID })
                 }
                 completion(true, "Success")
             }
@@ -47,16 +47,16 @@ final class SearchViewModel {
         }
     }
 
-    func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
+    func addFavorite(drinkID: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()
             let drink = Drink()
-            drink.idDrink = idDrink
+            drink.drinkID = drinkID
             drink.nameTitle = nameTitle
             drink.imageURL = imageUrl
             try realm.write {
                 realm.add(drink, update: .all)
-                checkFavorite(favorite: true, idDrink: idDrink)
+                checkFavorite(favorite: true, drinkID: drinkID)
             }
         } catch {
             print(error)
@@ -69,15 +69,15 @@ final class SearchViewModel {
             let result = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
             try realm.write {
                 realm.delete(result)
-                checkFavorite(favorite: false, idDrink: idDrink)
+                checkFavorite(favorite: false, drinkID: idDrink)
             }
         } catch {
             print(error)
         }
     }
 
-    func checkFavorite(favorite: Bool, idDrink: String) {
-        for item in drinks where item.idDrink == idDrink {
+    func checkFavorite(favorite: Bool, drinkID: String) {
+        for item in drinks where item.drinkID == drinkID {
             item.isFavorite = favorite
         }
     }
@@ -94,7 +94,7 @@ final class SearchViewModel {
 
     func viewModelDidSelectRowAt(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
-        let viewModel = DetailDrinkViewModel(drink: item)
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 }

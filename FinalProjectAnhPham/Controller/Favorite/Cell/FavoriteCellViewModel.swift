@@ -9,13 +9,13 @@
 import Foundation
 
 final class FavoriteCellViewModel {
-    var idDrink: String
+    var drinkID: String
     var isFavorite: Bool
     var nameTitle: String
     var imageURL: String
     
     init(drink: Drink) {
-        self.idDrink = drink.idDrink
+        self.drinkID = drink.drinkID
         self.isFavorite = drink.isFavorite
         self.nameTitle = drink.nameTitle
         self.imageURL = drink.imageURL

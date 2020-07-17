@@ -11,7 +11,7 @@ import Foundation
 final class DetailDrinkViewModel {
 
     // MARK: - Properties
-    var idDrink: String
+    var drinkID: String
     var drink: Drink?
     var ingredients: [String] = []
     var measures: [String] = []
@@ -19,12 +19,12 @@ final class DetailDrinkViewModel {
 
     // MARK: - Init
     init(idDrink: String) {
-        self.idDrink = idDrink
+        self.drinkID = idDrink
     }
 
     // MARK: - Function
     func getDetailDrink(completion: @escaping (Bool, String) -> Void) {
-        Networking.shared().getDetailDrink(idDrink: idDrink) { (apiResult: APIResult<DrinkDetail>) in
+        Networking.shared().getDetailDrink(idDrink: drinkID) { (apiResult: APIResult<DrinkDetail>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)

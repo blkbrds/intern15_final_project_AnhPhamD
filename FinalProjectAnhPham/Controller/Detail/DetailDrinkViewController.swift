@@ -23,7 +23,7 @@ final class DetailDrinkViewController: BaseViewController {
     @IBOutlet private weak var alcoholicLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var informationTableView: UITableView!
-    @IBOutlet weak var sectionTypeTableView: UITableView!
+    @IBOutlet private weak var sectionTypeTableView: UITableView!
     
     // MARK: - Properties
     var viewModel: DetailDrinkViewModel? {
@@ -49,7 +49,6 @@ final class DetailDrinkViewController: BaseViewController {
             guard let this = self else { return }
             if done {
                 this.updateView()
-                this.sectionTypeTableView.reloadData()
             } else {
                 this.showAlert(msg: msg)
             }
@@ -73,6 +72,7 @@ final class DetailDrinkViewController: BaseViewController {
         guard let drink = viewModel?.drink else {
             return
         }
+        sectionTypeTableView.reloadData()
         title = drink.nameTitle
         categoryLabel.text = drink.category
         glassLabel.text = drink.glass

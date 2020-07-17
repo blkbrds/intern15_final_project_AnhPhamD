@@ -18,8 +18,7 @@ final class HomeViewModel {
 
     // MARK: - Function
     func getCategories(category: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = API.Home.categories + category + "list"
-        Networking.shared().getCategory(urlString: urlString) { (apiResult: APIResult<TagGroupResult>) in
+        Networking.shared().getCategory(category: category) { (apiResult: APIResult<TagGroupResult>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
@@ -31,8 +30,7 @@ final class HomeViewModel {
     }
 
     func getDrinkForCategories(firstChar: String, keyword: String, completion: @escaping (Bool, String) -> Void) {
-        let urlString = API.Home.filterCategories + firstChar + keyword
-        Networking.shared().getDrinkForCategory(urlString: urlString) { (apiResult: APIResult<DrinkResult>) in
+        Networking.shared().getDrinkForCategory(firstChar: firstChar, keyword: keyword) { (apiResult: APIResult<DrinkResult>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
@@ -50,6 +48,12 @@ final class HomeViewModel {
     func viewModelCellForRowAt(indexPath: Int) -> DrinkTableCellViewModel {
         let item = drinks[indexPath]
         let viewModel = DrinkTableCellViewModel(drink: item)
+        return viewModel
+    }
+    
+    func getIdOfRow(index: Int) -> DetailDrinkViewModel {
+        let item = drinks[index]
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 
@@ -70,6 +74,12 @@ final class HomeViewModel {
     func viewModelCellForItems(indexPath: Int) -> DrinkCollectionCellViewModel {
         let item = drinks[indexPath]
         let viewModel = DrinkCollectionCellViewModel(drink: item)
+        return viewModel
+    }
+    
+    func getIdOfItem(index: Int) -> DetailDrinkViewModel {
+        let item = drinks[index]
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 }

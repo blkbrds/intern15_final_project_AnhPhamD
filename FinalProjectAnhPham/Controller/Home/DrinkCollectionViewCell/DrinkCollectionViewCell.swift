@@ -8,18 +8,13 @@
 
 import UIKit
 
-// MARK: - Protocol
-protocol DrinkCollectionViewCellDelegate: class {
-    func dowloadImage(cell: DrinkCollectionViewCell, indexPath: IndexPath)
-}
-
 final class DrinkCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet private weak var nameDrinkLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var favoriteButton: UIButton!
-    @IBOutlet weak var titleView: UIView!
+    @IBOutlet private weak var titleView: UIView!
 
     // MARK: - Properties
     var viewModel: DrinkCollectionCellViewModel? {
@@ -27,8 +22,6 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
             updateView()
         }
     }
-
-    weak var delegate: DrinkCollectionViewCellDelegate?
     var indexPath: IndexPath?
 
     // MARK: - Life Cycle

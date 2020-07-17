@@ -19,9 +19,9 @@ final class DrinkTableCellViewModel {
 
     // MARK: - Init
     init(drink: Drink) {
-        self.name = drink.name
+        self.name = drink.nameTitle
         self.isFavorite = drink.isFavorite
         self.imageURL = drink.imageURL
-        self.thumbnailImage = drink.thumbnailImage
+//        self.thumbnailImage = drink.thumbnailImage
     }
 }

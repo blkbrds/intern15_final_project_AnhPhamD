@@ -18,7 +18,7 @@ final class DrinkCollectionCellViewModel {
 
     // MARK: - Init
     init(drink: Drink) {
-        self.name = drink.name
+        self.name = drink.nameTitle
         self.imageURL = drink.imageURL
         self.isFavorite = drink.isFavorite
     }

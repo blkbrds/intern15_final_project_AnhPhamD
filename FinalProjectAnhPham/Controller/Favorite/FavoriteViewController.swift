@@ -8,14 +8,12 @@
 
 import UIKit
 
-class FavoriteViewController: UIViewController {
+final class FavoriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
     /*
     // MARK: - Navigation
 

@@ -8,14 +8,12 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
     /*
     // MARK: - Navigation
 
@@ -25,5 +23,4 @@ class SearchViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

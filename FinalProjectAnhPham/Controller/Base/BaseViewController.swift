@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
     }
 
     private func setupUI() {
-        let textAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FavoriteViewControllerDelegate: class {
-    func handleFavoriteCollection(controller: FavoriteViewController, idDrink: String)
+    func handleFavoriteCollection(controller: FavoriteViewController, drinkID: String)
 }
 
 final class FavoriteViewController: BaseViewController {
@@ -42,8 +42,8 @@ final class FavoriteViewController: BaseViewController {
         }
     }
     
-    private func deleteItemFavorite(idDrink: String) {
-        viewModel.deleteItemFavorite(idDrink: idDrink) { [weak self] (done) in
+    private func deleteItemFavorite(drinkID: String) {
+        viewModel.deleteItemFavorite(drinkID: drinkID) { [weak self] (done) in
             guard let this = self else { return }
             if done {
                 this.fectchData()
@@ -134,10 +134,10 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - DrinkCollectionViewCellDelegate
 extension FavoriteViewController: FavoriteCellDelegate {
-    func handleFavorite(cell: FavoriteCell, idDrink: String, isFavorite: Bool) {
+    func handleFavorite(cell: FavoriteCell, drinkID: String, isFavorite: Bool) {
         if let delegate = delegate {
-            delegate.handleFavoriteCollection(controller: self, idDrink: idDrink)
+            delegate.handleFavoriteCollection(controller: self, drinkID: drinkID)
         }
-        deleteItemFavorite(idDrink: idDrink)
+        deleteItemFavorite(drinkID: drinkID)
     }
 }

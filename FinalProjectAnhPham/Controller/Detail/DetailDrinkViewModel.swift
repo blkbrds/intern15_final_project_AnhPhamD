@@ -13,24 +13,27 @@ final class DetailDrinkViewModel {
     
     // MARK: - Properties
     var status = Favorite.favorite
-    var idDrink: String
+    var drinkID: String
     var drink: Drink?
-    var sections: [SectionType] = [.instruction, .ingredient, .measure]
-    
+    var materials: [String] {
+        guard let drink = drink else { return [] }
+        return drink.material
+    }
+    var sections: [SectionType] = [.instruction, .material]
+
     // MARK: - Init
-    init(drink: Drink) {
-        self.idDrink = drink.idDrink
+    init(drinkID: String) {
+        self.drinkID = drinkID
     }
     
     // MARK: - Function
     func getDetailDrink(completion: @escaping (Bool, String) -> Void) {
-        Networking.shared().getDetailDrink(id: idDrink) { [weak self] (apiResult: APIResult<DrinkResult>) in
-            guard let this = self else { return }
+        Networking.shared().getDetailDrink(drinkID: drinkID) { (apiResult: APIResult<DrinkDetail>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
-            case .success(let data):
-                this.drink = data.drinks.first
+            case .success(let drinkResult):
+                self.drink = drinkResult.drink
                 completion(true, "Success")
             }
         }
@@ -39,7 +42,7 @@ final class DetailDrinkViewModel {
     func checkFavorite(completion: @escaping (Bool) -> Void) {
         do {
             let realm = try Realm()
-            let results = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            let results = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
             if results.isEmpty {
                 completion(false)
             } else {
@@ -53,7 +56,7 @@ final class DetailDrinkViewModel {
     func deleteItemFavorite() {
         do {
             let realm = try Realm()
-            let result = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            let result = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
             try realm.write {
                 realm.delete(result)
             }
@@ -62,11 +65,11 @@ final class DetailDrinkViewModel {
         }
     }
     
-    func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
+    func addFavorite(drinkID: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()
             let drink = Drink()
-            drink.idDrink = idDrink
+            drink.drinkID = drinkID
             drink.nameTitle = nameTitle
             drink.imageURL = imageUrl
             try realm.write {
@@ -82,14 +85,24 @@ final class DetailDrinkViewModel {
     }
     
     func numberOfRowsInSection(section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
+        switch sections[section] {
+        case .instruction:
             return 1
         default:
-            return 1
+            return materials.count
         }
+    }
+    
+    func viewModelCellForRowAt2(index: Int) -> MaterialViewModel {
+        let item = materials[index]
+        let viewModel = MaterialViewModel(material: item)
+        return viewModel
+    }
+    
+    func viewModelCellForRowAt(index: Int) -> InstructionViewModel {
+        let item = drink?.instruction
+        let viewModel = InstructionViewModel(instruction: item ?? "")
+        return viewModel
     }
     
     func titleHeaderInSection(section: Int) -> String? {
@@ -101,7 +114,6 @@ final class DetailDrinkViewModel {
 extension DetailDrinkViewModel {
     enum SectionType: String {
         case instruction = "Instruction"
-        case ingredient = "Ingredient"
-        case measure = "Measure"
+        case material = "Material"
     }
 }

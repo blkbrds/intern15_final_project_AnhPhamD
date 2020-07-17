@@ -49,7 +49,6 @@ final class DetailDrinkViewController: BaseViewController {
             guard let this = self else { return }
             if done {
                 this.updateView()
-                this.sectionTypeTableView.reloadData()
             } else {
                 this.showAlert(msg: msg)
             }
@@ -57,8 +56,10 @@ final class DetailDrinkViewController: BaseViewController {
     }
     
     private func configTableView() {
-        let detailTableViewCell = UINib(nibName: "DetailTableViewCell", bundle: .main)
-        sectionTypeTableView.register(detailTableViewCell, forCellReuseIdentifier: "DetailTableViewCell")
+        let instructionTableViewCell = UINib(nibName: "InstructionTableViewCell", bundle: .main)
+        let materialTableViewCell = UINib(nibName: "MaterialTableViewCell", bundle: .main)
+        sectionTypeTableView.register(instructionTableViewCell, forCellReuseIdentifier: "InstructionTableViewCell")
+        sectionTypeTableView.register(materialTableViewCell, forCellReuseIdentifier: "MaterialTableViewCell")
         sectionTypeTableView.dataSource = self
         sectionTypeTableView.sectionHeaderHeight = 40
     }
@@ -71,6 +72,7 @@ final class DetailDrinkViewController: BaseViewController {
         guard let drink = viewModel?.drink else {
             return
         }
+        sectionTypeTableView.reloadData()
         title = drink.nameTitle
         categoryLabel.text = drink.category
         glassLabel.text = drink.glass
@@ -104,7 +106,7 @@ final class DetailDrinkViewController: BaseViewController {
             rightBarButton?.image = UIImage(systemName: "heart.fill")
             viewModel?.status = .unFavorite
             guard let drink = viewModel?.drink else { return }
-            viewModel?.addFavorite(idDrink: drink.idDrink, nameTitle: drink.nameTitle, imageUrl: drink.imageURL)
+            viewModel?.addFavorite(drinkID: drink.drinkID, nameTitle: drink.nameTitle, imageUrl: drink.imageURL)
         } else {
             viewModel?.deleteItemFavorite()
             rightBarButton?.image = UIImage(systemName: "heart")
@@ -131,26 +133,18 @@ extension DetailDrinkViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell,
-                let value = viewModel?.drink?.instruction else {
-                    return UITableViewCell()
-            }
-            cell.viewModel = DetailCellViewModel(label: value)
-            return cell
-        case 1:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell,
-                let value = viewModel?.drink?.ingredient else {
-                    return UITableViewCell()
-            }
-            cell.viewModel = DetailCellViewModel(label: value)
-            return cell
-        default:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell, let value = viewModel?.drink?.measure else {
+        switch viewModel?.sections[indexPath.section] {
+        case .instruction:
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InstructionTableViewCell", for: indexPath) as? InstructionTableViewCell else {
                 return UITableViewCell()
             }
-            cell.viewModel = DetailCellViewModel(label: value)
+            cell.viewModel = viewModel?.viewModelCellForRowAt(index: indexPath.row)
+            return cell
+        default:
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "MaterialTableViewCell", for: indexPath) as? MaterialTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.viewModel = viewModel?.viewModelCellForRowAt2(index: indexPath.row)
             return cell
         }
     }

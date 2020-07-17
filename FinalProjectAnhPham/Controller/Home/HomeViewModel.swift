@@ -33,39 +33,39 @@ final class HomeViewModel {
             print(error)
         }
     }
-    func addFavorite(idDrink: String, nameTitle: String, imageUrl: String) {
+    func addFavorite(drinkID: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()
             let drink = Drink()
-            drink.idDrink = idDrink
+            drink.drinkID = drinkID
             drink.nameTitle = nameTitle
             drink.imageURL = imageUrl
             try realm.write {
                 realm.add(drink, update: .all)
-                editFavorite(favorite: true, idDrink: idDrink)
+                editFavorite(favorite: true, drinkID: drinkID)
             }
         } catch {
             print(error)
         }
     }
     
-    func deleteItemFavorite(idDrink: String) {
+    func deleteItemFavorite(drinkID: String) {
         do {
             let realm = try Realm()
-            let result = realm.objects(Drink.self).filter("idDrink = '\(idDrink)'")
+            let result = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
             try realm.write {
                 realm.delete(result)
-                editFavorite(favorite: false, idDrink: idDrink)
+                editFavorite(favorite: false, drinkID: drinkID)
             }
         } catch {
             print(error)
         }
     }
     
-    func editFavorite(favorite: Bool, idDrink: String) {
+    func editFavorite(favorite: Bool, drinkID: String) {
         for item in drinks {
-//            where item.idDrink == id
-            if item.idDrink == idDrink {
+//            where item.drinkID == id
+            if item.drinkID == drinkID {
                 item.isFavorite = favorite
             }
 //            item.isFavorite = favorite
@@ -94,7 +94,7 @@ final class HomeViewModel {
             case .success(let drinkResult):
                 this.drinks = drinkResult.drinks
                 for i in 0..<this.drinks.count {
-                    this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.idDrink == this.drinks[i].idDrink })
+                    this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
                 }
                 completion(true, "Success")
             }
@@ -113,7 +113,7 @@ final class HomeViewModel {
     
     func viewModelDidSelectRowAt(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
-        let viewModel = DetailDrinkViewModel(drink: item)
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 
@@ -139,7 +139,7 @@ final class HomeViewModel {
     
     func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
-        let viewModel = DetailDrinkViewModel(drink: item)
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
 }

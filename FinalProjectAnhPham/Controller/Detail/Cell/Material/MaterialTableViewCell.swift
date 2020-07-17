@@ -8,14 +8,13 @@
 
 import UIKit
 
-final class InformationTableViewCell: UITableViewCell {
+final class MaterialTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet weak var ingredientLabel: UILabel!
-    @IBOutlet weak var measureLabel: UILabel!
+    @IBOutlet weak var materialLabel: UILabel!
     
     // MARK: - Properties
-    var viewModel: InformationViewModel? {
+    var viewModel: MaterialViewModel? {
         didSet {
             updateView()
         }
@@ -36,7 +35,6 @@ final class InformationTableViewCell: UITableViewCell {
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        ingredientLabel.text = viewModel.ingredient
-        measureLabel.text = viewModel.measure
+        materialLabel.text = viewModel.material
     }
 }

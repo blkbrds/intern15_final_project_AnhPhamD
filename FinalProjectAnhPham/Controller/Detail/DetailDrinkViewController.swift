@@ -57,9 +57,9 @@ final class DetailDrinkViewController: BaseViewController {
     
     private func configTableView() {
         let instructionTableViewCell = UINib(nibName: "InstructionTableViewCell", bundle: .main)
-        let informationTableViewCell = UINib(nibName: "InformationTableViewCell", bundle: .main)
+        let materialTableViewCell = UINib(nibName: "MaterialTableViewCell", bundle: .main)
         sectionTypeTableView.register(instructionTableViewCell, forCellReuseIdentifier: "InstructionTableViewCell")
-        sectionTypeTableView.register(informationTableViewCell, forCellReuseIdentifier: "InformationTableViewCell")
+        sectionTypeTableView.register(materialTableViewCell, forCellReuseIdentifier: "MaterialTableViewCell")
         sectionTypeTableView.dataSource = self
         sectionTypeTableView.sectionHeaderHeight = 40
     }
@@ -132,7 +132,7 @@ extension DetailDrinkViewController: UITableViewDataSource {
             cell.viewModel = viewModel?.viewModelCellForRowAt(index: indexPath.row)
             return cell
         default:
-            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InformationTableViewCell", for: indexPath) as? InformationTableViewCell else {
+            guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "MaterialTableViewCell", for: indexPath) as? MaterialTableViewCell else {
                 return UITableViewCell()
             }
             cell.viewModel = viewModel?.viewModelCellForRowAt2(index: indexPath.row)

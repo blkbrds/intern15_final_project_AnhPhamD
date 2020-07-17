@@ -19,8 +19,9 @@ final class Drink {
     var category: String
     var glass: String
     var alcoholic: String
-    var ingredients: [String] = []
-    var measures: [String] = []
+    private var ingredients: [String] = []
+    private var measures: [String] = []
+    var material: [String] = []
     
     // MARK: - Init
     init(json: JSON, isFavorite: Bool = false) {
@@ -66,17 +67,19 @@ final class Drink {
         }
         for index in 1...15 {
             if let ingredientJS = json["strIngredient\(index)"] as? String {
-                if ingredientJS != "" {
-                    self.ingredients.append(ingredientJS)
-                }
+                self.ingredients.append(ingredientJS)
             }
         }
         for index in 1...15 {
             if let measureJS = json["strMeasure\(index)"] as? String {
-                if measureJS != "" {
-                    self.measures.append(measureJS)
-                }
+                self.measures.append(measureJS)
+            } else {
+                self.measures.append("---")
             }
+        }
+        
+        material = zip(ingredients, measures).map { (ingredient, measure) -> String in
+            return ingredient + ": " + measure
         }
     }
 }

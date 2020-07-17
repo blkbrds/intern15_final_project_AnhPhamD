@@ -13,9 +13,11 @@ final class DetailDrinkViewModel {
     // MARK: - Properties
     var drinkID: String
     var drink: Drink?
-    var ingredients: [String] = []
-    var measures: [String] = []
-    var sections: [SectionType] = [.instruction, .ingredient]
+    var materials: [String] {
+        guard let drink = drink else { return [] }
+        return drink.material
+    }
+    var sections: [SectionType] = [.instruction, .material]
 
     // MARK: - Init
     init(drinkID: String) {
@@ -30,11 +32,6 @@ final class DetailDrinkViewModel {
                 completion(false, stringError)
             case .success(let drinkResult):
                 self.drink = drinkResult.drink
-                if let ingredients = self.drink?.ingredients, let measures = self.drink?.measures {
-                    self.ingredients = ingredients
-                    self.measures = measures
-                    self.checkDataDetail()
-                }
                 completion(true, "Success")
             }
         }
@@ -49,14 +46,13 @@ final class DetailDrinkViewModel {
         case .instruction:
             return 1
         default:
-            return ingredients.count
+            return materials.count
         }
     }
     
-    func viewModelCellForRowAt2(index: Int) -> InformationViewModel {
-        let item = ingredients[index]
-        let item1 = measures[index]
-        let viewModel = InformationViewModel(ingredient: item, measure: item1)
+    func viewModelCellForRowAt2(index: Int) -> MaterialViewModel {
+        let item = materials[index]
+        let viewModel = MaterialViewModel(material: item)
         return viewModel
     }
     
@@ -69,28 +65,11 @@ final class DetailDrinkViewModel {
     func titleHeaderInSection(section: Int) -> String? {
         return sections[section].rawValue
     }
-    
-    func checkDataDetail() {
-        if ingredients.count != measures.count {
-            if ingredients.count > measures.count {
-                let count = ingredients.count - measures.count
-                for _ in 0 ... count {
-                    measures.append("Empty Data")
-                }
-            } else {
-                let count = measures.count - ingredients.count
-                for _ in 0 ... count {
-                    ingredients.append("Empty Data")
-                }
-
-            }
-        }
-    }
 }
 
 extension DetailDrinkViewModel {
     enum SectionType: String {
         case instruction = "Instruction"
-        case ingredient = "Ingredient"
+        case material = "Material"
     }
 }

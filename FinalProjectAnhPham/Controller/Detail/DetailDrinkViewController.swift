@@ -145,7 +145,8 @@ extension DetailDrinkViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch viewModel?.sections[indexPath.section] {
+        guard let sectionType = viewModel?.sections[indexPath.section] else { return UITableViewCell() }
+        switch sectionType {
         case .instruction:
             guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "InstructionCell", for: indexPath) as? InstructionCell else {
                 return UITableViewCell()
@@ -158,27 +159,27 @@ extension DetailDrinkViewController: UITableViewDataSource, UITableViewDelegate 
             }
             cell.viewModel = viewModel?.viewModelCellForRowAt2(index: indexPath.row)
             return cell
-        default:
+        case .other:
             guard let cell = sectionTypeTableView.dequeueReusableCell(withIdentifier: "OtherDrinkCell", for: indexPath) as? OtherDrinkCell else {
                 return UITableViewCell()
             }
-            cell.viewModel = viewModel?.viewModelCellForRowAt3(index: indexPath.row)
+            if let viewModel = viewModel {
+                cell.viewModel = viewModel.viewModelCellForRowAt3()
+            }
+            cell.delegate = self
             return cell
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch viewModel?.sections[indexPath.section] {
-        case .other:
-            let vc = DetailDrinkViewController()
-            vc.viewModel = viewModel?.getDetailOtherDrink(index: indexPath.row)
-            navigationController?.pushViewController(vc, animated: true)
-        default:
-            return
         }
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel?.titleHeaderInSection(section: section)
+    }
+}
+
+extension DetailDrinkViewController: OtherDrinkCellDelegate {
+    func pushToDetail(_ cell: OtherDrinkCell, indexPath: IndexPath) {
+        let vc = DetailDrinkViewController()
+        vc.viewModel = viewModel?.viewModelDidSelectItemAt(index: indexPath.row)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

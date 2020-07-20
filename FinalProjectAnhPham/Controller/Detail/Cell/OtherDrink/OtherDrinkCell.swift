@@ -8,13 +8,15 @@
 
 import UIKit
 
+// MARK: - Protocol
+protocol OtherDrinkCellDelegate: class {
+    func pushToDetail(_ cell: OtherDrinkCell, indexPath: IndexPath)
+}
+
 final class OtherDrinkCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var avatarImageView: UIImageView!
-    @IBOutlet private weak var favoriteButton: UIButton!
-    @IBOutlet private weak var nameTitleLabel: UILabel!
-    @IBOutlet private weak var titleView: UIView!
+    @IBOutlet private weak var collectionView: UICollectionView!
 
     // MARK: - Properties
     var viewModel: OtherDrinkViewModel? {
@@ -22,19 +24,61 @@ final class OtherDrinkCell: UITableViewCell {
             updateView()
         }
     }
+    weak var delegate: OtherDrinkCellDelegate?
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        avatarImageView.layer.cornerRadius = 15
-        titleView.layer.cornerRadius = 15
+        configCollectionView()
     }
 
     // MARK: - Function
+    private func configCollectionView() {
+        let otherDrinkCollectionView = UINib(nibName: "OtherDrinkCollectionCell", bundle: .main)
+        collectionView.register(otherDrinkCollectionView, forCellWithReuseIdentifier: "OtherDrinkCollectionCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+
     private func updateView() {
-        guard let viewModel = viewModel else { return }
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
-        nameTitleLabel.text = viewModel.nameTitle
-        favoriteButton.isSelected = viewModel.isFavorite
+        collectionView.reloadData()
+    }
+}
+
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+extension OtherDrinkCell: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let viewModel = viewModel else {
+            return 0
+        }
+        return viewModel.numberOfItemsInSection()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OtherDrinkCollectionCell", for: indexPath) as? OtherDrinkCollectionCell else {
+            return UICollectionViewCell()
+        }
+        guard let viewModel = viewModel else {
+            return UICollectionViewCell()
+        }
+        cell.viewModel = viewModel.viewModelCellForItemAt(index: indexPath.row)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let delegate = delegate {
+            delegate.pushToDetail(self, indexPath: indexPath)
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension OtherDrinkCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (UIScreen.main.bounds.width - 30) / 2, height: collectionView.bounds.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 }

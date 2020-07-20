@@ -10,23 +10,23 @@ import UIKit
 import LGSideMenuController
 
 final class HomeViewController: BaseViewController {
-    
+
     // MARK: - Enum
     enum TypeDisplay {
         case tableView
         case collectionView
     }
-    
+
     // MARK: - IBOutlet
     @IBOutlet private weak var tagCollectionView: UICollectionView!
     @IBOutlet private weak var listDrinkTableView: UITableView!
     @IBOutlet private weak var listDrinkCollectionView: UICollectionView!
-    
+
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
     private var statusList = TypeDisplay.tableView
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +36,14 @@ final class HomeViewController: BaseViewController {
         configCollectionView()
         getData()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
     }
-    
+
     // MARK: - Function
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.leftBarButton), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
@@ -55,7 +55,7 @@ final class HomeViewController: BaseViewController {
             leftMenu.delegate = self
         }
     }
-    
+
     private func configTableView() {
         let drinkTableViewCell = UINib(nibName: Identifier.drinkTableCell, bundle: .main)
         listDrinkTableView.register(drinkTableViewCell, forCellReuseIdentifier: Identifier.drinkTableCell)

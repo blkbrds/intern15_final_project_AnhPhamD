@@ -9,8 +9,11 @@
 import Foundation
 
 final class InstructionViewModel {
+
+    // MARK: Properties
     var instruction: String
-    
+
+    // MARK: Init
     init(instruction: String) {
         self.instruction = instruction
     }

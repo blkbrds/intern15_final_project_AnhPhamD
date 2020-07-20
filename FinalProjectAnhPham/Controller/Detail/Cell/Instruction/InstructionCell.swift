@@ -11,8 +11,8 @@ import UIKit
 final class InstructionCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    @IBOutlet weak var instructionLabel: UILabel!
-    
+    @IBOutlet private weak var instructionLabel: UILabel!
+
     // MARK: - Properties
     var viewModel: InstructionViewModel? {
         didSet {

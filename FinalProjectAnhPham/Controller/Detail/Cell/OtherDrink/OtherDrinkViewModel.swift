@@ -9,15 +9,23 @@
 import Foundation
 
 final class OtherDrinkViewModel {
-    var nameTitle: String
-    var imageURL: String
-    var isFavorite: Bool
-    var drinkID: String
-    
-    init(drink: Drink) {
-        self.nameTitle = drink.nameTitle
-        self.imageURL = drink.imageURL
-        self.drinkID = drink.drinkID
-        self.isFavorite = drink.isFavorite
+
+    // MARK: - Properties
+    var otherDrinks: [Drink]
+
+    // MARK: - Init
+    init(otherDrinks: [Drink] = []) {
+        self.otherDrinks = otherDrinks
+    }
+
+    // MARK: - Function
+    func numberOfItemsInSection() -> Int {
+        return otherDrinks.count
+    }
+
+    func viewModelCellForItemAt(index: Int) -> OtherDrinkCollectionCellViewModel {
+        let item = otherDrinks[index]
+        let viewModel = OtherDrinkCollectionCellViewModel(drink: item)
+        return viewModel
     }
 }

@@ -98,13 +98,14 @@ final class DetailDrinkViewModel {
     }
 
     func numberOfRowsInSection(section: Int) -> Int {
+        guard section < sections.count else { return 0 }
         switch sections[section] {
         case .instruction:
             return 1
         case .material:
             return materials.count
-        default:
-            return otherDrinks.count
+        case .other:
+            return 1
         }
     }
 
@@ -120,20 +121,20 @@ final class DetailDrinkViewModel {
         return viewModel
     }
 
-    func viewModelCellForRowAt3(index: Int) -> OtherDrinkViewModel {
-        let item = otherDrinks[index]
-        let viewModel = OtherDrinkViewModel(drink: item)
+    func viewModelCellForRowAt3() -> OtherDrinkViewModel {
+        let item = otherDrinks
+        let viewModel = OtherDrinkViewModel(otherDrinks: item)
         return viewModel
     }
-
-    func titleHeaderInSection(section: Int) -> String? {
-        return sections[section].rawValue
-    }
-
-    func getDetailOtherDrink(index: Int) -> DetailDrinkViewModel {
+    
+    func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
         let item = otherDrinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
+    }
+    
+    func titleHeaderInSection(section: Int) -> String? {
+        return sections[section].rawValue
     }
 }
 
@@ -143,5 +144,13 @@ extension DetailDrinkViewModel {
         case instruction = "Instruction"
         case material = "Material"
         case other = "Other Drink"
+        
+        var indexSet: IndexSet {
+            switch self {
+            case .instruction: return IndexSet(integer: 0)
+            case .material: return IndexSet(integer: 1)
+            case .other: return IndexSet(integer: 2)
+            }
+        }
     }
 }

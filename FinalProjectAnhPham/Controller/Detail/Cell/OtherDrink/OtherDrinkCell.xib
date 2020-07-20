@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="244" id="KGk-i7-Jjw" customClass="OtherDrinkCell" customModule="FinalProjectAnhPham" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="WOQ-wp-Gju">
+                        <rect key="frame" x="20" y="20" width="280" height="250"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="250" id="tNq-En-aNF"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90y-Wa-QR8">
+                        <rect key="frame" x="262" y="31.5" width="28" height="23.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="N3d-Ne-XxP"/>
+                            <constraint firstAttribute="width" constant="28" id="T0m-wM-Bhx"/>
+                        </constraints>
+                        <color key="tintColor" red="0.79607843140000001" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <state key="normal" backgroundImage="heart" catalog="system">
+                            <color key="titleColor" red="1" green="0.024002201210000001" blue="0.072374784380000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <state key="selected" backgroundImage="heart.fill" catalog="system"/>
+                    </button>
+                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olV-vI-Kd7">
+                        <rect key="frame" x="20" y="207.5" width="280" height="62.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97h-Gq-7of">
+                                <rect key="frame" x="10" y="5" width="260" height="52.5"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="16"/>
+                                <color key="textColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="97h-Gq-7of" secondAttribute="trailing" constant="10" id="dc6-Jg-dyb"/>
+                            <constraint firstAttribute="bottom" secondItem="97h-Gq-7of" secondAttribute="bottom" constant="5" id="oJ5-xq-Boh"/>
+                            <constraint firstItem="97h-Gq-7of" firstAttribute="leading" secondItem="olV-vI-Kd7" secondAttribute="leading" constant="10" id="pCR-Dp-mwN"/>
+                            <constraint firstItem="97h-Gq-7of" firstAttribute="top" secondItem="olV-vI-Kd7" secondAttribute="top" constant="5" id="z1a-ID-ylD"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.87305194139999998" green="0.9123113155" blue="0.99955898519999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="olV-vI-Kd7" firstAttribute="leading" secondItem="WOQ-wp-Gju" secondAttribute="leading" id="7vH-TT-NJb"/>
+                    <constraint firstAttribute="bottom" secondItem="WOQ-wp-Gju" secondAttribute="bottom" constant="20" id="9en-uv-3eS"/>
+                    <constraint firstItem="90y-Wa-QR8" firstAttribute="top" secondItem="WOQ-wp-Gju" secondAttribute="top" constant="10" id="Exr-G2-4yL"/>
+                    <constraint firstItem="olV-vI-Kd7" firstAttribute="height" secondItem="WOQ-wp-Gju" secondAttribute="height" multiplier="1/4" id="Vrt-dc-mNg"/>
+                    <constraint firstItem="WOQ-wp-Gju" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Ynp-Ts-Sii"/>
+                    <constraint firstItem="90y-Wa-QR8" firstAttribute="trailing" secondItem="WOQ-wp-Gju" secondAttribute="trailing" constant="-10" id="djL-Li-Bv4"/>
+                    <constraint firstItem="olV-vI-Kd7" firstAttribute="trailing" secondItem="WOQ-wp-Gju" secondAttribute="trailing" id="evT-5Q-PCS"/>
+                    <constraint firstAttribute="trailing" secondItem="WOQ-wp-Gju" secondAttribute="trailing" constant="20" id="fGQ-yM-dzK"/>
+                    <constraint firstItem="olV-vI-Kd7" firstAttribute="bottom" secondItem="WOQ-wp-Gju" secondAttribute="bottom" id="h51-eI-mgu"/>
+                    <constraint firstItem="WOQ-wp-Gju" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="vKs-Qx-Wpa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="avatarImageView" destination="WOQ-wp-Gju" id="oYj-Ka-iHF"/>
+                <outlet property="favoriteButton" destination="90y-Wa-QR8" id="041-No-Gr2"/>
+                <outlet property="nameTitleLabel" destination="97h-Gq-7of" id="eKc-rB-bJg"/>
+                <outlet property="titleView" destination="olV-vI-Kd7" id="7lS-wo-6ap"/>
+            </connections>
+            <point key="canvasLocation" x="141" y="175"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="heart" catalog="system" width="64" height="54"/>
+        <image name="heart.fill" catalog="system" width="64" height="54"/>
+        <image name="loading" width="440" height="232"/>
+    </resources>
+</document>

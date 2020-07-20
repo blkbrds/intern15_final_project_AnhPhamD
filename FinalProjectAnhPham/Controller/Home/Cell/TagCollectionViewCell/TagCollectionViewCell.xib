@@ -20,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="134" height="58"/>
                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="highlightedColor" red="0.93333333333333335" green="0.43529411764705883" blue="0.3411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="highlightedColor" red="0.93333333330000001" green="0.43529411759999997" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zEC-7c-LrA">
                         <rect key="frame" x="0.0" y="58" width="134" height="1"/>

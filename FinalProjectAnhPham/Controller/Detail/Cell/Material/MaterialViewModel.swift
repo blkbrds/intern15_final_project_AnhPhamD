@@ -9,8 +9,11 @@
 import Foundation
 
 final class MaterialViewModel {
+
+    // MARK: - Properties
     var material: String
-    
+
+    // MARK: - Init
     init(material: String) {
         self.material = material
     }

@@ -10,35 +10,48 @@ import Foundation
 import RealmSwift
 
 final class DetailDrinkViewModel {
-    
+
     // MARK: - Properties
     var status = Favorite.favorite
     var drinkID: String
     var drink: Drink?
+    var otherDrinks: [Drink] = []
     var materials: [String] {
         guard let drink = drink else { return [] }
         return drink.material
     }
-    var sections: [SectionType] = [.instruction, .material]
+    var sections: [SectionType] = [.instruction, .material, .other]
 
     // MARK: - Init
     init(drinkID: String) {
         self.drinkID = drinkID
     }
-    
+
     // MARK: - Function
     func getDetailDrink(completion: @escaping (Bool, String) -> Void) {
         Networking.shared().getDetailDrink(drinkID: drinkID) { (apiResult: APIResult<DrinkDetail>) in
             switch apiResult {
             case .failure(let stringError):
                 completion(false, stringError)
-            case .success(let drinkResult):
-                self.drink = drinkResult.drink
+            case .success(let drinkDetail):
+                self.drink = drinkDetail.drink
                 completion(true, "Success")
             }
         }
     }
-    
+
+    func getOtherDrink(firstChar: String, keyword: String, completion: @escaping (Bool, String) -> Void) {
+        Networking.shared().getDrinkForCategory(firstChar: firstChar, keyword: keyword) { (apiResult: APIResult<DrinkResult>) in
+            switch apiResult {
+            case .failure(let stringError):
+                completion(false, stringError)
+            case .success(let drinkResult):
+                self.otherDrinks = drinkResult.drinks
+                completion(true, "Success")
+            }
+        }
+    }
+
     func checkFavorite(completion: @escaping (Bool) -> Void) {
         do {
             let realm = try Realm()
@@ -52,7 +65,7 @@ final class DetailDrinkViewModel {
             print(error)
         }
     }
-    
+
     func deleteItemFavorite() {
         do {
             let realm = try Realm()
@@ -64,7 +77,7 @@ final class DetailDrinkViewModel {
             print(error)
         }
     }
-    
+
     func addFavorite(drinkID: String, nameTitle: String, imageUrl: String) {
         do {
             let realm = try Realm()
@@ -79,29 +92,44 @@ final class DetailDrinkViewModel {
             print(error)
         }
     }
-    
+
     func numberOfSections() -> Int {
         return sections.count
     }
-    
+
     func numberOfRowsInSection(section: Int) -> Int {
+        guard section < sections.count else { return 0 }
         switch sections[section] {
         case .instruction:
             return 1
-        default:
+        case .material:
             return materials.count
+        case .other:
+            return 1
         }
     }
-    
+
+    func viewModelCellForRowAt(index: Int) -> InstructionViewModel {
+        let item = drink?.instruction
+        let viewModel = InstructionViewModel(instruction: item ?? "")
+        return viewModel
+    }
+
     func viewModelCellForRowAt2(index: Int) -> MaterialViewModel {
         let item = materials[index]
         let viewModel = MaterialViewModel(material: item)
         return viewModel
     }
+
+    func viewModelCellForRowAt3() -> OtherDrinkViewModel {
+        let item = otherDrinks
+        let viewModel = OtherDrinkViewModel(otherDrinks: item)
+        return viewModel
+    }
     
-    func viewModelCellForRowAt(index: Int) -> InstructionViewModel {
-        let item = drink?.instruction
-        let viewModel = InstructionViewModel(instruction: item ?? "")
+    func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
+        let item = otherDrinks[index]
+        let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
     
@@ -115,5 +143,14 @@ extension DetailDrinkViewModel {
     enum SectionType: String {
         case instruction = "Instruction"
         case material = "Material"
+        case other = "Other Drink"
+        
+        var indexSet: IndexSet {
+            switch self {
+            case .instruction: return IndexSet(integer: 0)
+            case .material: return IndexSet(integer: 1)
+            case .other: return IndexSet(integer: 2)
+            }
+        }
     }
 }

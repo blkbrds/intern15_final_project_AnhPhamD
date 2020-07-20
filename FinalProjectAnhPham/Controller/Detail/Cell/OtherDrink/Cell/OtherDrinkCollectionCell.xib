@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="OtherDrinkCollectionCell" customModule="FinalProjectAnhPham" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="167" height="118"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="167" height="118"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-Vn-Bim">
+                        <rect key="frame" x="0.0" y="0.0" width="167" height="118"/>
+                    </imageView>
+                    <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GXj-as-4rD">
+                        <rect key="frame" x="0.0" y="78.5" width="167" height="39.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdasdsadasasddasassaasdads" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMx-0C-Sul">
+                                <rect key="frame" x="5" y="5" width="157" height="29.5"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="13"/>
+                                <color key="textColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bMx-0C-Sul" firstAttribute="top" secondItem="GXj-as-4rD" secondAttribute="top" constant="5" id="2aZ-Ia-fpB"/>
+                            <constraint firstItem="bMx-0C-Sul" firstAttribute="leading" secondItem="GXj-as-4rD" secondAttribute="leading" constant="5" id="H4o-eK-iqW"/>
+                            <constraint firstAttribute="trailing" secondItem="bMx-0C-Sul" secondAttribute="trailing" constant="5" id="nk1-Py-zX6"/>
+                            <constraint firstAttribute="bottom" secondItem="bMx-0C-Sul" secondAttribute="bottom" constant="5" id="oV5-7W-SVG"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmO-Oo-VnS">
+                        <rect key="frame" x="134" y="6.5" width="28" height="23.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="EeP-Ho-MaW"/>
+                            <constraint firstAttribute="width" constant="28" id="rN6-Ld-mrU"/>
+                        </constraints>
+                        <color key="tintColor" red="0.79607843140000001" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <state key="normal" backgroundImage="heart" catalog="system"/>
+                        <state key="selected" backgroundImage="heart.fill" catalog="system"/>
+                    </button>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="4bN-Vn-Bim" secondAttribute="bottom" id="2jl-dH-Te9"/>
+                <constraint firstItem="GXj-as-4rD" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BW7-0v-wBQ"/>
+                <constraint firstAttribute="trailing" secondItem="GXj-as-4rD" secondAttribute="trailing" id="DVc-dN-A5W"/>
+                <constraint firstItem="4bN-Vn-Bim" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Jzp-37-JPB"/>
+                <constraint firstAttribute="trailing" secondItem="4bN-Vn-Bim" secondAttribute="trailing" id="NgI-5b-nCr"/>
+                <constraint firstItem="WmO-Oo-VnS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="WdU-iT-j0r"/>
+                <constraint firstItem="4bN-Vn-Bim" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Zr6-U8-QrU"/>
+                <constraint firstItem="GXj-as-4rD" firstAttribute="height" secondItem="4bN-Vn-Bim" secondAttribute="height" multiplier="1/3" id="oXi-VY-S9k"/>
+                <constraint firstAttribute="bottom" secondItem="GXj-as-4rD" secondAttribute="bottom" id="pt7-8a-UXU"/>
+                <constraint firstAttribute="trailing" secondItem="WmO-Oo-VnS" secondAttribute="trailing" constant="5" id="z0p-gn-Bh1"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="167" height="118"/>
+            <connections>
+                <outlet property="avatarImageView" destination="4bN-Vn-Bim" id="zeD-0D-fbP"/>
+                <outlet property="favoriteButton" destination="WmO-Oo-VnS" id="dQM-QQ-KV9"/>
+                <outlet property="nameTitleLabel" destination="bMx-0C-Sul" id="dCj-nv-AyG"/>
+                <outlet property="titleView" destination="GXj-as-4rD" id="cFc-1y-oSt"/>
+            </connections>
+            <point key="canvasLocation" x="216.66666666666669" y="126.5625"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="heart" catalog="system" width="64" height="54"/>
+        <image name="heart.fill" catalog="system" width="64" height="54"/>
+    </resources>
+</document>

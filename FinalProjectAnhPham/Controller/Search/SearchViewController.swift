@@ -14,6 +14,7 @@ final class SearchViewController: BaseViewController {
     // MARK: - IBOutlet
     @IBOutlet private weak var drinkResultsTableView: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet weak var notificationImageView: UIImageView!
 
     // MARK: - Properties
     var viewModel = SearchViewModel()
@@ -33,13 +34,17 @@ final class SearchViewController: BaseViewController {
     }
 
     private func getResultSearchByName(keywork: String) {
-        viewModel.getResultSearchByName(keywork: keywork) { [weak self] (done, msg) in
+        viewModel.getResultSearchByName(keywork: keywork) { [weak self] (done, _) in
             SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
+                this.drinkResultsTableView.isHidden = false
+                this.notificationImageView.isHidden = true
                 this.drinkResultsTableView.reloadData()
             } else {
-                this.showAlert(msg: msg)
+                this.drinkResultsTableView.isHidden = true
+                this.notificationImageView.isHidden = false
+                this.notificationImageView.image = UIImage(named: "im-nodata")
             }
         }
     }

@@ -64,7 +64,10 @@ final class Networking {
                     if let data = data {
                         var tagGroups: [TagGroup] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
+                        guard let drinksJS = json["drinks"] as? [JSON] else {
+                            completion(.failure("Data format is error"))
+                            return
+                        }
                         drinksJS.forEach { drink in
                             let item = TagGroup(json: drink)
                             tagGroups.append(item)
@@ -96,7 +99,10 @@ final class Networking {
                     if let data = data {
                         var drinksResult: [Drink] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
+                        guard let drinksJS = json["drinks"] as? [JSON] else {
+                            completion(.failure("Data format is error"))
+                            return
+                        }
                         drinksJS.forEach { drink in
                             let item = Drink(json: drink)
                             drinksResult.append(item)
@@ -135,7 +141,7 @@ final class Networking {
         }
         task.resume()
     }
-
+    
     func getDetailDrink(drinkID: String, completion: @escaping APICompletion<DrinkDetail>) {
         let urlString = API.Home.detailCategories + drinkID
         guard let url = URL(string: urlString) else {
@@ -153,7 +159,10 @@ final class Networking {
                     if let data = data {
                         var drinks: [Drink] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
+                        guard let drinksJS = json["drinks"] as? [JSON] else {
+                            completion(.failure("Data format is error"))
+                            return
+                        }
                         drinksJS.forEach { drink in
                             let item = Drink(json: drink)
                             drinks.append(item)
@@ -185,7 +194,10 @@ final class Networking {
                     if let data = data {
                         var drinks: [Drink] = []
                         let json = data.toJSON()
-                        guard let drinksJS = json["drinks"] as? [JSON] else { return }
+                        guard let drinksJS = json["drinks"] as? [JSON] else {
+                            completion(.failure("Data format is error"))
+                            return
+                        }
                         drinksJS.forEach { drink in
                             let item = Drink(json: drink)
                             drinks.append(item)

@@ -75,7 +75,7 @@ extension OtherDrinkCell: UICollectionViewDataSource, UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension OtherDrinkCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (UIScreen.main.bounds.width - 30) / 2, height: collectionView.bounds.height)
+        return CGSize(width: (UIScreen.main.bounds.width - 30) / 2, height: 160)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

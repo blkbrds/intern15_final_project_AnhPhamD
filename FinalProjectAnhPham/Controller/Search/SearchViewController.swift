@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 final class SearchViewController: BaseViewController {
 
@@ -33,6 +34,7 @@ final class SearchViewController: BaseViewController {
 
     private func getResultSearchByName(keywork: String) {
         viewModel.getResultSearchByName(keywork: keywork) { [weak self] (done, msg) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
                 this.drinkResultsTableView.reloadData()
@@ -88,6 +90,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        SVProgressHUD.show()
         guard let keyword = searchBar.text else { return }
         getResultSearchByName(keywork: keyword)
         view.endEditing(true)

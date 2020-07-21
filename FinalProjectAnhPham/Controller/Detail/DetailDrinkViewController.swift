@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 // MARK: - Enum
 enum Favorite {
@@ -47,6 +48,7 @@ final class DetailDrinkViewController: BaseViewController {
     private func loadAPIDetailDrink() {
         guard let viewModel = viewModel else { return }
         viewModel.getDetailDrink(completion: { [weak self] (done, msg) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
                 this.updateView()
@@ -180,6 +182,7 @@ extension DetailDrinkViewController: OtherDrinkCellDelegate {
     func pushToDetail(_ cell: OtherDrinkCell, indexPath: IndexPath) {
         let vc = DetailDrinkViewController()
         vc.viewModel = viewModel?.viewModelDidSelectItemAt(index: indexPath.row)
+        SVProgressHUD.show()
         navigationController?.pushViewController(vc, animated: true)
     }
 }

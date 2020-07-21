@@ -8,6 +8,7 @@
 
 import UIKit
 import LGSideMenuController
+import SVProgressHUD
 
 final class HomeViewController: BaseViewController {
 
@@ -25,7 +26,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
-    private var statusList = TypeDisplay.tableView
+    private var statusList = TypeDisplay.collectionView
     private var oldTagIndex: Int?
     private var newTagIndex = 0 {
         willSet {
@@ -53,7 +54,6 @@ final class HomeViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
     }
@@ -62,7 +62,7 @@ final class HomeViewController: BaseViewController {
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.leftBarButton), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
-        rightBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.rightCollectionBarButton), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
+        rightBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.rightTableBarButton), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
         navigationItem.rightBarButtonItem = rightBarButton
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
         if let leftMenu = SceneDelegate.share.sideMenu.leftViewController as? SideMenuViewController {
@@ -97,6 +97,7 @@ final class HomeViewController: BaseViewController {
 
     private func loadAPICategories(category: String) {
         viewModel.getCategories(category: category) { [weak self] (done, msg) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
                 this.tagCollectionView.reloadData()
@@ -108,6 +109,7 @@ final class HomeViewController: BaseViewController {
 
     private func loadAPIDrinkForCategories(firstChar: String, keyword: String) {
         viewModel.getDrinkForCategories(firstChar: firstChar, keyword: keyword) { [weak self] (done, msg) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
                 this.listDrinkTableView.reloadData()
@@ -174,7 +176,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             guard let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: Identifier.tagCell, for: indexPath) as? TagCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            if newTagIndex == indexPath.row, newTagIndex < viewModel.tagGroups.count {
+            if newTagIndex == indexPath.row {
                 cell.isSelectedCell = true
                 cell.isSelected = true
             } else {
@@ -201,6 +203,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             let keyword = viewModel.tagGroups[indexPath.row].tagName
             let newKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             if let newKeyword = newKeyword {
+                SVProgressHUD.show()
                 switch viewModel.status {
                 case .category:
                     loadAPIDrinkForCategories(firstChar: "c=", keyword: newKeyword)
@@ -213,6 +216,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         } else {
             let vc = DetailDrinkViewController()
             vc.viewModel = viewModel.viewModelDidSelectItemAt(index: indexPath.row)
+            SVProgressHUD.show()
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -251,6 +255,7 @@ extension HomeViewController: SideMenuViewControllerDelegate {
     func sideMenu(_ controller: SideMenuViewController, with item: MenuItem) {
         switch item {
         case .category:
+            SVProgressHUD.show()
             newTagIndex = 0
             let catagory = "c="
             loadAPICategories(category: catagory)
@@ -259,6 +264,7 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             viewModel.status = item
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .glass:
+            SVProgressHUD.show()
             newTagIndex = 0
             let category = "g="
             loadAPICategories(category: category)
@@ -267,6 +273,7 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             viewModel.status = item
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .alcoholic:
+            SVProgressHUD.show()
             newTagIndex = 0
             let category = "a="
             loadAPICategories(category: category)

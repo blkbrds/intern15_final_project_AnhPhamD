@@ -296,7 +296,6 @@
 			isa = PBXGroup;
 			children = (
 				F281B03824AAFE78003FEBD1 /* DrinkTableViewCell.swift */,
-				F281B06424AB54AD003FEBD1 /* DrinkCollectionViewCell.xib */,
 				F281B03924AAFE78003FEBD1 /* DrinkTableViewCell.xib */,
 			);
 			path = DrinkTableViewCell;
@@ -325,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				F281B06324AB54AD003FEBD1 /* DrinkCollectionViewCell.swift */,
+				F281B06424AB54AD003FEBD1 /* DrinkCollectionViewCell.xib */,
 			);
 			path = DrinkCollectionViewCell;
 			sourceTree = "<group>";

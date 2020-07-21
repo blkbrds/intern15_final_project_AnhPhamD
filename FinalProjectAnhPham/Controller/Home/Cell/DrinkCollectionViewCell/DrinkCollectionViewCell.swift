@@ -34,6 +34,11 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
         avatarImageView.layer.cornerRadius = 15
         titleView.layer.cornerRadius = 15
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarImageView.image = nil
+    }
 
     // MARK: - Function
     private func updateView() {

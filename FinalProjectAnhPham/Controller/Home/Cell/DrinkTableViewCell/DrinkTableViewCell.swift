@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 // MARK: - Protocol
 protocol DrinkTableViewCellDelegate: class {
@@ -38,6 +39,7 @@ final class DrinkTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        avatarImageView.image = nil
     }
 
     // MARK: - Function

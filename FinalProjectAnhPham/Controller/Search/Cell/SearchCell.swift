@@ -40,7 +40,7 @@ final class SearchCell: UITableViewCell {
     private func updateView() {
         guard let viewModel = viewModel else { return }
         nameTitleLabel.text = viewModel.nameTitle
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
+        avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
         favoriteButton.isSelected = viewModel.isFavorite
     }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SDWebImage
 
 // MARK: - Protocol
 protocol DrinkTableViewCellDelegate: class {
@@ -49,7 +50,7 @@ final class DrinkTableViewCell: UITableViewCell {
         }
         nameLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
+        avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
     }
 
     // MARK: - IBAction

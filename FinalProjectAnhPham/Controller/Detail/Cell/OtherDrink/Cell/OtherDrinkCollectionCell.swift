@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class OtherDrinkCollectionCell: UICollectionViewCell {
 
@@ -34,8 +35,8 @@ class OtherDrinkCollectionCell: UICollectionViewCell {
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
         nameTitleLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
+        avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
     }
 }

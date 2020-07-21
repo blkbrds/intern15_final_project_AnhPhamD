@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SDWebImage
 
 // MARK: - Enum
 enum Favorite {
@@ -95,7 +96,7 @@ final class DetailDrinkViewController: BaseViewController {
         categoryLabel.text = drink.category
         glassLabel.text = drink.glass
         alcoholicLabel.text = drink.alcoholic
-        avatarImageView.loadImageFromUrl(urlString: drink.imageURL)
+        avatarImageView.sd_setImage(with: URL(string: drink.imageURL))
     }
 
     private func configNavigation() {

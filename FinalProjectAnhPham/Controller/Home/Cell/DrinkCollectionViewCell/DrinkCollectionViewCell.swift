@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol DrinkCollectionViewCellDelegate: class {
     func handleFavoriteCollection(cell: DrinkCollectionViewCell, drinkID: String, isFavorite: Bool)
@@ -45,7 +46,7 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
         guard let viewModel = viewModel else { return }
         nameDrinkLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
+        avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
     }
 
     // MARK: - IBAction

@@ -10,5 +10,6 @@ target 'FinalProjectAnhPham' do
   pod 'LGSideMenuController'
   pod 'RealmSwift', '~> 4.0'
   pod 'SVProgressHUD'
+  pod 'SDWebImage'
 
 end

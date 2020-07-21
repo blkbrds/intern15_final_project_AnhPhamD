@@ -20,6 +20,11 @@ final class TagCollectionViewCell: UICollectionViewCell {
             updateView()
         }
     }
+    var isSelectedCell: Bool = false {
+        didSet {
+            updateSelected()
+        }
+    }
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -30,5 +35,9 @@ final class TagCollectionViewCell: UICollectionViewCell {
     private func updateView() {
         guard let viewModel = viewModel else { return }
         tagNameLabel.text = viewModel.tagName
+    }
+
+    private func updateSelected() {
+        footerView.isHidden = !isSelectedCell
     }
 }

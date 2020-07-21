@@ -96,6 +96,7 @@ final class HomeViewController: BaseViewController {
     }
 
     private func loadAPICategories(category: String) {
+        SVProgressHUD.show()
         viewModel.getCategories(category: category) { [weak self] (done, msg) in
             SVProgressHUD.dismiss()
             guard let this = self else { return }
@@ -108,6 +109,7 @@ final class HomeViewController: BaseViewController {
     }
 
     private func loadAPIDrinkForCategories(firstChar: String, keyword: String) {
+        SVProgressHUD.show()
         viewModel.getDrinkForCategories(firstChar: firstChar, keyword: keyword) { [weak self] (done, msg) in
             SVProgressHUD.dismiss()
             guard let this = self else { return }
@@ -203,7 +205,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             let keyword = viewModel.tagGroups[indexPath.row].tagName
             let newKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             if let newKeyword = newKeyword {
-                SVProgressHUD.show()
                 switch viewModel.status {
                 case .category:
                     loadAPIDrinkForCategories(firstChar: "c=", keyword: newKeyword)
@@ -216,7 +217,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         } else {
             let vc = DetailDrinkViewController()
             vc.viewModel = viewModel.viewModelDidSelectItemAt(index: indexPath.row)
-            SVProgressHUD.show()
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -255,7 +255,6 @@ extension HomeViewController: SideMenuViewControllerDelegate {
     func sideMenu(_ controller: SideMenuViewController, with item: MenuItem) {
         switch item {
         case .category:
-            SVProgressHUD.show()
             newTagIndex = 0
             let catagory = "c="
             loadAPICategories(category: catagory)
@@ -264,7 +263,6 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             viewModel.status = item
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .glass:
-            SVProgressHUD.show()
             newTagIndex = 0
             let category = "g="
             loadAPICategories(category: category)
@@ -273,7 +271,6 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             viewModel.status = item
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .alcoholic:
-            SVProgressHUD.show()
             newTagIndex = 0
             let category = "a="
             loadAPICategories(category: category)

@@ -34,6 +34,7 @@ final class SearchViewController: BaseViewController {
     }
 
     private func getResultSearchByName(keywork: String) {
+        SVProgressHUD.show()
         viewModel.getResultSearchByName(keywork: keywork) { [weak self] (done, _) in
             SVProgressHUD.dismiss()
             guard let this = self else { return }
@@ -95,7 +96,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        SVProgressHUD.show()
         guard let keyword = searchBar.text else { return }
         getResultSearchByName(keywork: keyword)
         view.endEditing(true)

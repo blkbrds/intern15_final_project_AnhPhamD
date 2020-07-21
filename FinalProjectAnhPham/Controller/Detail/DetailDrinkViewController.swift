@@ -47,6 +47,7 @@ final class DetailDrinkViewController: BaseViewController {
 
     // MARK: - Function
     private func loadAPIDetailDrink() {
+        SVProgressHUD.show()
         guard let viewModel = viewModel else { return }
         viewModel.getDetailDrink(completion: { [weak self] (done, msg) in
             SVProgressHUD.dismiss()

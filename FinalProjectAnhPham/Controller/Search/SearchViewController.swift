@@ -13,6 +13,7 @@ final class SearchViewController: BaseViewController {
 
     // MARK: - IBOutlet
     @IBOutlet private weak var drinkResultsTableView: UITableView!
+    @IBOutlet weak var listSearchHistoryTableView: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet weak var notificationImageView: UIImageView!
 
@@ -32,6 +33,17 @@ final class SearchViewController: BaseViewController {
     private func getData() {
         viewModel.fetchRealmData()
     }
+    
+    private func fetchData() {
+        viewModel.fetchSearchHistoryData { [weak self] (done, msg) in
+            guard let this = self else { return }
+            if done {
+                this.listSearchHistoryTableView.reloadData()
+            } else {
+                this.showAlert(msg: msg)
+            }
+        }
+    }
 
     private func getResultSearchByName(keywork: String) {
         SVProgressHUD.show()
@@ -49,13 +61,28 @@ final class SearchViewController: BaseViewController {
             }
         }
     }
+    
+    private func addSearchHistory(keywork: String) {
+        viewModel.addSearchHistory(searchKey: keywork) { [weak self] (done) in
+            guard let this = self else { return }
+            if done {
+                this.fetchData()
+            } else {
+                this.showAlert(msg: "Error")
+            }
+        }
+    }
 
     private func configTableView() {
-        let drinkTableView = UINib(nibName: "SearchCell", bundle: .main)
-        drinkResultsTableView.register(drinkTableView, forCellReuseIdentifier: "SearchCell")
+        let drinkTableView = UINib(nibName: "SearchResultCell", bundle: .main)
+        drinkResultsTableView.register(drinkTableView, forCellReuseIdentifier: "SearchResultCell")
         drinkResultsTableView.dataSource = self
         drinkResultsTableView.delegate = self
         drinkResultsTableView.rowHeight = 300
+        let searchKeyTableView = UINib(nibName: "SearchKeyworkCell", bundle: .main)
+        listSearchHistoryTableView.register(searchKeyTableView, forCellReuseIdentifier: "SearchKeyworkCell")
+        listSearchHistoryTableView.dataSource = self
+        listSearchHistoryTableView.rowHeight = 30
     }
 
     private func configNavigation() {
@@ -74,16 +101,28 @@ final class SearchViewController: BaseViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == drinkResultsTableView {
         return viewModel.numberOfRowsInSection()
+        } else {
+            return viewModel.numberOfRowsInSectionHistory()
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = drinkResultsTableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as? SearchCell else {
-            return UITableViewCell()
+        if tableView == drinkResultsTableView {
+            guard let cell = drinkResultsTableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell else {
+                return UITableViewCell()
+            }
+            cell.delegate = self
+            cell.viewModel = viewModel.viewModelCellForRowAt(index: indexPath.row)
+            return cell
+        } else {
+            guard let cell = listSearchHistoryTableView.dequeueReusableCell(withIdentifier: "SearchKeyworkCell", for: indexPath) as? SearchKeyworkCell else {
+                return UITableViewCell()
+            }
+            cell.viewModel = viewModel.viewModelSearchKeyCellForRowAt(index: indexPath.row)
+            return cell
         }
-        cell.delegate = self
-        cell.viewModel = viewModel.viewModelCellForRowAt(index: indexPath.row)
-        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -97,14 +136,26 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
+        addSearchHistory(keywork: keyword)
         getResultSearchByName(keywork: keyword)
         view.endEditing(true)
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        listSearchHistoryTableView.isHidden = false
+        fetchData()
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        listSearchHistoryTableView.isHidden = true
+        return true
     }
 }
 
 // MARK: - SearchCellDelegate
 extension SearchViewController: SearchCellDelegate {
-    func handleFavorite(_ cell: SearchCell, idDrink: String, isFavorite: Bool) {
+    func handleFavorite(_ cell: SearchResultCell, idDrink: String, isFavorite: Bool) {
         if isFavorite {
             viewModel.deleteItemFavorite(idDrink: idDrink)
         } else {

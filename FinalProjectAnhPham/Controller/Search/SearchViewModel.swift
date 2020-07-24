@@ -15,6 +15,7 @@ final class SearchViewModel {
     var status: MenuItem
     var drinks: [Drink] = []
     var realmDrinks: [Drink] = []
+    var searchResults: [SearchHistory] = []
 
     // MARK: - Init
     init(status: MenuItem = .category) {
@@ -34,6 +35,31 @@ final class SearchViewModel {
                 }
                 completion(true, "Success")
             }
+        }
+    }
+    
+    func fetchSearchHistoryData(completion: @escaping (Bool, String) -> Void) {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(SearchHistory.self)
+            searchResults = Array(results)
+            completion(true, "Success")
+        } catch {
+            completion(false, "Fetch realm error")
+        }
+    }
+    
+    func addSearchHistory(searchKey: String, completion: @escaping (Bool) -> Void) {
+        do {
+            let realm = try Realm()
+            let result = SearchHistory()
+            result.searchKey = searchKey
+            try realm.write {
+                realm.add(result)
+            }
+            completion(true)
+        } catch {
+            completion(false)
         }
     }
 
@@ -85,6 +111,10 @@ final class SearchViewModel {
     func numberOfRowsInSection() -> Int {
         return drinks.count
     }
+    
+    func numberOfRowsInSectionHistory() -> Int {
+        return searchResults.count
+    }
 
     func viewModelCellForRowAt(index: Int) -> SearchCellViewModel {
         let item = drinks[index]
@@ -95,6 +125,16 @@ final class SearchViewModel {
     func viewModelDidSelectRowAt(index: Int) -> DetailDrinkViewModel {
         let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
+        return viewModel
+    }
+    
+    func viewModelSearchKeyOfRowInSection() -> Int {
+        return searchResults.count
+    }
+    
+    func viewModelSearchKeyCellForRowAt(index: Int) -> SearchKeyworkViewModel {
+        let item = searchResults[index]
+        let viewModel = SearchKeyworkViewModel(searchHistory: item)
         return viewModel
     }
 }

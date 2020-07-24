@@ -10,10 +10,10 @@ import UIKit
 
 // MARK: - Protocol
 protocol SearchCellDelegate: class {
-    func handleFavorite(_ cell: SearchCell, idDrink: String, isFavorite: Bool)
+    func handleFavorite(_ cell: SearchResultCell, idDrink: String, isFavorite: Bool)
 }
 
-final class SearchCell: UITableViewCell {
+final class SearchResultCell: UITableViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet private weak var avatarImageView: UIImageView!

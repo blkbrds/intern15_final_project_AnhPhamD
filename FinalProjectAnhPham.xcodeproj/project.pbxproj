@@ -44,7 +44,6 @@
 		F284148624C15EE5007B790D /* MaterialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F284147E24C15EE5007B790D /* MaterialCell.xib */; };
 		F284148724C15EE5007B790D /* DetailDrinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F284147F24C15EE5007B790D /* DetailDrinkViewController.xib */; };
 		F284148824C15EE5007B790D /* DetailDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284148024C15EE5007B790D /* DetailDrinkViewController.swift */; };
-		F285CC3B24C6EF9D00B685D0 /* UIImageViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F285CC3A24C6EF9D00B685D0 /* UIImageViewExt.swift */; };
 		F285CC3D24C6F12E00B685D0 /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F285CC3C24C6F12E00B685D0 /* SearchHistory.swift */; };
 		F285CC4624C6F8DD00B685D0 /* SearchKeyworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F285CC4424C6F8DD00B685D0 /* SearchKeyworkCell.swift */; };
 		F285CC4724C6F8DD00B685D0 /* SearchKeyworkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F285CC4524C6F8DD00B685D0 /* SearchKeyworkCell.xib */; };
@@ -111,7 +110,6 @@
 		F284147E24C15EE5007B790D /* MaterialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaterialCell.xib; sourceTree = "<group>"; };
 		F284147F24C15EE5007B790D /* DetailDrinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailDrinkViewController.xib; sourceTree = "<group>"; };
 		F284148024C15EE5007B790D /* DetailDrinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailDrinkViewController.swift; sourceTree = "<group>"; };
-		F285CC3A24C6EF9D00B685D0 /* UIImageViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExt.swift; sourceTree = "<group>"; };
 		F285CC3C24C6F12E00B685D0 /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
 		F285CC4424C6F8DD00B685D0 /* SearchKeyworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeyworkCell.swift; sourceTree = "<group>"; };
 		F285CC4524C6F8DD00B685D0 /* SearchKeyworkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchKeyworkCell.xib; sourceTree = "<group>"; };
@@ -155,6 +153,7 @@
 				0EBD7A5A24AAD28900282779 /* Products */,
 				89D653BDB9C01FD610A028AA /* Pods */,
 				D48C73DCD937267A10C7273F /* Frameworks */,
+				F285CC4E24CA92EA00B685D0 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -431,6 +430,13 @@
 			path = SearchKeywork;
 			sourceTree = "<group>";
 		};
+		F285CC4E24CA92EA00B685D0 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		F29A584124BF1CFF0032BE48 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,7 +646,6 @@
 				F29A584F24C009CD0032BE48 /* SearchViewModel.swift in Sources */,
 				F281B06024AB4D35003FEBD1 /* TagCollectionViewCell.swift in Sources */,
 				F284148324C15EE5007B790D /* InstructionViewModel.swift in Sources */,
-				F285CC3B24C6EF9D00B685D0 /* UIImageViewExt.swift in Sources */,
 				0EBD7A5D24AAD28900282779 /* AppDelegate.swift in Sources */,
 				F281B04024AB1710003FEBD1 /* HomeViewModel.swift in Sources */,
 				F2C4E14224B02D0500B00814 /* SideMenuCell.swift in Sources */,

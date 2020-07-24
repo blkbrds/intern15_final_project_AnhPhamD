@@ -51,6 +51,7 @@ final class SearchViewController: BaseViewController {
             SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
+                this.listSearchHistoryTableView.isHidden = true
                 this.drinkResultsTableView.isHidden = false
                 this.notificationImageView.isHidden = true
                 this.drinkResultsTableView.reloadData()
@@ -82,6 +83,7 @@ final class SearchViewController: BaseViewController {
         let searchKeyTableView = UINib(nibName: "SearchKeyworkCell", bundle: .main)
         listSearchHistoryTableView.register(searchKeyTableView, forCellReuseIdentifier: "SearchKeyworkCell")
         listSearchHistoryTableView.dataSource = self
+        listSearchHistoryTableView.delegate = self
         listSearchHistoryTableView.rowHeight = 30
     }
 
@@ -126,9 +128,15 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = DetailDrinkViewController()
-        vc.viewModel = viewModel.viewModelDidSelectRowAt(index: indexPath.row)
-        navigationController?.pushViewController(vc, animated: true)
+        if tableView == drinkResultsTableView {
+            let vc = DetailDrinkViewController()
+            vc.viewModel = viewModel.viewModelDidSelectRowAt(index: indexPath.row)
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let keywork = viewModel.searchResults[indexPath.row].searchKey
+            addSearchHistory(keywork: keywork)
+            getResultSearchByName(keywork: keywork)
+        }
     }
 }
 

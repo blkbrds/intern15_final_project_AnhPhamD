@@ -39,7 +39,7 @@ final class SearchViewModel {
     func setupObserve() {
         do {
             let realm = try Realm()
-            notificationToken = realm.objects(Drink.self).observe({ [weak self] (change) in
+            notificationToken = realm.objects(Drink.self).observe({ [weak self] (_) in
                 guard let this = self else { return }
                 if let delegate = this.delegate {
                     this.fetchRealmData()

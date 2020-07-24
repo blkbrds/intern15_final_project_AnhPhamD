@@ -66,6 +66,7 @@ final class SearchViewController: BaseViewController {
                 this.notificationImageView.isHidden = true
                 this.listDrinkResultsTableView.reloadData()
             } else {
+                this.listSearchHistoryTableView.isHidden = true
                 this.listDrinkResultsTableView.isHidden = true
                 this.notificationImageView.isHidden = false
                 this.notificationImageView.image = UIImage(named: "im-nodata")

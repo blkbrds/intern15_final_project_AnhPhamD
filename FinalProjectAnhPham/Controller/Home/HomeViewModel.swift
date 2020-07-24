@@ -26,7 +26,6 @@ final class HomeViewModel {
     var tagGroups: [TagGroup] = []
     var status: MenuItem = .category
     var realmDrinks: [Drink] = []
-    var isFavorite: Bool = false
     private var notificationToken: NotificationToken?
     weak var delegate: HomeViewModelDelegate?
 
@@ -34,7 +33,7 @@ final class HomeViewModel {
     func setupObserve() {
         do {
             let realm = try Realm()
-            notificationToken = realm.objects(Drink.self).observe({ [weak self] (change) in
+            notificationToken = realm.objects(Drink.self).observe({ [weak self] _ in
                 guard let this = self else { return }
                 if let delegate = this.delegate {
                     this.fetchRealmData()
@@ -166,5 +165,9 @@ final class HomeViewModel {
         let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
+    }
+    
+    func clearData() {
+        drinks.removeAll()
     }
 }

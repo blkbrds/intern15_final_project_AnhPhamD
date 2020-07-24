@@ -184,7 +184,6 @@ extension DetailDrinkViewController: OtherDrinkCellDelegate {
     func pushToDetail(_ cell: OtherDrinkCell, indexPath: IndexPath) {
         let vc = DetailDrinkViewController()
         vc.viewModel = viewModel?.viewModelDidSelectItemAt(index: indexPath.row)
-        SVProgressHUD.show()
         navigationController?.pushViewController(vc, animated: true)
     }
 }

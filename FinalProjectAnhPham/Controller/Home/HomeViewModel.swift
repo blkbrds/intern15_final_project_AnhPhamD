@@ -9,16 +9,45 @@
 import Foundation
 import RealmSwift
 
+// MARK: - Protocol
+protocol HomeViewModelDelegate: class {
+    func syncFavorite(viewModel: HomeViewModel, needperformAction action: HomeViewModel.Action)
+}
+
 final class HomeViewModel {
 
+    // MARK: - Enum
+    enum Action {
+        case reloadData
+    }
+    
     // MARK: - Properties
     var drinks: [Drink] = []
     var tagGroups: [TagGroup] = []
     var status: MenuItem = .category
     var realmDrinks: [Drink] = []
     var isFavorite: Bool = false
+    private var notificationToken: NotificationToken?
+    weak var delegate: HomeViewModelDelegate?
 
     // MARK: - Function
+    func setupObserve() {
+        do {
+            let realm = try Realm()
+            notificationToken = realm.objects(Drink.self).observe({ [weak self] (change) in
+                guard let this = self else { return }
+                if let delegate = this.delegate {
+                    this.fetchRealmData()
+                    for i in 0..<this.drinks.count {
+                        this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
+                    }
+                    delegate.syncFavorite(viewModel: this, needperformAction: .reloadData)
+                }
+            })
+        } catch {
+            print(error)
+        }
+    }
     
     func fetchRealmData() {
         do {

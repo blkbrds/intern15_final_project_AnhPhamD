@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 // MARK: - Protocol
 protocol DrinkTableViewCellDelegate: class {
@@ -38,6 +39,7 @@ final class DrinkTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        avatarImageView.image = nil
     }
 
     // MARK: - Function
@@ -47,7 +49,7 @@ final class DrinkTableViewCell: UITableViewCell {
         }
         nameLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
+        avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
     }
 
     // MARK: - IBAction

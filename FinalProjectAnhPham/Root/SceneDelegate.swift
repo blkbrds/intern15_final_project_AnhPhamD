@@ -8,6 +8,7 @@
 
 import UIKit
 import LGSideMenuController
+import SVProgressHUD
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -33,6 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         setupSideMenu()
+        (UIApplication.shared.delegate as? AppDelegate)?.window = window
         window.makeKeyAndVisible()
     }
 

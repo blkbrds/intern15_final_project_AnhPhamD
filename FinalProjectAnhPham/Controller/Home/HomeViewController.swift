@@ -8,6 +8,7 @@
 
 import UIKit
 import LGSideMenuController
+import SVProgressHUD
 
 final class HomeViewController: BaseViewController {
 
@@ -25,7 +26,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
-    private var statusList = TypeDisplay.tableView
+    private var statusList = TypeDisplay.collectionView
     private var oldTagIndex: Int?
     private var newTagIndex = 0 {
         willSet {
@@ -53,7 +54,6 @@ final class HomeViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
     }
@@ -62,7 +62,7 @@ final class HomeViewController: BaseViewController {
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.leftBarButton), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
-        rightBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.rightCollectionBarButton), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
+        rightBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.rightTableBarButton), style: .plain, target: self, action: #selector(selectionTouchUpInSide))
         navigationItem.rightBarButtonItem = rightBarButton
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.9333333333, green: 0.4352941176, blue: 0.3411764706, alpha: 1)
         if let leftMenu = SceneDelegate.share.sideMenu.leftViewController as? SideMenuViewController {
@@ -96,7 +96,9 @@ final class HomeViewController: BaseViewController {
     }
 
     private func loadAPICategories(category: String) {
+        SVProgressHUD.show()
         viewModel.getCategories(category: category) { [weak self] (done, msg) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
                 this.tagCollectionView.reloadData()
@@ -107,7 +109,9 @@ final class HomeViewController: BaseViewController {
     }
 
     private func loadAPIDrinkForCategories(firstChar: String, keyword: String) {
+        SVProgressHUD.show()
         viewModel.getDrinkForCategories(firstChar: firstChar, keyword: keyword) { [weak self] (done, msg) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
                 this.listDrinkTableView.reloadData()
@@ -174,7 +178,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             guard let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: Identifier.tagCell, for: indexPath) as? TagCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            if newTagIndex == indexPath.row, newTagIndex < viewModel.tagGroups.count {
+            if newTagIndex == indexPath.row {
                 cell.isSelectedCell = true
                 cell.isSelected = true
             } else {

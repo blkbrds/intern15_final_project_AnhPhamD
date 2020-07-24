@@ -5,11 +5,17 @@ PODS:
   - Realm/Headers (4.4.1)
   - RealmSwift (4.4.1):
     - Realm (= 4.4.1)
+  - SDWebImage (5.8.1):
+    - SDWebImage/Core (= 5.8.1)
+  - SDWebImage/Core (5.8.1)
+  - SVProgressHUD (2.2.5)
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - LGSideMenuController
   - RealmSwift (~> 4.0)
+  - SDWebImage
+  - SVProgressHUD
   - SwiftLint (= 0.39.2)
 
 SPEC REPOS:
@@ -17,14 +23,18 @@ SPEC REPOS:
     - LGSideMenuController
     - Realm
     - RealmSwift
+    - SDWebImage
+    - SVProgressHUD
     - SwiftLint
 
 SPEC CHECKSUMS:
   LGSideMenuController: ae40c80983ab8b8801c7cef0a6804d43aaa72d45
   Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
   RealmSwift: 3eb8924ff7100df5928c7602f71d0fec51e7c9c5
+  SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 78a62da04cbcf47c483acae3a31c8e91dd05d73f
+PODFILE CHECKSUM: e30eadf5bdf9155edd9723f785d912d6981417f6
 
 COCOAPODS: 1.9.3

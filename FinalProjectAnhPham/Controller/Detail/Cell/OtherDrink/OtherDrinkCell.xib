@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="5Ac-41-boW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                        <rect key="frame" x="0.0" y="10" width="320" height="160"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="250" id="6DU-Pb-gBq"/>
+                            <constraint firstAttribute="height" constant="160" id="6DU-Pb-gBq"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HkT-HO-Kyj">
                             <size key="itemSize" width="50" height="50"/>
@@ -32,7 +32,7 @@
                 </subviews>
                 <color key="backgroundColor" red="0.87305194139999998" green="0.9123113155" blue="0.99955898519999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="5Ac-41-boW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="BKK-ge-PVB"/>
+                    <constraint firstItem="5Ac-41-boW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BKK-ge-PVB"/>
                     <constraint firstAttribute="trailing" secondItem="5Ac-41-boW" secondAttribute="trailing" id="Cox-ZC-cND"/>
                     <constraint firstItem="5Ac-41-boW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="brt-kt-NXN"/>
                     <constraint firstAttribute="bottom" secondItem="5Ac-41-boW" secondAttribute="bottom" id="weq-ds-b10"/>

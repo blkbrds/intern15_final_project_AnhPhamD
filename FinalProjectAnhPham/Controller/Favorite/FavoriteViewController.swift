@@ -17,7 +17,8 @@ final class FavoriteViewController: BaseViewController {
 
     // MARK: - IBOutlet
     @IBOutlet private weak var listFavoriteCollectionView: UICollectionView!
-
+    @IBOutlet weak var notificationLabel: UILabel!
+    
     // MARK: - Properties
     var viewModel = FavoriteViewModel()
     weak var delegate: FavoriteViewControllerDelegate?

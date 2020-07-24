@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol DrinkCollectionViewCellDelegate: class {
     func handleFavoriteCollection(cell: DrinkCollectionViewCell, drinkID: String, isFavorite: Bool)
@@ -34,13 +35,18 @@ final class DrinkCollectionViewCell: UICollectionViewCell {
         avatarImageView.layer.cornerRadius = 15
         titleView.layer.cornerRadius = 15
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarImageView.image = nil
+    }
 
     // MARK: - Function
     private func updateView() {
         guard let viewModel = viewModel else { return }
         nameDrinkLabel.text = viewModel.nameTitle
         favoriteButton.isSelected = viewModel.isFavorite
-        avatarImageView.loadImageFromUrl(urlString: viewModel.imageURL)
+        avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
     }
 
     // MARK: - IBAction

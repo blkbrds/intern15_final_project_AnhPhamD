@@ -9,5 +9,7 @@ target 'FinalProjectAnhPham' do
   pod 'SwiftLint', '0.39.2'
   pod 'LGSideMenuController'
   pod 'RealmSwift', '~> 4.0'
+  pod 'SVProgressHUD'
+  pod 'SDWebImage'
 
 end

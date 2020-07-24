@@ -12,7 +12,7 @@ import SVProgressHUD
 final class SearchViewController: BaseViewController {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var drinkResultsTableView: UITableView!
+    @IBOutlet private weak var listDrinkResultsTableView: UITableView!
     @IBOutlet weak var listSearchHistoryTableView: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet weak var notificationImageView: UIImageView!
@@ -26,12 +26,22 @@ final class SearchViewController: BaseViewController {
         configNavigation()
         configTableView()
         getData()
-        searchBar.delegate = self
+        configSyncRealmData()
+        configSearchBar()
     }
 
     // MARK: - Function
     private func getData() {
         viewModel.fetchRealmData()
+    }
+    
+    private func configSearchBar() {
+        searchBar.delegate = self
+    }
+    
+    private func configSyncRealmData() {
+        viewModel.delegate = self
+        viewModel.setupObserve()
     }
     
     private func fetchData() {
@@ -52,11 +62,11 @@ final class SearchViewController: BaseViewController {
             guard let this = self else { return }
             if done {
                 this.listSearchHistoryTableView.isHidden = true
-                this.drinkResultsTableView.isHidden = false
+                this.listDrinkResultsTableView.isHidden = false
                 this.notificationImageView.isHidden = true
-                this.drinkResultsTableView.reloadData()
+                this.listDrinkResultsTableView.reloadData()
             } else {
-                this.drinkResultsTableView.isHidden = true
+                this.listDrinkResultsTableView.isHidden = true
                 this.notificationImageView.isHidden = false
                 this.notificationImageView.image = UIImage(named: "im-nodata")
             }
@@ -76,10 +86,10 @@ final class SearchViewController: BaseViewController {
 
     private func configTableView() {
         let drinkTableView = UINib(nibName: "SearchResultCell", bundle: .main)
-        drinkResultsTableView.register(drinkTableView, forCellReuseIdentifier: "SearchResultCell")
-        drinkResultsTableView.dataSource = self
-        drinkResultsTableView.delegate = self
-        drinkResultsTableView.rowHeight = 300
+        listDrinkResultsTableView.register(drinkTableView, forCellReuseIdentifier: "SearchResultCell")
+        listDrinkResultsTableView.dataSource = self
+        listDrinkResultsTableView.delegate = self
+        listDrinkResultsTableView.rowHeight = 300
         let searchKeyTableView = UINib(nibName: "SearchKeyworkCell", bundle: .main)
         listSearchHistoryTableView.register(searchKeyTableView, forCellReuseIdentifier: "SearchKeyworkCell")
         listSearchHistoryTableView.dataSource = self
@@ -103,7 +113,7 @@ final class SearchViewController: BaseViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == drinkResultsTableView {
+        if tableView == listDrinkResultsTableView {
         return viewModel.numberOfRowsInSection()
         } else {
             return viewModel.numberOfRowsInSectionHistory()
@@ -111,8 +121,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == drinkResultsTableView {
-            guard let cell = drinkResultsTableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell else {
+        if tableView == listDrinkResultsTableView {
+            guard let cell = listDrinkResultsTableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell else {
                 return UITableViewCell()
             }
             cell.delegate = self
@@ -128,7 +138,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == drinkResultsTableView {
+        if tableView == listDrinkResultsTableView {
             let vc = DetailDrinkViewController()
             vc.viewModel = viewModel.viewModelDidSelectRowAt(index: indexPath.row)
             navigationController?.pushViewController(vc, animated: true)
@@ -169,6 +179,12 @@ extension SearchViewController: SearchCellDelegate {
         } else {
             viewModel.addFavorite(drinkID: cell.viewModel?.drinkID ?? "", nameTitle: cell.viewModel?.nameTitle ?? "", imageUrl: cell.viewModel?.imageURL ?? "")
         }
-        drinkResultsTableView.reloadData()
+        listDrinkResultsTableView.reloadData()
+    }
+}
+
+extension SearchViewController: SearchViewModelDelegate {
+    func syncFavorite(viewModel: SearchViewModel, needperformAction action: SearchViewModel.Action) {
+        listDrinkResultsTableView.reloadData()
     }
 }

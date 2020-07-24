@@ -49,6 +49,7 @@ final class HomeViewController: BaseViewController {
         configNavigation()
         configTableView()
         configCollectionView()
+        configSyncRealmData()
         getData()
     }
 
@@ -59,6 +60,24 @@ final class HomeViewController: BaseViewController {
     }
 
     // MARK: - Function
+    
+//    private func fectchData() {
+//        viewModel.fetchRealmData { [weak self] (done) in
+//            guard let this = self else { return }
+//            if done {
+////                this.listDrinkTableView.reloadData()
+////                this.listDrinkCollectionView.reloadData()
+//            } else {
+//                this.showAlert(msg: "Error")
+//            }
+//        }
+//    }
+    
+    private func configSyncRealmData() {
+        viewModel.delegate = self
+        viewModel.setupObserve()
+    }
+    
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(systemName: Identifier.leftBarButton), style: .plain, target: self, action: #selector(sideMenuTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
@@ -282,7 +301,6 @@ extension HomeViewController: SideMenuViewControllerDelegate {
             let favoriteViewController = FavoriteViewController()
             favoriteViewController.viewModel = FavoriteViewModel(status: viewModel.status)
             favoriteViewController.title = item.rawValue
-            favoriteViewController.delegate = self
             navigationController?.pushViewController(favoriteViewController, animated: true)
             SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         default:
@@ -322,10 +340,9 @@ extension HomeViewController: DrinkCollectionViewCellDelegate {
     }
 }
 
-// MARK: - FavoriteViewControllerDelegate
-extension HomeViewController: FavoriteViewControllerDelegate {
-    func handleFavoriteCollection(controller: FavoriteViewController, drinkID: String) {
-        viewModel.deleteItemFavorite(drinkID: drinkID)
+// MARK: - HomeViewModelDelegate
+extension HomeViewController: HomeViewModelDelegate {
+    func syncFavorite(viewModel: HomeViewModel, needperformAction action: HomeViewModel.Action) {
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
     }

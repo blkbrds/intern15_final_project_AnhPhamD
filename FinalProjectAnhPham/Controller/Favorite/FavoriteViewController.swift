@@ -8,11 +8,6 @@
 
 import UIKit
 
-// MARK: - Protocol
-protocol FavoriteViewControllerDelegate: class {
-    func handleFavoriteCollection(controller: FavoriteViewController, drinkID: String)
-}
-
 final class FavoriteViewController: BaseViewController {
 
     // MARK: - IBOutlet
@@ -21,7 +16,6 @@ final class FavoriteViewController: BaseViewController {
     
     // MARK: - Properties
     var viewModel = FavoriteViewModel()
-    weak var delegate: FavoriteViewControllerDelegate?
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -29,10 +23,14 @@ final class FavoriteViewController: BaseViewController {
         configNavigation()
         configCollectionView()
         fectchData()
-        // Do any additional setup after loading the view.
+        configSyncRealmData()
     }
 
     // MARK: - Function
+    private func configSyncRealmData() {
+        viewModel.delegate = self
+    }
+    
     private func fectchData() {
         viewModel.fetchRealmData { [weak self] (done) in
             guard let this = self else { return }
@@ -137,9 +135,13 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - DrinkCollectionViewCellDelegate
 extension FavoriteViewController: FavoriteCellDelegate {
     func handleFavorite(cell: FavoriteCell, drinkID: String, isFavorite: Bool) {
-        if let delegate = delegate {
-            delegate.handleFavoriteCollection(controller: self, drinkID: drinkID)
-        }
         deleteItemFavorite(drinkID: drinkID)
+    }
+}
+
+// MARK: - FavoriteViewModelDelegate
+extension FavoriteViewController: FavoriteViewModelDelegate {
+    func syncFavorite(viewModel: FavoriteViewModel, needperformAction action: FavoriteViewModel.Action) {
+        fectchData()
     }
 }

@@ -9,16 +9,29 @@
 import Foundation
 import RealmSwift
 
+// MARK: - Protocol
+protocol FavoriteViewModelDelegate: class {
+    func syncFavorite(viewModel: FavoriteViewModel, needperformAction action: FavoriteViewModel.Action)
+}
+
 final class FavoriteViewModel {
+    
+    // MARK: - Enum
+    enum Action {
+        case reloadData
+    }
 
     // MARK: - Properties
     var status: MenuItem
     var drinks: [Drink] = []
     var isFavorite: Bool = false
-
+    private var notificationToken: NotificationToken?
+    weak var delegate: FavoriteViewModelDelegate?
+    
     // MARK: - Init
     init(status: MenuItem = .category) {
         self.status = status
+        setupObserve()
     }
 
     // MARK: - Function
@@ -77,5 +90,18 @@ final class FavoriteViewModel {
         let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
+    }
+    
+    private func setupObserve() {
+        do {
+            let realm = try Realm()
+            notificationToken = realm.objects(Drink.self).observe({ (change) in
+                if let delegate = self.delegate {
+                    delegate.syncFavorite(viewModel: self, needperformAction: .reloadData)
+                }
+            })
+        } catch {
+            print(error)
+        }
     }
 }

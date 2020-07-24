@@ -9,20 +9,51 @@
 import Foundation
 import RealmSwift
 
+// MARK: - Protocol
+protocol SearchViewModelDelegate: class {
+    func syncFavorite(viewModel: SearchViewModel, needperformAction action: SearchViewModel.Action)
+}
+
 final class SearchViewModel {
+    
+    // MARK: - Enum
+    enum Action {
+        case reloadData
+    }
 
     // MARK: - Properties
     var status: MenuItem
     var drinks: [Drink] = []
     var realmDrinks: [Drink] = []
     var searchResults: [SearchHistory] = []
+    private var notificationToken: NotificationToken?
+    weak var delegate: SearchViewModelDelegate?
 
     // MARK: - Init
     init(status: MenuItem = .category) {
         self.status = status
+        setupObserve()
     }
 
     // MARK: - Function
+    func setupObserve() {
+        do {
+            let realm = try Realm()
+            notificationToken = realm.objects(Drink.self).observe({ [weak self] (change) in
+                guard let this = self else { return }
+                if let delegate = this.delegate {
+                    this.fetchRealmData()
+                    for i in 0..<this.drinks.count {
+                        this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
+                    }
+                    delegate.syncFavorite(viewModel: this, needperformAction: .reloadData)
+                }
+            })
+        } catch {
+            print(error)
+        }
+    }
+    
     func getResultSearchByName(keywork: String, completion: @escaping (Bool, String) -> Void) {
         Networking.shared().getResultSearchByName(keywork: keywork) { (apiResult: APIResult<DrinkResult>) in
             switch apiResult {
@@ -42,7 +73,9 @@ final class SearchViewModel {
         do {
             let realm = try Realm()
             let results = realm.objects(SearchHistory.self)
-            searchResults = Array(results)
+            var search = Array(results)
+            search.reverse()
+            searchResults = Array(search.prefix(5))
             completion(true, "Success")
         } catch {
             completion(false, "Fetch realm error")

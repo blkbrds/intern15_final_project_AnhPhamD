@@ -60,7 +60,6 @@
 		F2C4E13F24B0258400B00814 /* SideMenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E13E24B0258400B00814 /* SideMenuCellViewModel.swift */; };
 		F2C4E14224B02D0500B00814 /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14024B02D0500B00814 /* SideMenuCell.swift */; };
 		F2C4E14324B02D0500B00814 /* SideMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2C4E14124B02D0500B00814 /* SideMenuCell.xib */; };
-		F2C4E14524B0625B00B00814 /* UIImageViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14424B0625B00B00814 /* UIImageViewExt.swift */; };
 		F2F3286724AED61200B8D048 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F3286524AED61200B8D048 /* SideMenuViewController.swift */; };
 		F2F3286824AED61200B8D048 /* SideMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F3286624AED61200B8D048 /* SideMenuViewController.xib */; };
 /* End PBXBuildFile section */
@@ -123,7 +122,6 @@
 		F2C4E13E24B0258400B00814 /* SideMenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCellViewModel.swift; sourceTree = "<group>"; };
 		F2C4E14024B02D0500B00814 /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		F2C4E14124B02D0500B00814 /* SideMenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuCell.xib; sourceTree = "<group>"; };
-		F2C4E14424B0625B00B00814 /* UIImageViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExt.swift; sourceTree = "<group>"; };
 		F2F3286524AED61200B8D048 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		F2F3286624AED61200B8D048 /* SideMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -341,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				F281B07224AC2B20003FEBD1 /* DataExt.swift */,
-				F2C4E14424B0625B00B00814 /* UIImageViewExt.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -635,7 +632,6 @@
 				F281B03E24AB16DA003FEBD1 /* Drink.swift in Sources */,
 				F263960D24AAE1E300C70BF0 /* HomeViewController.swift in Sources */,
 				F284148124C15EE5007B790D /* DetailDrinkViewModel.swift in Sources */,
-				F2C4E14524B0625B00B00814 /* UIImageViewExt.swift in Sources */,
 				F2A4FA3224C55316007AE8F1 /* InstructionCell.swift in Sources */,
 				F263805524B3279000895D0A /* FavoriteViewController.swift in Sources */,
 				F281B07524AC31C2003FEBD1 /* Networking.swift in Sources */,

@@ -157,7 +157,6 @@ extension SearchViewController: UISearchBarDelegate {
         guard let keyword = searchBar.text else { return }
         addSearchHistory(keywork: keyword)
         getResultSearchByName(keywork: keyword)
-        view.endEditing(true)
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {

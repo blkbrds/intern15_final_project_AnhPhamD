@@ -53,12 +53,6 @@ final class HomeViewController: BaseViewController {
         getData()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        listDrinkTableView.reloadData()
-        listDrinkCollectionView.reloadData()
-    }
-
     // MARK: - Function
     private func configSyncRealmData() {
         viewModel.delegate = self

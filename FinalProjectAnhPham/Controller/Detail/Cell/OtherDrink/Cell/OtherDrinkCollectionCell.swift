@@ -14,7 +14,6 @@ class OtherDrinkCollectionCell: UICollectionViewCell {
     // MARK: - IBOutlet
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var nameTitleLabel: UILabel!
-    @IBOutlet private weak var favoriteButton: UIButton!
     @IBOutlet private weak var titleView: UIView!
 
     // MARK: - Properties
@@ -36,7 +35,6 @@ class OtherDrinkCollectionCell: UICollectionViewCell {
     private func updateView() {
         guard let viewModel = viewModel else { return }
         nameTitleLabel.text = viewModel.nameTitle
-        favoriteButton.isSelected = viewModel.isFavorite
         avatarImageView.sd_setImage(with: URL(string: viewModel.imageURL))
     }
 }

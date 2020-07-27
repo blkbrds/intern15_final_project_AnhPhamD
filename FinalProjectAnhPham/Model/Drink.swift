@@ -22,7 +22,7 @@ final class Drink: Object {
     var isFavorite: Bool = false
     private var ingredients: [String] = []
     private var measures: [String] = []
-    var material: [String] = []
+    var materials: [String] = []
 
     override static func primaryKey() -> String? {
         return "drinkID"
@@ -83,7 +83,7 @@ final class Drink: Object {
             }
         }
         
-        material = zip(ingredients, measures).map { (ingredient, measure) -> String in
+        materials = zip(ingredients, measures).map { (ingredient, measure) -> String in
             return ingredient + ": " + measure
         }
     }

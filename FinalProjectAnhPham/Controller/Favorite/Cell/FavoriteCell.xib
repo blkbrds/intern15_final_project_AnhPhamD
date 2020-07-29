@@ -38,14 +38,14 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dww-rb-D5O">
-                        <rect key="frame" x="105" y="4" width="22" height="24.5"/>
+                        <rect key="frame" x="99" y="6.5" width="28" height="23.5"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="Ady-qV-yXD"/>
-                            <constraint firstAttribute="width" constant="22" id="uzJ-DV-upD"/>
+                            <constraint firstAttribute="height" constant="26" id="Ady-qV-yXD"/>
+                            <constraint firstAttribute="width" constant="28" id="uzJ-DV-upD"/>
                         </constraints>
                         <color key="tintColor" red="0.79607843140000001" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <state key="normal" backgroundImage="trash" catalog="system"/>
-                        <state key="selected" backgroundImage="trash.fill" catalog="system"/>
+                        <state key="normal" backgroundImage="heart.fill" catalog="system"/>
+                        <state key="selected" backgroundImage="heart" catalog="system"/>
                         <connections>
                             <action selector="deleteButtonTouchUpInSide:" destination="gTV-IL-0wX" eventType="touchUpInside" id="BXE-je-hMG"/>
                         </connections>
@@ -76,7 +76,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="trash" catalog="system" width="60" height="64"/>
-        <image name="trash.fill" catalog="system" width="60" height="64"/>
+        <image name="heart" catalog="system" width="64" height="54"/>
+        <image name="heart.fill" catalog="system" width="64" height="54"/>
     </resources>
 </document>

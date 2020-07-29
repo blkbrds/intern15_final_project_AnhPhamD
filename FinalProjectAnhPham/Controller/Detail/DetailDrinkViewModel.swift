@@ -16,10 +16,7 @@ final class DetailDrinkViewModel {
     var drinkID: String
     var drink: Drink?
     var otherDrinks: [Drink] = []
-    var materials: [String] {
-        guard let drink = drink else { return [] }
-        return drink.material
-    }
+    var materials: [String] = []
     var sections: [SectionType] = [.instruction, .material, .other]
 
     // MARK: - Init
@@ -35,6 +32,9 @@ final class DetailDrinkViewModel {
                 completion(false, stringError)
             case .success(let drinkDetail):
                 self.drink = drinkDetail.drink
+                if let drink = drinkDetail.drink {
+                    self.materials = drink.materials
+                }
                 completion(true, "Success")
             }
         }

@@ -53,26 +53,7 @@ final class HomeViewController: BaseViewController {
         getData()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        listDrinkTableView.reloadData()
-        listDrinkCollectionView.reloadData()
-    }
-
     // MARK: - Function
-    
-//    private func fectchData() {
-//        viewModel.fetchRealmData { [weak self] (done) in
-//            guard let this = self else { return }
-//            if done {
-////                this.listDrinkTableView.reloadData()
-////                this.listDrinkCollectionView.reloadData()
-//            } else {
-//                this.showAlert(msg: "Error")
-//            }
-//        }
-//    }
-    
     private func configSyncRealmData() {
         viewModel.delegate = self
         viewModel.setupObserve()
@@ -112,6 +93,12 @@ final class HomeViewController: BaseViewController {
         viewModel.fetchRealmData()
         loadAPICategories(category: "c=")
         loadAPIDrinkForCategories(firstChar: "c=", keyword: "Ordinary%20Drink")
+    }
+    
+    private func clearData() {
+        viewModel.clearData()
+        listDrinkTableView.reloadData()
+        listDrinkCollectionView.reloadData()
     }
 
     private func loadAPICategories(category: String) {
@@ -274,42 +261,41 @@ extension HomeViewController: SideMenuViewControllerDelegate {
     func sideMenu(_ controller: SideMenuViewController, with item: MenuItem) {
         switch item {
         case .category:
+            clearData()
             newTagIndex = 0
             let catagory = "c="
             loadAPICategories(category: catagory)
             loadAPIDrinkForCategories(firstChar: "c=", keyword: "Ordinary%20Drink")
             title = item.rawValue
             viewModel.status = item
-            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .glass:
+            clearData()
             newTagIndex = 0
             let category = "g="
             loadAPICategories(category: category)
             loadAPIDrinkForCategories(firstChar: "g=", keyword: "Highball%20glass")
             title = item.rawValue
             viewModel.status = item
-            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .alcoholic:
+            clearData()
             newTagIndex = 0
             let category = "a="
             loadAPICategories(category: category)
             loadAPIDrinkForCategories(firstChar: "a=", keyword: "Alcoholic")
             title = item.rawValue
             viewModel.status = item
-            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         case .favorite:
             let favoriteViewController = FavoriteViewController()
             favoriteViewController.viewModel = FavoriteViewModel(status: viewModel.status)
             favoriteViewController.title = item.rawValue
             navigationController?.pushViewController(favoriteViewController, animated: true)
-            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         default:
             let searchViewController = SearchViewController()
             searchViewController.viewModel = SearchViewModel(status: viewModel.status)
             searchViewController.title = item.rawValue
             navigationController?.pushViewController(searchViewController, animated: true)
-            SceneDelegate.share.sideMenu.hideLeftViewAnimated()
         }
+        SceneDelegate.share.sideMenu.hideLeftViewAnimated()
     }
 }
 

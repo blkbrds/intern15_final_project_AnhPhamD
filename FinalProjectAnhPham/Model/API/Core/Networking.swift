@@ -116,32 +116,7 @@ final class Networking {
         }
         task.resume()
     }
-    
-    func getDrinkImageForCategories(urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
-        let config = URLSessionConfiguration.ephemeral
-        config.waitsForConnectivity = true
-        let session = URLSession(configuration: config)
-        let task = session.dataTask(with: url) { (data, _, error) in
-            DispatchQueue.main.async {
-                if error != nil {
-                    completion(nil)
-                } else {
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        completion(image)
-                    } else {
-                        completion(nil)
-                    }
-                }
-            }
-        }
-        task.resume()
-    }
-    
+
     func getDetailDrink(drinkID: String, completion: @escaping APICompletion<DrinkDetail>) {
         let urlString = API.Home.detailCategories + drinkID
         guard let url = URL(string: urlString) else {

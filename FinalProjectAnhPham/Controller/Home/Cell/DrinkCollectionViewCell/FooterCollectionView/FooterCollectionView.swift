@@ -16,7 +16,7 @@ protocol FooterCollectionViewDelegate: class {
 final class FooterCollectionView: UICollectionReusableView {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var loadMoreButton: UIButton!
+    @IBOutlet weak var loadMoreButton: UIButton!
 
     // MARK: - Properties
     weak var delegate: FooterCollectionViewDelegate?

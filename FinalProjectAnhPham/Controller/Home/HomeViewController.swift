@@ -11,18 +11,18 @@ import LGSideMenuController
 import SVProgressHUD
 
 final class HomeViewController: BaseViewController {
-
+    
     // MARK: - Enum
     enum TypeDisplay {
         case tableView
         case collectionView
     }
-
+    
     // MARK: - IBOutlet
     @IBOutlet private weak var tagCollectionView: UICollectionView!
     @IBOutlet private weak var listDrinkTableView: UITableView!
     @IBOutlet private weak var listDrinkCollectionView: UICollectionView!
-
+    
     // MARK: - Properites
     var viewModel = HomeViewModel()
     var rightBarButton: UIBarButtonItem?
@@ -41,7 +41,7 @@ final class HomeViewController: BaseViewController {
             }
         }
     }
-
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,7 @@ final class HomeViewController: BaseViewController {
         configSyncRealmData()
         getData()
     }
-
+    
     // MARK: - Function
     private func configSyncRealmData() {
         viewModel.delegate = self
@@ -69,22 +69,15 @@ final class HomeViewController: BaseViewController {
             leftMenu.delegate = self
         }
     }
-
+    
     private func configTableView() {
         let drinkTableViewCell = UINib(nibName: Identifier.drinkTableCell, bundle: .main)
         listDrinkTableView.register(drinkTableViewCell, forCellReuseIdentifier: Identifier.drinkTableCell)
-        let footerTableView = Bundle.main.loadNibNamed("FooterTableView", owner: self, options: nil)?.first as? FooterTableView
-        if let footerTableView = footerTableView {
-            footerTableView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
-            footerTableView.delegate = self
-            footerTableView.setupUI()
-        }
-        listDrinkTableView.tableFooterView = footerTableView
         listDrinkTableView.dataSource = self
         listDrinkTableView.delegate = self
         listDrinkTableView.rowHeight = UIScreen.main.bounds.height / 3
     }
-
+    
     private func configCollectionView() {
         let tagCollectionCell = UINib(nibName: Identifier.tagCell, bundle: .main)
         tagCollectionView.register(tagCollectionCell, forCellWithReuseIdentifier: Identifier.tagCell)
@@ -97,7 +90,7 @@ final class HomeViewController: BaseViewController {
         tagCollectionView.dataSource = self
         tagCollectionView.delegate = self
     }
-
+    
     private func getData() {
         viewModel.fetchRealmData()
         loadAPICategories(category: "c=")
@@ -109,7 +102,7 @@ final class HomeViewController: BaseViewController {
         listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
     }
-
+    
     private func loadAPICategories(category: String) {
         SVProgressHUD.show()
         viewModel.getCategories(category: category) { [weak self] (done, msg) in
@@ -122,13 +115,35 @@ final class HomeViewController: BaseViewController {
             }
         }
     }
-
+    
+    private func setupFooterTableView() {
+        if viewModel.drinks.count >= 20 {
+            let footerTableView = Bundle.main.loadNibNamed("FooterTableView", owner: self, options: nil)?.first as? FooterTableView
+            if let footerTableView = footerTableView {
+                footerTableView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60)
+                footerTableView.delegate = self
+                footerTableView.setupUI()
+            }
+            listDrinkTableView.tableFooterView = footerTableView
+        } else {
+            let footerTableView = Bundle.main.loadNibNamed("FooterTableView", owner: self, options: nil)?.first as? FooterTableView
+            if let footerTableView = footerTableView {
+                footerTableView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.0001)
+                footerTableView.loadMoreButton.isHidden = true
+                footerTableView.delegate = self
+                footerTableView.setupUI()
+            }
+            listDrinkTableView.tableFooterView = footerTableView
+        }
+    }
+    
     private func loadAPIDrinkForCategories(firstChar: String, keyword: String) {
         SVProgressHUD.show()
         viewModel.getDrinkForCategories(firstChar: firstChar, keyword: keyword) { [weak self] (done, msg) in
             SVProgressHUD.dismiss()
             guard let this = self else { return }
             if done {
+                this.setupFooterTableView()
                 this.listDrinkTableView.reloadData()
                 this.listDrinkCollectionView.reloadData()
             } else {
@@ -136,11 +151,11 @@ final class HomeViewController: BaseViewController {
             }
         }
     }
-
+    
     @objc private func sideMenuTouchUpInSide() {
         sideMenuController?.showLeftView(animated: true, completionHandler: nil)
     }
-
+    
     @objc private func selectionTouchUpInSide() {
         if statusList == .tableView {
             listDrinkTableView.isHidden = true
@@ -161,7 +176,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection()
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Identifier.drinkTableCell, for: indexPath) as? DrinkTableViewCell else {
             return UITableViewCell()
@@ -246,7 +261,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: (UIScreen.main.bounds.width - CGFloat(30)) / 2, height: 200)
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
@@ -263,7 +278,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == listDrinkCollectionView {
             switch kind {
             case UICollectionView.elementKindSectionFooter:
-                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterCollectionView", for: indexPath) as? FooterCollectionView else {
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterCollectionView",
+                    for: indexPath) as? FooterCollectionView else {
                     return UICollectionReusableView()
                 }
                 footer.delegate = self
@@ -362,28 +378,29 @@ extension HomeViewController: DrinkCollectionViewCellDelegate {
 // MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     func syncFavorite(viewModel: HomeViewModel, needperformAction action: HomeViewModel.Action) {
-        switch action {
-        case .reloadData:
-            listDrinkTableView.reloadData()
-            listDrinkCollectionView.reloadData()
-        }
+        listDrinkTableView.reloadData()
+        listDrinkCollectionView.reloadData()
     }
 }
 
 // MARK: - FooterTableViewDelegate
 extension HomeViewController: FooterTableViewDelegate {
     func loadMore(_ view: FooterTableView) {
-        viewModel.drinksLoadMore = Array(viewModel.drinks.prefix(viewModel.page))
+        viewModel.loadMore()
         listDrinkTableView.reloadData()
-        viewModel.page += 10
+        if viewModel.drinks.count == viewModel.listDrinks.count {
+            view.loadMoreButton.isHidden = true
+        }
     }
 }
 
 // MARK: - FooterCollectionViewDelegate
 extension HomeViewController: FooterCollectionViewDelegate {
     func loadMore(_ view: FooterCollectionView) {
-        viewModel.drinksLoadMore = Array(viewModel.drinks.prefix(viewModel.page))
+        viewModel.loadMore()
         listDrinkCollectionView.reloadData()
-        viewModel.page += 10
+        if viewModel.drinks.count == viewModel.listDrinks.count {
+            view.loadMoreButton.isHidden = true
+        }
     }
 }

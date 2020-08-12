@@ -16,7 +16,7 @@ protocol FooterTableViewDelegate: class {
 final class FooterTableView: UIView {
 
     // MARK: - IBOutlet
-    @IBOutlet private weak var loadMoreButton: UIButton!
+    @IBOutlet weak var loadMoreButton: UIButton!
 
     // MARK: - Properties
     weak var delegate: FooterTableViewDelegate?

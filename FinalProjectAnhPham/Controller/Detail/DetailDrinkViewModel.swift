@@ -144,13 +144,5 @@ extension DetailDrinkViewModel {
         case instruction = "Instruction"
         case material = "Material"
         case other = "Other Drink"
-        
-        var indexSet: IndexSet {
-            switch self {
-            case .instruction: return IndexSet(integer: 0)
-            case .material: return IndexSet(integer: 1)
-            case .other: return IndexSet(integer: 2)
-            }
-        }
     }
 }

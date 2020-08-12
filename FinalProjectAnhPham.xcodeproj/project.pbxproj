@@ -11,6 +11,10 @@
 		0EBD7A5F24AAD28900282779 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD7A5E24AAD28900282779 /* SceneDelegate.swift */; };
 		0EBD7A6624AAD28F00282779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EBD7A6524AAD28F00282779 /* Assets.xcassets */; };
 		1B935970F040B2AD743A5037 /* Pods_FinalProjectAnhPham.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9F3247E027ABBD46F392F2 /* Pods_FinalProjectAnhPham.framework */; };
+		F21D251D24E2E90400D91A3B /* FooterTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21D251C24E2E90400D91A3B /* FooterTableView.swift */; };
+		F21D251F24E2E91B00D91A3B /* FooterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F21D251E24E2E91B00D91A3B /* FooterTableView.xib */; };
+		F21D252424E303ED00D91A3B /* FooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21D252224E303ED00D91A3B /* FooterCollectionView.swift */; };
+		F21D252524E303ED00D91A3B /* FooterCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F21D252324E303ED00D91A3B /* FooterCollectionView.xib */; };
 		F2322DBC24C1B6060045F484 /* OtherDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2322DBA24C1B6060045F484 /* OtherDrinkCell.swift */; };
 		F2322DBD24C1B6060045F484 /* OtherDrinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2322DBB24C1B6060045F484 /* OtherDrinkCell.xib */; };
 		F263805124B3278200895D0A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F263804F24B3278200895D0A /* SearchViewController.swift */; };
@@ -77,6 +81,10 @@
 		5A9F3247E027ABBD46F392F2 /* Pods_FinalProjectAnhPham.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProjectAnhPham.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73443E3DFCEE58258550AB65 /* Pods-FinalProjectAnhPham.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectAnhPham.release.xcconfig"; path = "Target Support Files/Pods-FinalProjectAnhPham/Pods-FinalProjectAnhPham.release.xcconfig"; sourceTree = "<group>"; };
 		DDF28AC0A604F99D3BB80446 /* Pods-FinalProjectAnhPham.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectAnhPham.debug.xcconfig"; path = "Target Support Files/Pods-FinalProjectAnhPham/Pods-FinalProjectAnhPham.debug.xcconfig"; sourceTree = "<group>"; };
+		F21D251C24E2E90400D91A3B /* FooterTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterTableView.swift; sourceTree = "<group>"; };
+		F21D251E24E2E91B00D91A3B /* FooterTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterTableView.xib; sourceTree = "<group>"; };
+		F21D252224E303ED00D91A3B /* FooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCollectionView.swift; sourceTree = "<group>"; };
+		F21D252324E303ED00D91A3B /* FooterCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterCollectionView.xib; sourceTree = "<group>"; };
 		F2322DBA24C1B6060045F484 /* OtherDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDrinkCell.swift; sourceTree = "<group>"; };
 		F2322DBB24C1B6060045F484 /* OtherDrinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OtherDrinkCell.xib; sourceTree = "<group>"; };
 		F263804F24B3278200895D0A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +203,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F21D252024E3003E00D91A3B /* FooterTableView */ = {
+			isa = PBXGroup;
+			children = (
+				F21D251C24E2E90400D91A3B /* FooterTableView.swift */,
+				F21D251E24E2E91B00D91A3B /* FooterTableView.xib */,
+			);
+			path = FooterTableView;
+			sourceTree = "<group>";
+		};
+		F21D252124E303BB00D91A3B /* FooterCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				F21D252224E303ED00D91A3B /* FooterCollectionView.swift */,
+				F21D252324E303ED00D91A3B /* FooterCollectionView.xib */,
+			);
+			path = FooterCollectionView;
+			sourceTree = "<group>";
+		};
 		F2322DB824C1B44B0045F484 /* Instruction */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +328,7 @@
 		F281B03724AAFE56003FEBD1 /* DrinkTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				F21D252024E3003E00D91A3B /* FooterTableView */,
 				F281B03824AAFE78003FEBD1 /* DrinkTableViewCell.swift */,
 				F281B03924AAFE78003FEBD1 /* DrinkTableViewCell.xib */,
 			);
@@ -330,6 +357,7 @@
 		F281B06224AB548E003FEBD1 /* DrinkCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				F21D252124E303BB00D91A3B /* FooterCollectionView */,
 				F281B06324AB54AD003FEBD1 /* DrinkCollectionViewCell.swift */,
 				F281B06424AB54AD003FEBD1 /* DrinkCollectionViewCell.xib */,
 			);
@@ -563,7 +591,9 @@
 				F281B06624AB54AD003FEBD1 /* DrinkCollectionViewCell.xib in Resources */,
 				F263805224B3278200895D0A /* SearchViewController.xib in Resources */,
 				F29A585424C011520032BE48 /* SearchResultCell.xib in Resources */,
+				F21D252524E303ED00D91A3B /* FooterCollectionView.xib in Resources */,
 				F2322DBD24C1B6060045F484 /* OtherDrinkCell.xib in Resources */,
+				F21D251F24E2E91B00D91A3B /* FooterTableView.xib in Resources */,
 				F284148224C15EE5007B790D /* InstructionCell.xib in Resources */,
 				F263960E24AAE1E300C70BF0 /* HomeViewController.xib in Resources */,
 			);
@@ -659,6 +689,8 @@
 				0EBD7A5F24AAD28900282779 /* SceneDelegate.swift in Sources */,
 				F2F3286724AED61200B8D048 /* SideMenuViewController.swift in Sources */,
 				F27345B024BBFF7700C2B198 /* FavoriteViewModel.swift in Sources */,
+				F21D252424E303ED00D91A3B /* FooterCollectionView.swift in Sources */,
+				F21D251D24E2E90400D91A3B /* FooterTableView.swift in Sources */,
 				F29A585624C011660032BE48 /* SearchCellViewModel.swift in Sources */,
 				F284148824C15EE5007B790D /* DetailDrinkViewController.swift in Sources */,
 				F281B03A24AAFE78003FEBD1 /* DrinkTableViewCell.swift in Sources */,

@@ -35,6 +35,19 @@ final class FavoriteViewModel {
     }
 
     // MARK: - Function
+    private func setupObserve() {
+        do {
+            let realm = try Realm()
+            notificationToken = realm.objects(Drink.self).observe({ (_) in
+                if let delegate = self.delegate {
+                    delegate.syncFavorite(viewModel: self, needperformAction: .reloadData)
+                }
+            })
+        } catch {
+            print(error)
+        }
+    }
+    
     func fetchRealmData(completion: (Bool) -> Void) {
         do {
             // Realm
@@ -90,18 +103,5 @@ final class FavoriteViewModel {
         let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
-    }
-    
-    private func setupObserve() {
-        do {
-            let realm = try Realm()
-            notificationToken = realm.objects(Drink.self).observe({ (change) in
-                if let delegate = self.delegate {
-                    delegate.syncFavorite(viewModel: self, needperformAction: .reloadData)
-                }
-            })
-        } catch {
-            print(error)
-        }
     }
 }

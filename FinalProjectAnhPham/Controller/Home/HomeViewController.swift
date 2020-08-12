@@ -73,6 +73,13 @@ final class HomeViewController: BaseViewController {
     private func configTableView() {
         let drinkTableViewCell = UINib(nibName: Identifier.drinkTableCell, bundle: .main)
         listDrinkTableView.register(drinkTableViewCell, forCellReuseIdentifier: Identifier.drinkTableCell)
+        let footerTableView = Bundle.main.loadNibNamed("FooterTableView", owner: self, options: nil)?.first as? FooterTableView
+        if let footerTableView = footerTableView {
+            footerTableView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
+            footerTableView.delegate = self
+            footerTableView.setupUI()
+        }
+        listDrinkTableView.tableFooterView = footerTableView
         listDrinkTableView.dataSource = self
         listDrinkTableView.delegate = self
         listDrinkTableView.rowHeight = UIScreen.main.bounds.height / 3
@@ -83,6 +90,8 @@ final class HomeViewController: BaseViewController {
         tagCollectionView.register(tagCollectionCell, forCellWithReuseIdentifier: Identifier.tagCell)
         let drinkCollectionCell = UINib(nibName: Identifier.drinkCollectionCell, bundle: .main)
         listDrinkCollectionView.register(drinkCollectionCell, forCellWithReuseIdentifier: Identifier.drinkCollectionCell)
+        let foooterCollectionView = UINib(nibName: "FooterCollectionView", bundle: .main)
+        listDrinkCollectionView.register(foooterCollectionView, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterCollectionView")
         listDrinkCollectionView.dataSource = self
         listDrinkCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -161,7 +170,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.viewModel = viewModel.viewModelCellForRowAt(indexPath: indexPath.row)
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailDrinkViewController()
         vc.viewModel = viewModel.viewModelDidSelectRowAt(index: indexPath.row)
@@ -240,6 +249,30 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if collectionView == listDrinkCollectionView {
+            return CGSize(width: UIScreen.main.bounds.width, height: 60)
+        } else {
+            return CGSize(width: 0, height: 0)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if collectionView == listDrinkCollectionView {
+            switch kind {
+            case UICollectionView.elementKindSectionFooter:
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterCollectionView", for: indexPath) as? FooterCollectionView else {
+                    return UICollectionReusableView()
+                }
+                footer.delegate = self
+                return footer
+            default:
+                return UICollectionReusableView()
+            }
+        }
+        return UICollectionReusableView()
     }
 }
 
@@ -329,7 +362,28 @@ extension HomeViewController: DrinkCollectionViewCellDelegate {
 // MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     func syncFavorite(viewModel: HomeViewModel, needperformAction action: HomeViewModel.Action) {
+        switch action {
+        case .reloadData:
+            listDrinkTableView.reloadData()
+            listDrinkCollectionView.reloadData()
+        }
+    }
+}
+
+// MARK: - FooterTableViewDelegate
+extension HomeViewController: FooterTableViewDelegate {
+    func loadMore(_ view: FooterTableView) {
+        viewModel.drinksLoadMore = Array(viewModel.drinks.prefix(viewModel.page))
         listDrinkTableView.reloadData()
+        viewModel.page += 10
+    }
+}
+
+// MARK: - FooterCollectionViewDelegate
+extension HomeViewController: FooterCollectionViewDelegate {
+    func loadMore(_ view: FooterCollectionView) {
+        viewModel.drinksLoadMore = Array(viewModel.drinks.prefix(viewModel.page))
         listDrinkCollectionView.reloadData()
+        viewModel.page += 10
     }
 }

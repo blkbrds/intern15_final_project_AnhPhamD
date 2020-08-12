@@ -185,6 +185,9 @@ extension SearchViewController: SearchCellDelegate {
 
 extension SearchViewController: SearchViewModelDelegate {
     func syncFavorite(viewModel: SearchViewModel, needperformAction action: SearchViewModel.Action) {
-        listDrinkResultsTableView.reloadData()
+        switch action {
+        case .reloadData:
+            listDrinkResultsTableView.reloadData()
+        }
     }
 }

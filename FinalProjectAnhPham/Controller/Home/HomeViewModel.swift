@@ -23,6 +23,8 @@ final class HomeViewModel {
     
     // MARK: - Properties
     var drinks: [Drink] = []
+    var drinksLoadMore: [Drink] = []
+    var page: Int = 20
     var tagGroups: [TagGroup] = []
     var status: MenuItem = .category
     var realmDrinks: [Drink] = []
@@ -117,6 +119,7 @@ final class HomeViewModel {
                 completion(false, stringError)
             case .success(let drinkResult):
                 this.drinks = drinkResult.drinks
+                this.drinksLoadMore = Array(this.drinks.prefix(10))
                 for i in 0..<this.drinks.count {
                     this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
                 }
@@ -126,17 +129,17 @@ final class HomeViewModel {
     }
 
     func numberOfRowsInSection() -> Int {
-        return drinks.count
+        return drinksLoadMore.count
     }
 
     func viewModelCellForRowAt(indexPath: Int) -> DrinkCellViewModel {
-        let item = drinks[indexPath]
+        let item = drinksLoadMore[indexPath]
         let viewModel = DrinkCellViewModel(drink: item)
         return viewModel
     }
     
     func viewModelDidSelectRowAt(index: Int) -> DetailDrinkViewModel {
-        let item = drinks[index]
+        let item = drinksLoadMore[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
@@ -152,17 +155,17 @@ final class HomeViewModel {
     }
 
     func numberOfItemsInSection() -> Int {
-        return drinks.count
+        return drinksLoadMore.count
     }
 
     func viewModelCellForItems(indexPath: Int) -> DrinkCellViewModel {
-        let item = drinks[indexPath]
+        let item = drinksLoadMore[indexPath]
         let viewModel = DrinkCellViewModel(drink: item)
         return viewModel
     }
     
     func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
-        let item = drinks[index]
+        let item = drinksLoadMore[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }

@@ -142,6 +142,9 @@ extension FavoriteViewController: FavoriteCellDelegate {
 // MARK: - FavoriteViewModelDelegate
 extension FavoriteViewController: FavoriteViewModelDelegate {
     func syncFavorite(viewModel: FavoriteViewModel, needperformAction action: FavoriteViewModel.Action) {
-        fectchData()
+        switch action {
+        case .reloadData:
+            fectchData()
+        }
     }
 }

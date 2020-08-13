@@ -22,8 +22,8 @@ final class HomeViewModel {
     }
     
     // MARK: - Properties
+    var drinkTotals: [Drink] = []
     var drinks: [Drink] = []
-    var listDrinks: [Drink] = []
     var page: Int = 40
     var tagGroups: [TagGroup] = []
     var status: MenuItem = .category
@@ -39,8 +39,8 @@ final class HomeViewModel {
                 guard let this = self else { return }
                 if let delegate = this.delegate {
                     this.fetchRealmData()
-                    for i in 0..<this.drinks.count {
-                        this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
+                    for i in 0..<this.drinkTotals.count {
+                        this.drinkTotals[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinkTotals[i].drinkID })
                     }
                     delegate.syncFavorite(viewModel: this, needperformAction: .reloadData)
                 }
@@ -93,7 +93,7 @@ final class HomeViewModel {
     }
     
     func checkFavorite(favorite: Bool, drinkID: String) {
-        for item in drinks where item.drinkID == drinkID {
+        for item in drinkTotals where item.drinkID == drinkID {
             item.isFavorite = favorite
         }
     }
@@ -118,10 +118,10 @@ final class HomeViewModel {
             case .failure(let stringError):
                 completion(false, stringError)
             case .success(let drinkResult):
-                this.drinks = drinkResult.drinks
-                this.listDrinks = Array(this.drinks.prefix(20))
-                for i in 0..<this.drinks.count {
-                    this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
+                this.drinkTotals = drinkResult.drinks
+                this.drinks = Array(this.drinkTotals.prefix(20))
+                for i in 0..<this.drinkTotals.count {
+                    this.drinkTotals[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinkTotals[i].drinkID })
                 }
                 completion(true, "Success")
             }
@@ -129,17 +129,17 @@ final class HomeViewModel {
     }
 
     func numberOfRowsInSection() -> Int {
-        return listDrinks.count
+        return drinks.count
     }
 
     func viewModelCellForRowAt(indexPath: Int) -> DrinkCellViewModel {
-        let item = listDrinks[indexPath]
+        let item = drinks[indexPath]
         let viewModel = DrinkCellViewModel(drink: item)
         return viewModel
     }
     
     func viewModelDidSelectRowAt(index: Int) -> DetailDrinkViewModel {
-        let item = listDrinks[index]
+        let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
@@ -155,27 +155,34 @@ final class HomeViewModel {
     }
 
     func numberOfItemsInSection() -> Int {
-        return listDrinks.count
+        return drinks.count
     }
 
     func viewModelCellForItems(indexPath: Int) -> DrinkCellViewModel {
-        let item = listDrinks[indexPath]
+        let item = drinks[indexPath]
         let viewModel = DrinkCellViewModel(drink: item)
         return viewModel
     }
     
     func viewModelDidSelectItemAt(index: Int) -> DetailDrinkViewModel {
-        let item = listDrinks[index]
+        let item = drinks[index]
         let viewModel = DetailDrinkViewModel(drinkID: item.drinkID)
         return viewModel
     }
     
     func clearData() {
-        listDrinks.removeAll()
+        drinks.removeAll()
     }
     
     func loadMore() {
-        listDrinks = Array(drinks.prefix(page))
+        drinks = Array(drinkTotals.prefix(page))
         page += 20
+    }
+}
+
+extension HomeViewModel {
+    
+    var canLoadMore: Bool {
+        return drinkTotals.count > drinks.count
     }
 }

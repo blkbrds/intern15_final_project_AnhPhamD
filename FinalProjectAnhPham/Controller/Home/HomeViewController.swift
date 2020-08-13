@@ -261,7 +261,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if collectionView == listDrinkCollectionView {
-            return CGSize(width: UIScreen.main.bounds.width, height: 60)
+            if !viewModel.canLoadMore {
+                return CGSize(width: UIScreen.main.bounds.width, height: CGFloat.leastNonzeroMagnitude)
+            } else {
+                return CGSize(width: UIScreen.main.bounds.width, height: 60)
+            }
         } else {
             return CGSize(width: 0, height: 0)
         }
@@ -381,10 +385,12 @@ extension HomeViewController: FooterTableViewDelegate {
     func loadMore(_ view: FooterTableView) {
         viewModel.loadMore()
         listDrinkTableView.reloadData()
-        if viewModel.drinks.count == viewModel.listDrinks.count {
-            view.loadMoreButton.isHidden = true
+        listDrinkCollectionView.reloadData()
+
+        if !viewModel.canLoadMore {
             let footerTableView = listDrinkTableView.tableFooterView
-            footerTableView?.frame.size.height = 0.000_1
+            footerTableView?.frame.size.height = CGFloat.leastNonzeroMagnitude
+            footerTableView?.isHidden = true
             listDrinkTableView.tableFooterView = footerTableView
         }
     }
@@ -394,9 +400,14 @@ extension HomeViewController: FooterTableViewDelegate {
 extension HomeViewController: FooterCollectionViewDelegate {
     func loadMore(_ view: FooterCollectionView) {
         viewModel.loadMore()
+        listDrinkTableView.reloadData()
         listDrinkCollectionView.reloadData()
-        if viewModel.drinks.count == viewModel.listDrinks.count {
-            view.loadMoreButton.isHidden = true
+        
+        if !viewModel.canLoadMore {
+            let footerTableView = listDrinkTableView.tableFooterView
+            footerTableView?.frame.size.height = CGFloat.leastNonzeroMagnitude
+            footerTableView?.isHidden = true
+            listDrinkTableView.tableFooterView = footerTableView
         }
     }
 }

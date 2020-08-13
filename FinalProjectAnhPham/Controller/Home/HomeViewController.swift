@@ -126,14 +126,7 @@ final class HomeViewController: BaseViewController {
             }
             listDrinkTableView.tableFooterView = footerTableView
         } else {
-            let footerTableView = Bundle.main.loadNibNamed("FooterTableView", owner: self, options: nil)?.first as? FooterTableView
-            if let footerTableView = footerTableView {
-                footerTableView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.0001)
-                footerTableView.loadMoreButton.isHidden = true
-                footerTableView.delegate = self
-                footerTableView.setupUI()
-            }
-            listDrinkTableView.tableFooterView = footerTableView
+            listDrinkTableView.tableFooterView?.frame.size.height = 0.001
         }
     }
     
@@ -390,6 +383,9 @@ extension HomeViewController: FooterTableViewDelegate {
         listDrinkTableView.reloadData()
         if viewModel.drinks.count == viewModel.listDrinks.count {
             view.loadMoreButton.isHidden = true
+            let footerTableView = listDrinkTableView.tableFooterView
+            footerTableView?.frame.size.height = 0.000_1
+            listDrinkTableView.tableFooterView = footerTableView
         }
     }
 }

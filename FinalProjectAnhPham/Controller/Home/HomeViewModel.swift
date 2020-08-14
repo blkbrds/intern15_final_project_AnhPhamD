@@ -174,6 +174,10 @@ final class HomeViewModel {
         drinks.removeAll()
     }
     
+    func resetValue() {
+        page = 40
+    }
+    
     func loadMore() {
         drinks = Array(drinkTotals.prefix(page))
         page += 20

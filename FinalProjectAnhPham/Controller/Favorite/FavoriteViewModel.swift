@@ -48,7 +48,7 @@ final class FavoriteViewModel {
         }
     }
     
-    func fetchRealmData(completion: (Bool) -> Void) {
+    func fetchRealmData(completion: @escaping (Bool) -> Void) {
         do {
             // Realm
             let realm = try Realm()
@@ -59,6 +59,14 @@ final class FavoriteViewModel {
             // Call back
             completion(true)
         } catch {
+            completion(false)
+        }
+    }
+    
+    func checkFavoriteData(completion: @escaping (Bool) -> Void) {
+        if drinks.isEmpty {
+            completion(true)
+        } else {
             completion(false)
         }
     }

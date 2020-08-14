@@ -31,13 +31,28 @@ final class FavoriteViewController: BaseViewController {
         viewModel.delegate = self
     }
     
+    private func checkFavoriteData() {
+        viewModel.checkFavoriteData { [weak self] (done) in
+            guard let this = self else { return }
+            if done {
+                this.notificationLabel.isHidden = false
+                this.notificationLabel.text = "No Favorite!"
+                this.listFavoriteCollectionView.isHidden = true
+            } else {
+                this.listFavoriteCollectionView.isHidden = false
+                this.notificationLabel.isHidden = true
+            }
+        }
+    }
+    
     private func fectchData() {
         viewModel.fetchRealmData { [weak self] (done) in
             guard let this = self else { return }
             if done {
+                this.checkFavoriteData()
                 this.listFavoriteCollectionView.reloadData()
             } else {
-                showAlert(msg: "Error")
+                this.showAlert(msg: "Error")
             }
         }
     }

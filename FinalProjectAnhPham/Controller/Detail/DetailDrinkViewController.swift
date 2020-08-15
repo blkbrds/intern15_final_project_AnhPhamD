@@ -25,7 +25,6 @@ final class DetailDrinkViewController: BaseViewController {
     @IBOutlet private weak var glassLabel: UILabel!
     @IBOutlet private weak var alcoholicLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
-    @IBOutlet private weak var informationTableView: UITableView!
     @IBOutlet private weak var sectionTypeTableView: UITableView!
 
     // MARK: - Properties

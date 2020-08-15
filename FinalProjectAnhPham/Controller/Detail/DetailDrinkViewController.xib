@@ -14,7 +14,6 @@
                 <outlet property="categoryLabel" destination="ydO-SN-nt4" id="OCp-SQ-IA4"/>
                 <outlet property="glassLabel" destination="dXU-Qx-jdZ" id="0Xo-Jc-1oB"/>
                 <outlet property="infomationView" destination="KTE-g8-uVw" id="1YL-QO-0Nv"/>
-                <outlet property="informationTableView" destination="7qu-Mp-6cq" id="lne-ta-jlY"/>
                 <outlet property="sectionTypeTableView" destination="7qu-Mp-6cq" id="YcW-8i-Tqo"/>
                 <outlet property="stackView" destination="bxW-yh-LEC" id="I6Y-TK-ue9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

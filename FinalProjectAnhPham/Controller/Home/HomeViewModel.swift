@@ -22,7 +22,9 @@ final class HomeViewModel {
     }
     
     // MARK: - Properties
+    var drinkTotals: [Drink] = []
     var drinks: [Drink] = []
+    var page: Int = 40
     var tagGroups: [TagGroup] = []
     var status: MenuItem = .category
     var realmDrinks: [Drink] = []
@@ -37,8 +39,8 @@ final class HomeViewModel {
                 guard let this = self else { return }
                 if let delegate = this.delegate {
                     this.fetchRealmData()
-                    for i in 0..<this.drinks.count {
-                        this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
+                    for i in 0..<this.drinkTotals.count {
+                        this.drinkTotals[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinkTotals[i].drinkID })
                     }
                     delegate.syncFavorite(viewModel: this, needperformAction: .reloadData)
                 }
@@ -70,7 +72,7 @@ final class HomeViewModel {
             drink.imageURL = imageUrl
             try realm.write {
                 realm.add(drink, update: .all)
-                editFavorite(favorite: true, drinkID: drinkID)
+                checkFavorite(favorite: true, drinkID: drinkID)
             }
         } catch {
             print(error)
@@ -83,15 +85,15 @@ final class HomeViewModel {
             let result = realm.objects(Drink.self).filter("drinkID = '\(drinkID)'")
             try realm.write {
                 realm.delete(result)
-                editFavorite(favorite: false, drinkID: drinkID)
+                checkFavorite(favorite: false, drinkID: drinkID)
             }
         } catch {
             print(error)
         }
     }
     
-    func editFavorite(favorite: Bool, drinkID: String) {
-        for item in drinks where item.drinkID == drinkID {
+    func checkFavorite(favorite: Bool, drinkID: String) {
+        for item in drinkTotals where item.drinkID == drinkID {
             item.isFavorite = favorite
         }
     }
@@ -116,9 +118,10 @@ final class HomeViewModel {
             case .failure(let stringError):
                 completion(false, stringError)
             case .success(let drinkResult):
-                this.drinks = drinkResult.drinks
-                for i in 0..<this.drinks.count {
-                    this.drinks[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinks[i].drinkID })
+                this.drinkTotals = drinkResult.drinks
+                this.drinks = Array(this.drinkTotals.prefix(20))
+                for i in 0..<this.drinkTotals.count {
+                    this.drinkTotals[i].isFavorite = this.realmDrinks.contains(where: { $0.drinkID == this.drinkTotals[i].drinkID })
                 }
                 completion(true, "Success")
             }
@@ -169,5 +172,21 @@ final class HomeViewModel {
     
     func clearData() {
         drinks.removeAll()
+    }
+    
+    func resetValue() {
+        page = 40
+    }
+    
+    func loadMore() {
+        drinks = Array(drinkTotals.prefix(page))
+        page += 20
+    }
+}
+
+extension HomeViewModel {
+    
+    var canLoadMore: Bool {
+        return drinkTotals.count > drinks.count
     }
 }

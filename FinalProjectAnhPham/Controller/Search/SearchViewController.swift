@@ -10,16 +10,16 @@ import UIKit
 import SVProgressHUD
 
 final class SearchViewController: BaseViewController {
-
+    
     // MARK: - IBOutlet
     @IBOutlet private weak var listDrinkResultsTableView: UITableView!
     @IBOutlet weak var listSearchHistoryTableView: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet weak var notificationImageView: UIImageView!
-
+    
     // MARK: - Properties
     var viewModel = SearchViewModel()
-
+    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ final class SearchViewController: BaseViewController {
         configSyncRealmData()
         configSearchBar()
     }
-
+    
     // MARK: - Function
     private func getData() {
         viewModel.fetchRealmData()
@@ -54,7 +54,7 @@ final class SearchViewController: BaseViewController {
             }
         }
     }
-
+    
     private func getResultSearchByName(keywork: String) {
         SVProgressHUD.show()
         viewModel.getResultSearchByName(keywork: keywork) { [weak self] (done, _) in
@@ -84,7 +84,7 @@ final class SearchViewController: BaseViewController {
             }
         }
     }
-
+    
     private func configTableView() {
         let drinkTableView = UINib(nibName: "SearchResultCell", bundle: .main)
         listDrinkResultsTableView.register(drinkTableView, forCellReuseIdentifier: "SearchResultCell")
@@ -97,12 +97,12 @@ final class SearchViewController: BaseViewController {
         listSearchHistoryTableView.delegate = self
         listSearchHistoryTableView.rowHeight = 30
     }
-
+    
     private func configNavigation() {
         let leftBarButton = UIBarButtonItem(image: UIImage(named: "ic-back"), style: .plain, target: self, action: #selector(backTouchUpInSide))
         navigationItem.leftBarButtonItem = leftBarButton
     }
-
+    
     @objc func backTouchUpInSide() {
         if let vc = navigationController?.viewControllers[0] as? HomeViewController {
             vc.viewModel.status = viewModel.status
@@ -115,12 +115,12 @@ final class SearchViewController: BaseViewController {
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == listDrinkResultsTableView {
-        return viewModel.numberOfRowsInSection()
+            return viewModel.numberOfRowsInSection()
         } else {
             return viewModel.numberOfRowsInSectionHistory()
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == listDrinkResultsTableView {
             guard let cell = listDrinkResultsTableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell else {
@@ -137,7 +137,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == listDrinkResultsTableView {
             let vc = DetailDrinkViewController()
